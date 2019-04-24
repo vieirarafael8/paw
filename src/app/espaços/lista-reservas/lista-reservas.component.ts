@@ -1,5 +1,7 @@
 import { Component, Input } from "@angular/core";
 
+import { Reserva } from '../../models/reserva.model';
+
 @Component({
   selector: "app-lista-reservas",
   templateUrl: "./lista-reservas.component.html",
@@ -11,5 +13,5 @@ export class ListaReservasComponent {
     { title: "Segunda Reserva", content: "Conteudo da segunda reserva" },
     { title: "Terceira Reserva", content: "Conteudo da terceira reserva" }
   ];*/
-  @Input() reservas = [];
+  @Input() reservas: Reserva[] = [];
 }

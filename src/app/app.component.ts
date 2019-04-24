@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
+import { Reserva } from "./models/reserva.model";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"]
 })
 export class AppComponent {
-  storedReservas =[];
-  onReservaAdded(reservas){
+  storedReservas: Reserva[] = [];
+
+  onReservaAdded(reservas) {
     this.storedReservas.push(reservas);
   }
 }
