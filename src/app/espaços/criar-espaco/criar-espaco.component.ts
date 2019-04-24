@@ -1,16 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from "@angular/core";
 
 @Component({
-  selector: 'app-criar-espaco',
-  templateUrl: './criar-espaco.component.html',
-  styleUrls: ['./criar-espaco.component.css']
+  selector: "app-criar-espaco",
+  templateUrl: "./criar-espaco.component.html",
+  styleUrls: ["./criar-espaco.component.css"]
 })
-
-export class CriarEspacoComponent{
-  enteredValue = '';
-  newEspaco = 'VAZIO';
+export class CriarEspacoComponent {
+  enteredTitle = "";
+  enteredContent = "";
+  @Output() reservaCriada = new EventEmitter();
 
   onAddEspaco() {
-    this.newEspaco = this.enteredValue;
+    const reserva = {
+      title: this.enteredTitle,
+      content: this.enteredContent
+    };
+    this.reservaCriada.emit(reserva);
   }
 }

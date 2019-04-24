@@ -6,16 +6,23 @@ import {
   MatInputModule,
   MatCardModule,
   MatButtonModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatExpansionModule
 } from "@angular/material";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { CriarEspacoComponent } from "./espaços/criar-espaco/criar-espaco.component";
-import {HeaderComponent} from "./header/header.component";
+import { HeaderComponent } from "./header/header.component";
+import { ListaReservasComponent } from "./espaços/lista-reservas/lista-reservas.component";
 
 @NgModule({
-  declarations: [AppComponent, CriarEspacoComponent, HeaderComponent],
+  declarations: [
+    AppComponent,
+    CriarEspacoComponent,
+    HeaderComponent,
+    ListaReservasComponent
+  ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -24,7 +31,8 @@ import {HeaderComponent} from "./header/header.component";
     MatInputModule,
     MatCardModule,
     MatButtonModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]
