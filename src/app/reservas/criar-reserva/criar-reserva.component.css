@@ -7,3 +7,8 @@ textarea{
  .h2{
    text-align: center;
  }
+
+
+ mat-slider {
+  width: 250px;
+}

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NavbarModule, WavesModule, ButtonsModule } from 'angular-bootstrap-md';
 
 import {
   MatInputModule,
@@ -10,7 +11,9 @@ import {
   MatToolbarModule,
   MatExpansionModule,
   MatCheckboxModule,
-  MatRadioModule
+  MatRadioModule,
+  MatSliderModule,
+  MatIconModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -40,7 +43,12 @@ import { ListaReservasComponent } from './reservas/lista-reservas/lista-reservas
     MatExpansionModule,
     ReactiveFormsModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSliderModule,
+    NavbarModule,
+    WavesModule,
+    ButtonsModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

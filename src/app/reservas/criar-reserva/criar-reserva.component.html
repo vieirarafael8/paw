@@ -1,16 +1,25 @@
 
 <mat-card>
   <form (submit)="onAddReserva(reservaForm)" #reservaForm="ngForm">
-    <h3>Quantidades por Espaço</h3>
-    <mat-form-field >
-          <input matInput type="number" name="openspace" ngModel required placeholder="Número secretárias OpenSpace" min="0" #openspace="ngModel">
-    </mat-form-field>
-    <mat-form-field >
-        <input matInput type="number" name="salareuniao"  ngModel required placeholder="Número pessoas para Sala de Reunião" min="0" max="5" #salareuniao="ngModel" >
-    </mat-form-field>
-    <mat-form-field >
-    <input matInput type="number" name="salaformacao" ngModel required placeholder="Número pessoas para Sala de Formação" min="0" max="20" #salaformacao="ngModel">
-    </mat-form-field>
+    <h3 >Quantidades por Espaço</h3>
+    <h5>Número secretárias OpenSpace:</h5>
+          <input matInput type="number" name="openspace" ngModel required min="0" #openspace="ngModel">
+    <h5>Número pessoas para Sala de Reunião:</h5>
+      0 <mat-slider name="salareuniao" ngModel
+          thumbLabel
+          [displayWith]="formatLabel" required
+          tickInterval="1"
+          min="0"
+          max="5" color="primary" #salareuniao="ngModel">
+        </mat-slider> 5
+        <h5>Número pessoas para Sala de Formação:</h5>
+        0 <mat-slider name="salareuniao" ngModel
+        thumbLabel
+        [displayWith]="formatLabel" required
+        tickInterval="1"
+        min="0"
+        max="20" color="primary" #salareuniao="ngModel">
+      </mat-slider> 20
 
 <h3>Extras</h3>
 <section>
