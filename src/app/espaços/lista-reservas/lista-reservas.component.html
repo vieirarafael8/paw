@@ -1,9 +1,0 @@
-<mat-accordion multi="true" *ngIf="reservas.length > 0">
-  <mat-expansion-panel *ngFor="let reserva of reservas">
-    <mat-expansion-panel-header>
-      {{ reserva.title }}
-    </mat-expansion-panel-header>
-    <p>{{ reserva.content }}</p>
-  </mat-expansion-panel>
-</mat-accordion>
-<p class="info-text mat-body-2" *ngIf="reservas.length == 0">Sem Reservas!</p>

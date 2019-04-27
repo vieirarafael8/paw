@@ -1,0 +1,26 @@
+
+<mat-card>
+  <form (submit)="onAddReserva(reservaForm)" #reservaForm="ngForm">
+    <h3>Quantidades por Espaço</h3>
+    <mat-form-field >
+          <input matInput type="number" name="openspace" ngModel required placeholder="Número secretárias OpenSpace" min="0" #openspace="ngModel">
+    </mat-form-field>
+    <mat-form-field >
+        <input matInput type="number" name="salareuniao" ngModel required placeholder="Número pessoas para Sala de Reunião" min="0" #salareuniao="ngModel">
+    </mat-form-field>
+    <mat-form-field >
+    <input matInput type="number" name="salaformacao" ngModel required placeholder="Número pessoas para Sala de Formação" min="0" #salaformacao="ngModel">
+    </mat-form-field>
+<!--<h3>Extras</h3>
+<mat-checkbox (change)="checkCheckBoxTele($event)">Telefone</mat-checkbox> <p></p>
+<mat-checkbox (change)="checkCheckBoxCorreio($event)">Correio</mat-checkbox> <p></p>
+<mat-checkbox (change)="checkCheckBoxInternet($event)">Internet</mat-checkbox><p></p>
+    <p></p>-->
+    <button mat-raised-button color="primary" type="submit">
+      Guardar Reserva
+    </button>
+  </form>
+</mat-card>
+
+
+

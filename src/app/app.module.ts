@@ -1,27 +1,32 @@
-import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { FormsModule } from "@angular/forms";
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import {
   MatInputModule,
   MatCardModule,
   MatButtonModule,
   MatToolbarModule,
-  MatExpansionModule
-} from "@angular/material";
+  MatExpansionModule,
+  MatCheckboxModule,
+  MatRadioModule
+} from '@angular/material';
 
-import { AppRoutingModule } from "./app-routing.module";
-import { AppComponent } from "./app.component";
-import { CriarEspacoComponent } from "./espaços/criar-espaco/criar-espaco.component";
-import { HeaderComponent } from "./header/header.component";
-import { ListaReservasComponent } from "./espaços/lista-reservas/lista-reservas.component";
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { CriarReservaComponent } from './reservas/criar-reserva/criar-reserva.component';
+import { HeaderComponent } from './header/header.component';
+import { ListaReservasComponent } from './reservas/lista-reservas/lista-reservas.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    CriarEspacoComponent,
+    CriarReservaComponent,
     HeaderComponent,
     ListaReservasComponent
+
   ],
   imports: [
     BrowserModule,
@@ -32,7 +37,10 @@ import { ListaReservasComponent } from "./espaços/lista-reservas/lista-reservas
     MatCardModule,
     MatButtonModule,
     MatToolbarModule,
-    MatExpansionModule
+    MatExpansionModule,
+    ReactiveFormsModule,
+    MatCheckboxModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]

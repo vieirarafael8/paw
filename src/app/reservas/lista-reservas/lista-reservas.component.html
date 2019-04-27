@@ -1,0 +1,16 @@
+<mat-accordion multi="true" *ngIf="reservas.length > 0">
+  <mat-expansion-panel *ngFor="let reserva of reservas">
+    <mat-expansion-panel-header>
+      A SUA RESERVA:
+    </mat-expansion-panel-header>
+    <p>Número Secretárias OpenSpace reservadas -> {{ reserva.openspace }}</p>
+    <p>Número Pessoas para Sala de Reunião reservadas -> {{ reserva.salareuniao }}</p>
+    <p>Número Pessoas para Sala de Reunião reservadas -> {{ reserva.salaformacao }}</p>
+    <mat-action-row>
+      <button mat-button color="primary">EDIT</button>
+      <button mat-button color="warn">DELETE</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<p></p>
+<p class="info-text mat-body-1" *ngIf="reservas.length <= 0">Sem Reservas!</p>
