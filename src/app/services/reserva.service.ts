@@ -16,8 +16,9 @@ export class ReservaService {
     return this.reservasUpdated.asObservable();
   }
 
-  addReserva(openspace: number, salareuniao: number, salaformacao: number) {
-    const reserva: Reserva = {openspace: openspace, salareuniao: salareuniao, salaformacao: salaformacao};
+  addReserva(openspace: number, salareuniao: number, salaformacao: number, tele: boolean, correio: boolean, internet: boolean) {
+    const reserva: Reserva = {openspace: openspace, salareuniao: salareuniao, salaformacao: salaformacao,
+      tele: tele, correio: correio, internet: internet};
     this.reservas.push(reserva);
     this.reservasUpdated.next([...this.reservas]);
   }

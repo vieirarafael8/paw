@@ -3,9 +3,18 @@
     <mat-expansion-panel-header>
       A SUA RESERVA:
     </mat-expansion-panel-header>
+    <h3>Espaços:</h3>
+    <section>
     <p>Número Secretárias OpenSpace reservadas -> {{ reserva.openspace }}</p>
     <p>Número Pessoas para Sala de Reunião reservadas -> {{ reserva.salareuniao }}</p>
     <p>Número Pessoas para Sala de Reunião reservadas -> {{ reserva.salaformacao }}</p>
+  </section>
+  <h3>Extras:</h3>
+  <section>
+    <p id="tele" *ngIf="reserva.tele == true"> Telefone Fixo </p>
+    <p id="correio" *ngIf="reserva.correio == true"> Correio Fixo </p>
+    <p id="internet" *ngIf="reserva.internet == true"> Internet </p>
+  </section>
     <mat-action-row>
       <button mat-button color="primary">EDIT</button>
       <button mat-button color="warn">DELETE</button>
@@ -13,4 +22,9 @@
   </mat-expansion-panel>
 </mat-accordion>
 <p></p>
-<p class="info-text mat-body-1" *ngIf="reservas.length <= 0">Sem Reservas!</p>
+<h3 class="info-text mat-body-3" *ngIf="!(reservas.length > 0)"> Sem Reservas! </h3>
+<section *ngFor="let reserva of reservas">
+<p class="info-text mat-body-1" style="display: none" *ngIf="reserva.tele == false"></p>
+<p class="info-text mat-body-1" style="display: none" *ngIf="reserva.correio == false"></p>
+<p class="info-text mat-body-1" style="display: none" *ngIf="reserva.internet == false"></p>
+</section>
