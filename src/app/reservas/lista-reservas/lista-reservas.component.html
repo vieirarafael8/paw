@@ -3,18 +3,29 @@
     <mat-expansion-panel-header>
       A SUA RESERVA:
     </mat-expansion-panel-header>
-    <h3>Espaços:</h3>
+    <h3 *ngIf="!(reserva.openspace == null && reserva.salareuniao == null && reserva.salaformacao == null)">Espaços:</h3>
     <section>
-    <p>Número Secretárias OpenSpace reservadas -> {{ reserva.openspace }}</p>
-    <p>Número Pessoas para Sala de Reunião reservadas -> {{ reserva.salareuniao }}</p>
-    <p>Número Pessoas para Sala de Reunião reservadas -> {{ reserva.salaformacao }}</p>
+    <p *ngIf="reserva.openspace > 0">Número Secretárias OpenSpace reservadas -> {{ reserva.openspace }}</p>
+    <p *ngIf="reserva.salareuniao > 0">Número Pessoas para Sala de Reunião reservadas -> {{ reserva.salareuniao }}</p>
+    <p *ngIf="reserva.salaformacao > 0">Número Pessoas para Sala de Formação reservadas -> {{ reserva.salaformacao }}</p>
   </section>
-  <h3>Extras:</h3>
+  <h4 *ngIf="(reserva.openspace == null && reserva.salareuniao == null && reserva.salaformacao == null)">Sem Espaços Reservados!</h4><p></p>
+  <section *ngFor="let reserva of reservas">
+      <mat-accordion>
+      <p class="info-text mat-body-1" style="display: none" *ngIf="reserva.openspace == 0"></p>
+      <p class="info-text mat-body-1" style="display: none" *ngIf="reserva.salareuniao == 0"></p>
+      <p class="info-text mat-body-1" style="display: none" *ngIf="reserva.salaformacao == 0"></p>
+      </mat-accordion>
+  </section>
+  <p></p>
   <section>
+    <p></p>
+    <h3 *ngIf="!(reserva.tele == false && reserva.correio == false && reserva.internet == false)">Extras:</h3>
     <p id="tele" *ngIf="reserva.tele == true"> Telefone Fixo </p>
     <p id="correio" *ngIf="reserva.correio == true"> Correio Fixo </p>
     <p id="internet" *ngIf="reserva.internet == true"> Internet </p>
   </section>
+  <h4 *ngIf="(reserva.tele == false && reserva.correio == false && reserva.internet == false)">Sem Extras Reservados!</h4><p></p>
     <mat-action-row>
       <button mat-button color="primary">EDIT</button>
       <button mat-button color="warn">DELETE</button>
@@ -24,7 +35,10 @@
 <p></p>
 <h3 class="info-text mat-body-3" *ngIf="!(reservas.length > 0)"> Sem Reservas! </h3>
 <section *ngFor="let reserva of reservas">
-<p class="info-text mat-body-1" style="display: none" *ngIf="reserva.tele == false"></p>
-<p class="info-text mat-body-1" style="display: none" *ngIf="reserva.correio == false"></p>
-<p class="info-text mat-body-1" style="display: none" *ngIf="reserva.internet == false"></p>
+    <mat-accordion>
+    <p class="info-text mat-body-1" style="display: none" *ngIf="reserva.tele == false"></p>
+    <p class="info-text mat-body-1" style="display: none" *ngIf="reserva.correio == false"></p>
+    <p class="info-text mat-body-1" style="display: none" *ngIf="reserva.internet == false"></p>
+    </mat-accordion>
 </section>
+

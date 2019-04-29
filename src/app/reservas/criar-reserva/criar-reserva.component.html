@@ -1,21 +1,21 @@
 
-<mat-card>
-  <form (submit)="onAddReserva(reservaForm)" #reservaForm="ngForm">
+<mat-card >
+  <form (submit)="onAddReserva(reservaForm)" #reservaForm="ngForm" ng-model="checked">
     <h3 >Quantidades por Espaço</h3>
     <h5>Número secretárias OpenSpace:</h5>
-          <input matInput type="number" name="openspace" ngModel required min="0" #openspace="ngModel">
+          <input matInput type="number" name="openspace" ngModel min="0" #openspace="ngModel">
     <h5>Número pessoas para Sala de Reunião:</h5>
       0 <mat-slider name="salareuniao" ngModel
           thumbLabel
-          [displayWith]="formatLabel" required
+          [displayWith]="formatLabel"
           tickInterval="1"
           min="0"
           max="5" color="primary" #salareuniao="ngModel">
         </mat-slider> 5
         <h5>Número pessoas para Sala de Formação:</h5>
-        0 <mat-slider name="salareuniao" ngModel
+        0 <mat-slider name="salaformacao" ngModel
         thumbLabel
-        [displayWith]="formatLabel" required
+        [displayWith]="formatLabel"
         tickInterval="1"
         min="0"
         max="20" color="primary" #salareuniao="ngModel">
@@ -31,6 +31,7 @@
     <button mat-raised-button color="primary" type="submit">
       Guardar Reserva
     </button>
+
   </form>
 </mat-card>
 

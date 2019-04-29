@@ -7,7 +7,7 @@ import { ReservaService } from '../../services/reserva.service';
   templateUrl: './criar-reserva.component.html',
   styleUrls: ['./criar-reserva.component.css']
 })
-export class CriarReservaComponent {
+export class CriarReservaComponent  {
 
   openspace = null;
   salareuniao = null;
@@ -18,10 +18,12 @@ export class CriarReservaComponent {
 
   constructor(public reservaService: ReservaService) {}
 
+
   onAddReserva(form: NgForm) {
-    if ( form.invalid ) {
-      return;
+    if ( form.invalid) {
+    return false;
     }
+
 
     this.reservaService.addReserva(form.value.openspace, form.value.salareuniao, form.value.salaformacao,
       form.value.tele, form.value.correio, form.value.internet);
@@ -29,6 +31,7 @@ export class CriarReservaComponent {
     form.resetForm();
 
   }
+
   formatLabel(value: number | null) {
     if (!value) {
       return 0;
@@ -40,6 +43,9 @@ export class CriarReservaComponent {
 
     return value;
   }
+
+
+
   }
 
 
