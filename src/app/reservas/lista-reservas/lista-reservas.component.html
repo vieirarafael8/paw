@@ -1,7 +1,8 @@
+<p></p>
 <mat-accordion multi="true" *ngIf="reservas.length > 0">
   <mat-expansion-panel *ngFor="let reserva of reservas">
     <mat-expansion-panel-header>
-      A SUA RESERVA:
+      A SUA RESERVA
     </mat-expansion-panel-header>
     <h3 *ngIf="!(reserva.openspace == null && reserva.salareuniao == null && reserva.salaformacao == null)">Espaços:</h3>
     <section>
@@ -41,4 +42,4 @@
     <p class="info-text mat-body-1" style="display: none" *ngIf="reserva.internet == false"></p>
     </mat-accordion>
 </section>
-
+<p></p>

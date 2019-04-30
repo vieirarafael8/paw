@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ReservaService } from '../../services/reserva.service';
 
@@ -9,6 +9,7 @@ import { ReservaService } from '../../services/reserva.service';
 })
 export class CriarReservaComponent  {
 
+  id = null;
   openspace = null;
   salareuniao = null;
   salaformacao = null;
@@ -20,6 +21,7 @@ export class CriarReservaComponent  {
 
 
   onAddReserva(form: NgForm) {
+
     if ( form.invalid) {
     return false;
     }
