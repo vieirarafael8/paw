@@ -1,5 +1,5 @@
 export interface Reserva {
-
+  id: string;
   openspace: number;
   salareuniao: number;
   salaformacao: number;

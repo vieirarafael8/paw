@@ -12,13 +12,13 @@ export class ListaReservasComponent implements OnInit, OnDestroy{
   reservas: Reserva[] = [];
   private reservaSub: Subscription;
 
-  constructor(public postsService: ReservaService) {}
+  constructor(public reservasService: ReservaService) {}
 
   ngOnInit() {
-    this.reservas = this.postsService.getPosts();
-    this.reservaSub = this.postsService.getPostUpdateListener()
-      .subscribe((posts: Reserva[]) => {
-        this.reservas = posts;
+    this.reservasService.getPosts();
+    this.reservaSub = this.reservasService.getPostUpdateListener()
+      .subscribe((reservas: Reserva[]) => {
+        this.reservas = reservas;
       });
   }
 

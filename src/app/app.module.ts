@@ -21,6 +21,7 @@ import { AppComponent } from './app.component';
 import { CriarReservaComponent } from './reservas/criar-reserva/criar-reserva.component';
 import { HeaderComponent } from './header/header.component';
 import { ListaReservasComponent } from './reservas/lista-reservas/lista-reservas.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { ListaReservasComponent } from './reservas/lista-reservas/lista-reservas
     NavbarModule,
     WavesModule,
     ButtonsModule,
-    MatIconModule
+    MatIconModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

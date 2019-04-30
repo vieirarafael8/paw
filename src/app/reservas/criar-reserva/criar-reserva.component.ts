@@ -27,7 +27,9 @@ export class CriarReservaComponent  {
     }
 
 
-    this.reservaService.addReserva(form.value.openspace, form.value.salareuniao, form.value.salaformacao,
+
+
+    this.reservaService.addReserva(this.id, form.value.openspace, form.value.salareuniao, form.value.salaformacao,
       form.value.tele, form.value.correio, form.value.internet);
 
     form.resetForm();
