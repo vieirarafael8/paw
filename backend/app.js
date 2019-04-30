@@ -1,6 +1,10 @@
 const express = require('express');
+const bodyParser = require("body-parser");
 
 const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -15,7 +19,15 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use( '/api/reservas', (req, res, next) => {
+app.post('/api/reservas', (req, res, next) =>{
+  const reserva = req.body;
+  console.log(reserva);
+  res.status(201).json({
+  message: 'Reserva adicionada com sucesso!'
+  });
+});
+
+app.get( '/api/reservas', (req, res, next) => {
   const reservas = [
     { id: '1', openspace: 1, salareuniao: 1,
   salaformacao: 1, tele: true, correio: true,
