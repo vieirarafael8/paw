@@ -4,20 +4,20 @@
     <mat-expansion-panel-header>
       A SUA RESERVA
     </mat-expansion-panel-header>
-    <h3 *ngIf="(reserva.openspace > 0 || reserva.salareuniao > 0 || reserva.salaformacao > 0)">Espaços:</h3>
-    <section>
-    <p *ngIf="reserva.openspace > 0">Número Secretárias OpenSpace reservadas -> {{ reserva.openspace }}</p>
-    <p *ngIf="reserva.salareuniao > 0">Número Pessoas para Sala de Reunião reservadas -> {{ reserva.salareuniao }}</p>
-    <p *ngIf="reserva.salaformacao > 0">Número Pessoas para Sala de Formação reservadas -> {{ reserva.salaformacao }}</p>
-  </section>
-  <h4 *ngIf="!(reserva.openspace > 0 || reserva.salareuniao > 0 || reserva.salaformacao > 0)">Sem Espaços Reservados!</h4><p></p>
+    <div>
+    <h3>Espaço Reservado:</h3>
+    <p>Número Secretárias para {{ reserva.tipoEspaco }} reservadas -> {{ reserva.numComp }}</p>
+    </div>
   <section *ngFor="let reserva of reservas">
       <mat-accordion>
-      <p class="info-text mat-body-1" style="display: none" *ngIf="reserva.openspace == 0"></p>
-      <p class="info-text mat-body-1" style="display: none" *ngIf="reserva.salareuniao == 0"></p>
-      <p class="info-text mat-body-1" style="display: none" *ngIf="reserva.salaformacao == 0"></p>
+      <p class="info-text mat-body-1" style="display: none" *ngIf="reserva.tipoEspaco === 'Openspace'"></p>
+      <p class="info-text mat-body-1" style="display: none" *ngIf="reserva.tipoEspaco === 'Sala de Reunião'"></p>
+      <p class="info-text mat-body-1" style="display: none" *ngIf="reserva.tipoEspaco === 'Sala de Formação'"></p>
       </mat-accordion>
   </section>
+  <div>
+
+  </div>
   <p></p>
   <section>
     <p></p>

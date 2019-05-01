@@ -1,0 +1,15 @@
+<form [formGroup]="criarReserva" (ngSubmit)="submitReserva()">
+
+  <input type="number" formControlName="openSpace"><p></p>
+  <input type="number" formControlName="salaReuniao"><p></p>
+  <input type="number" formControlName="salaFormacao"><p></p>
+
+  <input type="checkbox" formControlName="tele"><p></p>
+
+  <input type="checkbox" formControlName="correio"><p></p>
+
+  <input type="checkbox" formControlName="internet"><p></p>
+
+  <button>Submit!</button>
+
+</form>

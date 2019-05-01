@@ -1,39 +1,43 @@
-
-<mat-card >
-  <form (submit)="onAddReserva(reservaForm)" #reservaForm="ngForm" >
-    <h3 >Quantidades por Espaço</h3>
-    <h5>Número secretárias OpenSpace:</h5>
-          <input matInput type="number" name="openspace" ngModel min="0" #openspace="ngModel" >
-    <h5>Número pessoas para Sala de Reunião:</h5>
-      0 <mat-slider name="salareuniao" ngModel
-          thumbLabel
-          [displayWith]="formatLabel"
-          tickInterval="1"
-          min="0"
-          max="5" color="primary" #salareuniao="ngModel" >
-        </mat-slider> 5
-        <h5>Número pessoas para Sala de Formação:</h5>
-        0 <mat-slider name="salaformacao" ngModel
-        thumbLabel
-        [displayWith]="formatLabel"
-        tickInterval="1"
-        min="0"
-        max="20" color="primary" #salareuniao="ngModel" >
-      </mat-slider> 20
-
-<h3>Extras</h3>
-<section>
-<mat-checkbox id="tele" [(ngModel)]="tele" color="primary" name="tele">Telefone</mat-checkbox> <p></p>
-<mat-checkbox id="correio"  [(ngModel)]="correio" color="primary" name="correio">Correio</mat-checkbox> <p></p>
-<mat-checkbox  id="internet" [(ngModel)]="internet" color="primary" name="internet">Internet</mat-checkbox><p></p>
-</section>
+<mat-card>
+  <form [formGroup]="criarReserva" (ngSubmit)="onAddReserva()">
+    <h4>Tipo Espacço</h4>
+    <mat-form-field>
+      <mat-label>Tipo Espaço</mat-label>
+      <mat-select formControlName="tipoEspaco">
+        <mat-option *ngFor="let reserva of reservas" [value]="reserva">
+          {{ reserva }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div *ngIf="(criarReserva.value.tipoEspaco === 'Openspace' || criarReserva.value.tipoEspaco === 'Sala de Reunião')
+    || criarReserva.value.tipoEspaco === 'Sala de Formação'">
+    <h4 >Número Secretárias:</h4>
     <p></p>
+    <mat-slider name="numComp" thumbLabel color="primary" *ngIf="criarReserva.value.tipoEspaco === 'Openspace'" tickInterval="1" min="0" max="10"></mat-slider>
+    <mat-slider name="numComp" thumbLabel color="primary" *ngIf="criarReserva.value.tipoEspaco === 'Sala de Reunião'" tickInterval="1" min="0" max="5" ></mat-slider>
+    <mat-slider name="numComp" thumbLabel color="primary" *ngIf="criarReserva.value.tipoEspaco === 'Sala de Formação'" tickInterval="1" min="0" max="20"></mat-slider>
+  </div>
+    <p></p>
+    <div *ngIf="criarReserva.value.tipoEspaco === 'Openspace'">
+      <h4>Extras</h4>
+      <section>
+        <mat-checkbox id="tele" formControlName="tele" color="primary"
+          >Telefone</mat-checkbox
+        >
+        <p></p>
+        <mat-checkbox id="correio" formControlName="correio" color="primary"
+          >Correio</mat-checkbox
+        >
+        <p></p>
+        <mat-checkbox id="internet" formControlName="internet" color="primary"
+          >Internet</mat-checkbox
+        >
+        <p></p>
+      </section>
+      <p></p>
+    </div>
     <button mat-raised-button color="primary" type="submit" >
       Guardar Reserva
     </button>
-
   </form>
 </mat-card>
-
-
-

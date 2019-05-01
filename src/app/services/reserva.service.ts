@@ -3,6 +3,8 @@ import { Subject } from 'rxjs';
 
 import { Reserva } from '../models/reserva.model';
 import { HttpClient } from '@angular/common/http';
+import { TipoEspaco } from '../enums/tipoEspaco';
+
 
 
 @Injectable({ providedIn: 'root' })
@@ -28,19 +30,15 @@ export class ReservaService {
   }
 
   addReserva(
-    id: string,
-    openspace: number,
-    salareuniao: number,
-    salaformacao: number,
+    tipoEspaco: TipoEspaco,
+    numComp: number,
     tele: boolean,
     correio: boolean,
     internet: boolean
   ) {
     const reserva: Reserva = {
-      id: null,
-      openspace: openspace,
-      salareuniao: salareuniao,
-      salaformacao: salaformacao,
+      tipoEspaco: tipoEspaco,
+      numComp: numComp,
       tele: tele,
       correio: correio,
       internet: internet

@@ -13,7 +13,8 @@ import {
   MatCheckboxModule,
   MatRadioModule,
   MatSliderModule,
-  MatIconModule
+  MatIconModule,
+  MatSelectModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -22,6 +23,7 @@ import { CriarReservaComponent } from './reservas/criar-reserva/criar-reserva.co
 import { HeaderComponent } from './header/header.component';
 import { ListaReservasComponent } from './reservas/lista-reservas/lista-reservas.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CriarReservasComponent } from './reservas/criar-reservas/criar-reservas.component';
 
 
 @NgModule({
@@ -29,7 +31,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     CriarReservaComponent,
     HeaderComponent,
-    ListaReservasComponent
+    ListaReservasComponent,
+    CriarReservasComponent
 
   ],
   imports: [
@@ -50,7 +53,8 @@ import { HttpClientModule } from '@angular/common/http';
     WavesModule,
     ButtonsModule,
     MatIconModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

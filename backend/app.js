@@ -29,16 +29,12 @@ app.post('/api/reservas', (req, res, next) =>{
 
 app.get( '/api/reservas', (req, res, next) => {
   const reservas = [
-    { id: '1', openspace: 1, salareuniao: 1,
-  salaformacao: 1, tele: true, correio: true,
+    { tipoEspaco: 'OpenSpace', numComp: '2', tele: true, correio: true,
   internet: true},
-
-  { id: '2', openspace: 2, salareuniao: 2,
-  salaformacao: 2, tele: true, correio: true,
-  internet: true}
 ];
+
   res.status(200).json({
-    message: 'Reservas adquirida com sucesso!',
+    message: 'Reserva adquirida com sucesso!',
     reservas: reservas
   });
 });
