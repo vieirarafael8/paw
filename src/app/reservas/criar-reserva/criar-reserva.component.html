@@ -13,9 +13,9 @@
     || criarReserva.value.tipoEspaco === 'Sala de Formação'">
     <h4 >Número Secretárias:</h4>
     <p></p>
-    <mat-slider name="numComp" thumbLabel color="primary" *ngIf="criarReserva.value.tipoEspaco === 'Openspace'" tickInterval="1" min="0" max="10"></mat-slider>
-    <mat-slider name="numComp" thumbLabel color="primary" *ngIf="criarReserva.value.tipoEspaco === 'Sala de Reunião'" tickInterval="1" min="0" max="5" ></mat-slider>
-    <mat-slider name="numComp" thumbLabel color="primary" *ngIf="criarReserva.value.tipoEspaco === 'Sala de Formação'" tickInterval="1" min="0" max="20"></mat-slider>
+    <mat-slider formControlName="numComp" thumbLabel color="primary" *ngIf="criarReserva.value.tipoEspaco === 'Openspace'" tickInterval="1" min="0" max="10"></mat-slider>
+    <mat-slider formControlName="numComp"  thumbLabel color="primary" *ngIf="criarReserva.value.tipoEspaco === 'Sala de Reunião'" tickInterval="1" min="0" max="5" ></mat-slider>
+    <mat-slider formControlName="numComp" thumbLabel color="primary" *ngIf="criarReserva.value.tipoEspaco === 'Sala de Formação'" tickInterval="1" min="0" max="20"></mat-slider>
   </div>
     <p></p>
     <div *ngIf="criarReserva.value.tipoEspaco === 'Openspace'">

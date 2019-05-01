@@ -21,7 +21,7 @@ export class CriarReservaComponent implements OnInit {
 
     this.criarReserva = this.formBuilder.group({
       tipoEspaco: ['', [Validators.required]],
-      numComp: ['', Validators.required, Validators.min(0)],
+      numComp: ['', Validators.required],
       tele: [false],
       correio: [false],
       internet: [false]
@@ -45,17 +45,6 @@ export class CriarReservaComponent implements OnInit {
 
     this.criarReserva.reset();
 
-  }
-  formatLabel(value: number | null) {
-    if (!value) {
-      return 0;
-    }
-
-    if (value >= 1000) {
-      return Math.round(value / 1000) + 'secretárias';
-    }
-
-    return value;
   }
 
 }

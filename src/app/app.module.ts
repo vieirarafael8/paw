@@ -14,7 +14,8 @@ import {
   MatRadioModule,
   MatSliderModule,
   MatIconModule,
-  MatSelectModule
+  MatSelectModule,
+
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
