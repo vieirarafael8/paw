@@ -15,6 +15,7 @@ import {
   MatSliderModule,
   MatIconModule,
   MatSelectModule,
+  MatDatepickerModule,
 
 } from '@angular/material';
 
@@ -55,7 +56,8 @@ import { CriarReservasComponent } from './reservas/criar-reservas/criar-reservas
     ButtonsModule,
     MatIconModule,
     HttpClientModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

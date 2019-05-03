@@ -32,6 +32,8 @@ export class ReservaService {
   addReserva(
     tipoEspaco: TipoEspaco,
     numComp: number,
+    dataInicio: Date,
+    dataFim: Date,
     tele: boolean,
     correio: boolean,
     internet: boolean
@@ -39,6 +41,8 @@ export class ReservaService {
     const reserva: Reserva = {
       tipoEspaco: tipoEspaco,
       numComp: numComp,
+      dataInicio: dataInicio,
+      dataFim: dataFim,
       tele: tele,
       correio: correio,
       internet: internet

@@ -8,6 +8,9 @@ textarea{
    text-align: center;
  }
 
+mark{
+  background-color: #87b5ff;
+}
 
  mat-slider {
   width: 250px;

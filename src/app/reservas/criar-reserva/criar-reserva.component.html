@@ -1,6 +1,6 @@
 <mat-card>
   <form [formGroup]="criarReserva" (ngSubmit)="onAddReserva()">
-    <h4>Tipo Espacço</h4>
+    <h4>Tipo Espaço</h4>
     <mat-form-field>
       <mat-label>Tipo Espaço</mat-label>
       <mat-select formControlName="tipoEspaco">
@@ -9,16 +9,23 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <div *ngIf="(criarReserva.value.tipoEspaco === 'Openspace' || criarReserva.value.tipoEspaco === 'Sala de Reunião')
-    || criarReserva.value.tipoEspaco === 'Sala de Formação'">
-    <h4 >Número Secretárias:</h4>
-    <p></p>
-    <mat-slider formControlName="numComp" thumbLabel color="primary" *ngIf="criarReserva.value.tipoEspaco === 'Openspace'" tickInterval="1" min="0" max="10"></mat-slider>
-    <mat-slider formControlName="numComp"  thumbLabel color="primary" *ngIf="criarReserva.value.tipoEspaco === 'Sala de Reunião'" tickInterval="1" min="0" max="5" ></mat-slider>
-    <mat-slider formControlName="numComp" thumbLabel color="primary" *ngIf="criarReserva.value.tipoEspaco === 'Sala de Formação'" tickInterval="1" min="0" max="20"></mat-slider>
-  </div>
-    <p></p>
+    <p *ngIf="criarReserva.value.tipoEspaco === 'Sala de Reunião'">
+        <small><ins>Este Espaço tem lotação máxima de 5 Pessoas!</ins></small>
+    </p>
+    <p *ngIf="criarReserva.value.tipoEspaco === 'Sala de Formação'">
+        <small><ins>Este Espaço tem lotação máxima de 20 Pessoas!</ins></small>
+    </p>
     <div *ngIf="criarReserva.value.tipoEspaco === 'Openspace'">
+      <h4>Número Secretárias:</h4>
+      <mat-slider
+        formControlName="numComp"
+        thumbLabel
+        color="primary"
+        *ngIf="criarReserva.value.tipoEspaco === 'Openspace'"
+        tickInterval="1"
+        min="0"
+        max="10"
+      ></mat-slider>
       <h4>Extras</h4>
       <section>
         <mat-checkbox id="tele" formControlName="tele" color="primary"
@@ -36,7 +43,22 @@
       </section>
       <p></p>
     </div>
-    <button mat-raised-button color="primary" type="submit" >
+    <h4>Data da reserva</h4>
+    <div>
+        <mat-form-field>
+            <input matInput [matDatepicker]="dataI" formControlName="dataInicio" placeholder="Data de Início" />
+            <mat-datepicker-toggle matSuffix [for]="dataI"></mat-datepicker-toggle>
+            <mat-datepicker  #dataI></mat-datepicker>
+          </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <input matInput [matDatepicker]="dataF" formControlName="dataFim" placeholder="Data de Fim" />
+        <mat-datepicker-toggle matSuffix [for]="dataF"></mat-datepicker-toggle>
+        <mat-datepicker #dataF></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <button mat-raised-button color="primary" type="submit">
       Guardar Reserva
     </button>
   </form>

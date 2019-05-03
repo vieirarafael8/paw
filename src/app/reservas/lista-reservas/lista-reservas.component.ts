@@ -6,7 +6,7 @@ import { ReservaService } from '../../services/reserva.service';
 @Component({
   selector: 'app-lista-reservas',
   templateUrl: './lista-reservas.component.html',
-  styleUrls: ['./lista-reservas.component.css']
+  styleUrls: ['./lista-reservas.component.css'],
 })
 export class ListaReservasComponent implements OnInit, OnDestroy {
   reservas: Reserva[] = [];
