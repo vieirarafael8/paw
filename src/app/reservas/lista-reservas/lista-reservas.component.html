@@ -1,4 +1,4 @@
-<p></p>
+<h2>Espaços Reservados</h2>
 <mat-accordion multi="true" *ngIf="reservas.length > 0">
   <mat-expansion-panel *ngFor="let reserva of reservas">
     <mat-expansion-panel-header>
@@ -36,7 +36,7 @@
   </section>
     <mat-action-row>
       <button mat-button color="primary">EDIT</button>
-      <button mat-button color="warn">DELETE</button>
+      <button mat-button color="warn" (click)="onDelete(reserva.id)">DELETE</button>
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>

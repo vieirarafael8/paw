@@ -1,8 +1,11 @@
 <mat-toolbar color="primary">
-<mat-toolbar-row>
-  <span>ManageMySpace</span>
-  <span class="example-spacer"></span>
-  <i class="material-icons md-64">person</i>
-  <i class="material-icons md-64">settings</i>
-</mat-toolbar-row>
+  <span>
+    <a routerLink="/">ManageMySpace</a>
+  </span>
+  <span class="spacer"></span>
+  <ul>
+    <li>
+      <a mat-button routerLink="/criar" routerLinkActive="criar-item">Criar Reserva</a>
+    </li>
+  </ul>
 </mat-toolbar>

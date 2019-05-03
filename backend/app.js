@@ -42,9 +42,11 @@ app.post('/api/reservas', (req, res, next) =>{
     correio: req.body.correio,
     internet: req.body.internet
   });
-  reserva.save();
-  res.status(201).json({
-  message: 'Reserva adicionada com sucesso!'
+  reserva.save().then(createdReserva => {
+    res.status(201).json({
+      message: 'Reserva adicionada com sucesso!',
+      reservaId: createdReserva._id
+      });
   });
 });
 
@@ -55,6 +57,15 @@ app.get( '/api/reservas', (req, res, next) => {
       message: 'Reserva adquirida com sucesso!',
       reservas: documents
     });
+  });
+});
+
+app.delete('/api/reservas/:id', (req, res, next) => {
+
+  Reserva.deleteOne({_id: req.params.id}).then(result => {
+    console.log(result);
+    res.status(200).json({
+      message: 'Reserva eliminada com sucesso!'});
   });
 });
 

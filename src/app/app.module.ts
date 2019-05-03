@@ -25,7 +25,6 @@ import { CriarReservaComponent } from './reservas/criar-reserva/criar-reserva.co
 import { HeaderComponent } from './header/header.component';
 import { ListaReservasComponent } from './reservas/lista-reservas/lista-reservas.component';
 import { HttpClientModule } from '@angular/common/http';
-import { CriarReservasComponent } from './reservas/criar-reservas/criar-reservas.component';
 
 
 @NgModule({
@@ -34,7 +33,7 @@ import { CriarReservasComponent } from './reservas/criar-reservas/criar-reservas
     CriarReservaComponent,
     HeaderComponent,
     ListaReservasComponent,
-    CriarReservasComponent
+
 
   ],
   imports: [
