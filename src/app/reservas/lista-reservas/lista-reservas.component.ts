@@ -15,7 +15,7 @@ export class ListaReservasComponent implements OnInit, OnDestroy {
   constructor(public reservasService: ReservaService) {}
 
   ngOnInit() {
-    this.reservasService.getPosts();
+    this.reservasService.getReservas();
     this.reservaSub = this.reservasService.getPostUpdateListener()
       .subscribe((reservas: Reserva[]) => {
         this.reservas = reservas;

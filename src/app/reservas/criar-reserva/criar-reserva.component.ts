@@ -4,6 +4,7 @@ import { ReservaService } from '../../services/reserva.service';
 import { Reserva } from 'src/app/models/reserva.model';
 import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 // create our cost var with the information about the format that we want
 export const MY_FORMATS = {
@@ -42,10 +43,13 @@ export class CriarReservaComponent implements OnInit {
   submitted = false;
   numCompReuniao = 5;
   numCompFormacao = 20;
+  private mode = 'create';
+  private reservaId: string;
+  reserva: Reserva;
 
   constructor(
     private formBuilder: FormBuilder,
-    public reservaService: ReservaService
+    public reservaService: ReservaService, public route: ActivatedRoute
   ) {
     this.criarReserva = this.formBuilder.group({
       tipoEspaco: ['', [Validators.required]],
@@ -60,7 +64,19 @@ export class CriarReservaComponent implements OnInit {
     this.reservas = ['Openspace', 'Sala de Reunião', 'Sala de Formação'];
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      if(paramMap.has('reservaId')){
+        this.mode = 'edit';
+        this.reservaId = paramMap.get('reservaId');
+        this.reserva = this.reservaService.getReserva(this.reservaId);
+
+      } else {
+        this.mode = 'create';
+        this.reservaId = null;
+      }
+    });
+  }
 
   onAddReserva() {
     console.log(this.criarReserva);

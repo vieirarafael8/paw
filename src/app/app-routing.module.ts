@@ -5,7 +5,8 @@ import { CriarReservaComponent } from './reservas/criar-reserva/criar-reserva.co
 
 const routes: Routes = [
   {path: '', component: ListaReservasComponent},
-  {path: 'criar', component: CriarReservaComponent}
+  {path: 'criar', component: CriarReservaComponent},
+  {path: 'edit/:reservaId', component: CriarReservaComponent}
 ];
 
 @NgModule({

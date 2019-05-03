@@ -15,7 +15,7 @@ export class ReservaService {
 
   constructor(private http: HttpClient) {}
 
-  getPosts() {
+  getReservas() {
     this.http
       .get<{ message: string; reservas: any }>(
         'http://localhost:3000/api/reservas'
@@ -42,6 +42,10 @@ export class ReservaService {
 
   getPostUpdateListener() {
     return this.reservasUpdated.asObservable();
+  }
+
+  getReserva(id: string) {
+    return {...this.reservas.find(r => r.id === id)};
   }
 
   addReserva(

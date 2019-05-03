@@ -35,7 +35,7 @@
     <h4 *ngIf="!(reserva.tele == true || reserva.correio == true || reserva.internet == true)">Sem Extras Reservados!</h4>
   </section>
     <mat-action-row>
-      <button mat-button color="primary">EDIT</button>
+      <a mat-button [routerLink]="['/edit', reserva.id]" color="primary">EDIT</a>
       <button mat-button color="warn" (click)="onDelete(reserva.id)">DELETE</button>
     </mat-action-row>
   </mat-expansion-panel>
