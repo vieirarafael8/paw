@@ -5,6 +5,8 @@ import { Reserva } from 'src/app/models/reserva.model';
 import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { DatePipe } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 // create our cost var with the information about the format that we want
 export const MY_FORMATS = {
@@ -46,6 +48,7 @@ export class CriarReservaComponent implements OnInit {
   private mode = 'create';
   private reservaId: string;
   reserva: Reserva;
+  err: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -66,7 +69,7 @@ export class CriarReservaComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      if(paramMap.has('reservaId')){
+      if (paramMap.has('reservaId')) {
         this.mode = 'edit';
         this.reservaId = paramMap.get('reservaId');
         this.reservaService.getReserva(this.reservaId).subscribe(reservasData => {
@@ -97,7 +100,12 @@ export class CriarReservaComponent implements OnInit {
     }
     console.log(this.criarReserva.value.tipoEspaco);
 
-    if (this.criarReserva.value.tipoEspaco === 'Openspace') {
+    if (this.criarReserva.value.dataFim < this.criarReserva.value.dataInicio) {
+      console.log('Data de Fim deve ser igual ou posterior à Data de Início!');
+      alert('Data de Fim deve ser igual ou posterior à Data de Início!');
+      return;
+    } else {
+      if (this.criarReserva.value.tipoEspaco === 'Openspace') {
       this.reservaService.addReserva(
         this.criarReserva.value.tipoEspaco,
         this.criarReserva.value.numComp,
@@ -108,7 +116,8 @@ export class CriarReservaComponent implements OnInit {
         this.criarReserva.value.internet
       );
       this.criarReserva.reset();
-    } else if (this.criarReserva.value.tipoEspaco === 'Sala de Reunião') {
+      alert('Reserva realizada com sucesso!');
+      } else if (this.criarReserva.value.tipoEspaco === 'Sala de Reunião') {
       this.reservaService.addReserva(
         this.criarReserva.value.tipoEspaco,
         this.numCompReuniao,
@@ -119,7 +128,8 @@ export class CriarReservaComponent implements OnInit {
         this.criarReserva.value.internet
       );
       this.criarReserva.reset();
-    } else {
+      alert('Reserva realizada com sucesso!');
+      } else {
       this.reservaService.addReserva(
         this.criarReserva.value.tipoEspaco,
         this.numCompFormacao,
@@ -130,6 +140,8 @@ export class CriarReservaComponent implements OnInit {
         this.criarReserva.value.internet
       );
       this.criarReserva.reset();
+      alert('Reserva realizada com sucesso!');
+      }
     }
   }
 }
