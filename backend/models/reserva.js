@@ -7,7 +7,8 @@ const reservaSchema = mongoose.Schema({
   dataFim: {type: Date, required: true},
   tele: Boolean,
   correio: Boolean,
-  internet: Boolean
+  internet: Boolean,
+  estado: {type: ['concluída', 'pendente'], default: 'pendente'}
 });
 
 module.exports = mongoose.model('Reserva', reservaSchema);

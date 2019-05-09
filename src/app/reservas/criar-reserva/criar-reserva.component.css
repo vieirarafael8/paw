@@ -15,3 +15,7 @@ mark{
  mat-slider {
   width: 250px;
 }
+
+mat-spinner {
+ margin: auto;
+}

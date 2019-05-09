@@ -7,6 +7,7 @@ import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-mome
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Estado } from 'src/app/enums/estado';
 
 // create our cost var with the information about the format that we want
 export const MY_FORMATS = {
@@ -48,7 +49,9 @@ export class CriarReservaComponent implements OnInit {
   private mode = 'create';
   private reservaId: string;
   reserva: Reserva;
-  err: any;
+  isLoading = false;
+  estado: Estado;
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -57,11 +60,12 @@ export class CriarReservaComponent implements OnInit {
     this.criarReserva = this.formBuilder.group({
       tipoEspaco: ['', [Validators.required]],
       numComp: [''],
-      dataInicio: [''],
-      dataFim: [''],
+      dataInicio: ['', [Validators.required]],
+      dataFim: ['', [Validators.required]],
       tele: [false],
       correio: [false],
-      internet: [false]
+      internet: [false],
+      estado: ['']
     });
 
     this.reservas = ['Openspace', 'Sala de Reunião', 'Sala de Formação'];
@@ -72,7 +76,9 @@ export class CriarReservaComponent implements OnInit {
       if (paramMap.has('reservaId')) {
         this.mode = 'edit';
         this.reservaId = paramMap.get('reservaId');
+        this.isLoading = true;
         this.reservaService.getReserva(this.reservaId).subscribe(reservasData => {
+          this.isLoading = false;
           this.reserva =  { id: reservasData._id,
             tipoEspaco: reservasData.tipoEspaco,
             numComp: reservasData.numComp,
@@ -81,7 +87,8 @@ export class CriarReservaComponent implements OnInit {
             tele: reservasData.tele,
             correio: reservasData.correio,
             internet: reservasData.internet,
-            }
+            estado: reservasData.estado,
+            };
         });
 
       } else {
@@ -95,7 +102,7 @@ export class CriarReservaComponent implements OnInit {
     console.log(this.criarReserva);
 
     if (this.criarReserva.invalid) {
-      console.log('erro!');
+      console.log('Formulário Inválido!');
       return;
     }
     console.log(this.criarReserva.value.tipoEspaco);
@@ -106,6 +113,7 @@ export class CriarReservaComponent implements OnInit {
       return;
     } else {
       if (this.criarReserva.value.tipoEspaco === 'Openspace') {
+      this.isLoading = true;
       this.reservaService.addReserva(
         this.criarReserva.value.tipoEspaco,
         this.criarReserva.value.numComp,
@@ -113,23 +121,25 @@ export class CriarReservaComponent implements OnInit {
         this.criarReserva.value.dataFim,
         this.criarReserva.value.tele,
         this.criarReserva.value.correio,
-        this.criarReserva.value.internet
+        this.criarReserva.value.internet,
+        this.estado = Estado.PENDENTE
       );
       this.criarReserva.reset();
-      alert('Reserva realizada com sucesso!');
       } else if (this.criarReserva.value.tipoEspaco === 'Sala de Reunião') {
-      this.reservaService.addReserva(
+        this.isLoading = true;
+        this.reservaService.addReserva(
         this.criarReserva.value.tipoEspaco,
         this.numCompReuniao,
         this.criarReserva.value.dataInicio,
         this.criarReserva.value.dataFim,
         this.criarReserva.value.tele,
         this.criarReserva.value.correio,
-        this.criarReserva.value.internet
+        this.criarReserva.value.internet,
+        this.estado = Estado.PENDENTE
       );
-      this.criarReserva.reset();
-      alert('Reserva realizada com sucesso!');
+        this.criarReserva.reset();
       } else {
+      this.isLoading = true;
       this.reservaService.addReserva(
         this.criarReserva.value.tipoEspaco,
         this.numCompFormacao,
@@ -137,10 +147,10 @@ export class CriarReservaComponent implements OnInit {
         this.criarReserva.value.dataFim,
         this.criarReserva.value.tele,
         this.criarReserva.value.correio,
-        this.criarReserva.value.internet
+        this.criarReserva.value.internet,
+        this.estado = Estado.PENDENTE
       );
       this.criarReserva.reset();
-      alert('Reserva realizada com sucesso!');
       }
     }
   }

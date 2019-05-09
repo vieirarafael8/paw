@@ -1,5 +1,5 @@
-
-<mat-accordion multi="true" *ngIf="reservas.length > 0">
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-accordion multi="true" *ngIf="reservas.length > 0 && !isLoading">
     <h2>Espaços Reservados</h2>
   <mat-expansion-panel *ngFor="let reserva of reservas">
     <mat-expansion-panel-header>
@@ -21,9 +21,11 @@
     <p id="internet" *ngIf="reserva.internet == true"> Internet </p>
     <h4 *ngIf="!(reserva.tele == true || reserva.correio == true || reserva.internet == true)">Sem Extras Reservados!</h4>
   </div>
+  <p><b>Estado da reserva</b> -> {{ reserva.estado }}</p>
     <mat-action-row>
       <button mat-button color="warn" (click)="onDelete(reserva.id)">DELETE</button>
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
-<h3 class="info-text mat-body-3" *ngIf="!(reservas.length > 0)"> Sem Reservas! </h3>
+<mat-paginator [length]="totalReservas" [pageSize]="reservasPorPagina" [pageSizeOptions]="[tamanhoPagina]" (page)="onChangedPage($event)"></mat-paginator>
+<h3 class="info-text mat-body-3" *ngIf="!(reservas.length > 0) && !isLoading"> Sem Reservas! </h3>

@@ -1,6 +1,7 @@
 <h2>Reserve um Espaço</h2>
 <mat-card>
-  <form [formGroup]="criarReserva" (ngSubmit)="onAddReserva()">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form [formGroup]="criarReserva" (ngSubmit)="onAddReserva()" *ngIf="!isLoading">
     <h4>Tipo Espaço</h4>
     <mat-form-field>
       <mat-label>Tipo Espaço</mat-label>
@@ -9,6 +10,7 @@
           {{ reserva }}
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="criarReserva.get('tipoEspaco').invalid">Por favor escolha um tipo de Espaço!</mat-error>
     </mat-form-field>
     <p *ngIf="criarReserva.value.tipoEspaco === 'Sala de Reunião'">
         <small><ins>Este Espaço tem lotação máxima de 5 Pessoas!</ins></small>
@@ -17,46 +19,42 @@
         <small><ins>Este Espaço tem lotação máxima de 20 Pessoas!</ins></small>
     </p>
     <div *ngIf="criarReserva.value.tipoEspaco === 'Openspace'">
-      <h4>Número Secretárias:</h4>
+      <h4>Número Secretárias</h4>
       <mat-slider
         formControlName="numComp"
         thumbLabel
         color="primary"
         *ngIf="criarReserva.value.tipoEspaco === 'Openspace'"
         tickInterval="1"
-        min="0"
+        min="1"
         max="10"
       ></mat-slider>
       <h4>Extras</h4>
       <section>
         <mat-checkbox id="tele" formControlName="tele" color="primary"
           >Telefone</mat-checkbox
-        >
-        <p></p>
+        ><br>
         <mat-checkbox id="correio" formControlName="correio" color="primary"
           >Correio</mat-checkbox
-        >
-        <p></p>
+        ><br>
         <mat-checkbox id="internet" formControlName="internet" color="primary"
           >Internet</mat-checkbox
-        >
-        <p></p>
+        ><br>
       </section>
-      <p></p>
     </div>
-    <h4>Data da reserva</h4>
     <div>
-        <mat-form-field>
+      <h4>Data da reserva</h4>
+      <mat-form-field>
             <input matInput [matDatepicker]="dataI" formControlName="dataInicio" placeholder="Data de Início" />
             <mat-datepicker-toggle matSuffix [for]="dataI"></mat-datepicker-toggle>
             <mat-datepicker  #dataI></mat-datepicker>
-          </mat-form-field>
-    </div>
-    <div>
+            <mat-error *ngIf="criarReserva.get('dataInicio').invalid">Por favor insira uma Data de Início de Reserva!</mat-error>
+      </mat-form-field>
       <mat-form-field>
         <input matInput [matDatepicker]="dataF" formControlName="dataFim" placeholder="Data de Fim" />
         <mat-datepicker-toggle matSuffix [for]="dataF"></mat-datepicker-toggle>
         <mat-datepicker #dataF></mat-datepicker>
+        <mat-error *ngIf="criarReserva.get('dataInicio').invalid">Por favor insira uma Data de Fim de Reserva!</mat-error>
       </mat-form-field>
     </div>
     <button mat-raised-button color="primary" type="submit">

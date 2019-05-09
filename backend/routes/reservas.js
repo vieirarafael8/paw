@@ -12,7 +12,8 @@ router.post('', (req, res, next) =>{
     dataFim: req.body.dataFim,
     tele: req.body.tele,
     correio: req.body.correio,
-    internet: req.body.internet
+    internet: req.body.internet,
+    estado: req.body.estado
   });
   reserva.save().then(createdReserva => {
     res.status(201).json({

@@ -16,6 +16,8 @@ import {
   MatIconModule,
   MatSelectModule,
   MatDatepickerModule,
+  MatProgressSpinnerModule,
+  MatPaginatorModule,
 
 } from '@angular/material';
 
@@ -33,8 +35,6 @@ import { HttpClientModule } from '@angular/common/http';
     CriarReservaComponent,
     HeaderComponent,
     ListaReservasComponent,
-
-
   ],
   imports: [
     BrowserModule,
@@ -57,6 +57,8 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     MatSelectModule,
     MatDatepickerModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

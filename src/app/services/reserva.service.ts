@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { TipoEspaco } from '../enums/tipoEspaco';
 import { map } from 'rxjs/operators';
 import { stringify } from '@angular/core/src/util';
+import { Router } from '@angular/router';
+import { Estado } from '../enums/estado';
 
 
 @Injectable({ providedIn: 'root' })
@@ -13,7 +15,7 @@ export class ReservaService {
   private reservas: Reserva[] = [];
   private reservasUpdated = new Subject<Reserva[]>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   getReservas() {
     this.http
@@ -23,6 +25,7 @@ export class ReservaService {
       .pipe(map((reservasData) => {
         return reservasData.reservas.map(reserva => {
           return {
+            id: reserva._id,
             tipoEspaco: reserva.tipoEspaco,
             numComp: reserva.numComp,
             dataInicio: reserva.dataInicio,
@@ -30,7 +33,7 @@ export class ReservaService {
             tele: reserva.tele,
             correio: reserva.correio,
             internet: reserva.internet,
-            id: reserva._id
+            estado: reserva.estado
           };
         });
       }))
@@ -51,7 +54,8 @@ export class ReservaService {
       dataFim: Date,
       tele: boolean,
       correio: boolean,
-      internet: boolean}>('http://localhost:3000/api/reservas/' + id);
+      internet: boolean,
+      estado: Estado}>('http://localhost:3000/api/reservas/' + id);
   }
 
 
@@ -62,7 +66,8 @@ export class ReservaService {
     dataFim: Date,
     tele: boolean,
     correio: boolean,
-    internet: boolean
+    internet: boolean,
+    estado: Estado
   ) {
     const reserva: Reserva = {
       id: null,
@@ -72,7 +77,8 @@ export class ReservaService {
       dataFim: dataFim,
       tele: tele,
       correio: correio,
-      internet: internet
+      internet: internet,
+      estado: estado
     };
     this.http.post<{ message: string, reservaId: string }>('http://localhost:3000/api/reservas', reserva)
     .subscribe(responseData => {
@@ -80,6 +86,7 @@ export class ReservaService {
         reserva.id = id;
         this.reservas.push(reserva);
         this.reservasUpdated.next([...this.reservas]);
+        this.router.navigate(['/']);
     });
 
   }
