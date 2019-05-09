@@ -1,53 +1,29 @@
-<h2>Espaços Reservados</h2>
+
 <mat-accordion multi="true" *ngIf="reservas.length > 0">
+    <h2>Espaços Reservados</h2>
   <mat-expansion-panel *ngFor="let reserva of reservas">
     <mat-expansion-panel-header>
       A SUA RESERVA
     </mat-expansion-panel-header>
-    <div *ngIf="reserva.tipoEspaco === 'Openspace'">
     <h3>Espaço Reservado:</h3>
-    <p>Número Secretárias para {{ reserva.tipoEspaco }} reservadas -> {{ reserva.numComp }}</p>
-    </div>
-    <div *ngIf="!(reserva.tipoEspaco === 'Openspace')">
-        <h3>Espaço Reservado:</h3>
-        <p> {{ reserva.tipoEspaco }} reservada com lotação máxima de {{ reserva.numComp }}</p>
-        </div>
-        <section>
-            <p> Data de Incio -> {{ reserva.dataInicio | date:'dd/MM/yyyy' }}</p>
-            <p> Data de Fim -> {{ reserva.dataFim | date:'dd/MM/yyyy' }}</p>
-        </section>
-  <section *ngFor="let reserva of reservas">
-      <mat-accordion>
-      <p class="info-text mat-body-1" style="display: none" *ngIf="reserva.tipoEspaco === 'Openspace'"></p>
-      <p class="info-text mat-body-1" style="display: none" *ngIf="reserva.tipoEspaco === 'Sala de Reunião'"></p>
-      <p class="info-text mat-body-1" style="display: none" *ngIf="reserva.tipoEspaco === 'Sala de Formação'"></p>
-      </mat-accordion>
-  </section>
-  <div>
-  </div>
-  <p></p>
-  <section *ngIf="reserva.tipoEspaco === 'Openspace'">
-    <p></p>
+    <section>
+        <p> <b>Tipo de Espaço</b> -> {{ reserva.tipoEspaco }} </p>
+        <p> <b>Lotação máxima</b>  ->  {{ reserva.numComp }} </p>
+    </section>
+    <section>
+        <p> <b>Data de Início</b> -> {{ reserva.dataInicio | date:'dd/MM/yyyy' }}</p>
+        <p> <b>Data de Fim</b> -> {{ reserva.dataFim | date:'dd/MM/yyyy' }}</p>
+    </section>
+  <div *ngIf="!(reserva.tipoEspaco == 'Sala de Reunião' || reserva.tipoEspaco == 'Sala de Formação')">
     <h3 *ngIf="(reserva.tele == true || reserva.correio == true || reserva.internet == true)">Extras:</h3>
     <p id="tele" *ngIf="reserva.tele == true"> Telefone Fixo </p>
     <p id="correio" *ngIf="reserva.correio == true"> Correio Fixo </p>
     <p id="internet" *ngIf="reserva.internet == true"> Internet </p>
     <h4 *ngIf="!(reserva.tele == true || reserva.correio == true || reserva.internet == true)">Sem Extras Reservados!</h4>
-  </section>
+  </div>
     <mat-action-row>
-      <a mat-button [routerLink]="['/edit', reserva.id]" color="primary">EDIT</a>
       <button mat-button color="warn" (click)="onDelete(reserva.id)">DELETE</button>
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
-<p></p>
 <h3 class="info-text mat-body-3" *ngIf="!(reservas.length > 0)"> Sem Reservas! </h3>
-<section *ngFor="let reserva of reservas">
-    <mat-accordion>
-    <p class="info-text mat-body-1" style="display: none" *ngIf="reserva.tele == false"></p>
-    <p class="info-text mat-body-1" style="display: none" *ngIf="reserva.correio == false"></p>
-    <p class="info-text mat-body-1" style="display: none" *ngIf="reserva.internet == false"></p>
-    </mat-accordion>
-</section>
-
-<p></p>

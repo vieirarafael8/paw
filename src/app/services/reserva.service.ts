@@ -45,8 +45,15 @@ export class ReservaService {
   }
 
   getReserva(id: string) {
-    return {...this.reservas.find(r => r.id === id)};
+    return this.http.get<{_id: string,  tipoEspaco: TipoEspaco,
+      numComp: number,
+      dataInicio: Date,
+      dataFim: Date,
+      tele: boolean,
+      correio: boolean,
+      internet: boolean}>('http://localhost:3000/api/reservas/' + id);
   }
+
 
   addReserva(
     tipoEspaco: TipoEspaco,

@@ -14,5 +14,10 @@ a {
 }
 
 .criar-item {
-  color: aqua;
+  color: white;
+}
+
+.minhas {
+  left: 50%;
+  margin-left: -3px;
 }

@@ -3,8 +3,7 @@ const bodyParser = require("body-parser");
 
 const mongoose = require('mongoose');
 
-const Reserva = require('./models/reserva');
-
+const reservaRoutes = require('./routes/reservas');
 
 const app = express();
 
@@ -32,41 +31,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post('/api/reservas', (req, res, next) =>{
-  const reserva = new Reserva({
-    tipoEspaco: req.body.tipoEspaco,
-    numComp: req.body.numComp,
-    dataInicio: req.body.dataInicio,
-    dataFim: req.body.dataFim,
-    tele: req.body.tele,
-    correio: req.body.correio,
-    internet: req.body.internet
-  });
-  reserva.save().then(createdReserva => {
-    res.status(201).json({
-      message: 'Reserva adicionada com sucesso!',
-      reservaId: createdReserva._id
-      });
-  });
-});
-
-app.get( '/api/reservas', (req, res, next) => {
-
-  Reserva.find().then(documents => {
-    res.status(200).json({
-      message: 'Reserva adquirida com sucesso!',
-      reservas: documents
-    });
-  });
-});
-
-app.delete('/api/reservas/:id', (req, res, next) => {
-
-  Reserva.deleteOne({_id: req.params.id}).then(result => {
-    console.log(result);
-    res.status(200).json({
-      message: 'Reserva eliminada com sucesso!'});
-  });
-});
+app.use('/api/reservas', reservaRoutes);
 
 module.exports = app;

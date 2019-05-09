@@ -69,7 +69,17 @@ export class CriarReservaComponent implements OnInit {
       if(paramMap.has('reservaId')){
         this.mode = 'edit';
         this.reservaId = paramMap.get('reservaId');
-        this.reserva = this.reservaService.getReserva(this.reservaId);
+        this.reservaService.getReserva(this.reservaId).subscribe(reservasData => {
+          this.reserva =  { id: reservasData._id,
+            tipoEspaco: reservasData.tipoEspaco,
+            numComp: reservasData.numComp,
+            dataInicio: reservasData.dataInicio,
+            dataFim: reservasData.dataFim,
+            tele: reservasData.tele,
+            correio: reservasData.correio,
+            internet: reservasData.internet,
+            }
+        });
 
       } else {
         this.mode = 'create';
