@@ -24,11 +24,25 @@ router.post('', (req, res, next) =>{
 });
 
 router.get('', (req, res, next) => {
-
-  Reserva.find().then(documents => {
-    res.status(200).json({
-      message: 'Reserva adquirida com sucesso!',
-      reservas: documents
+  const pageSize = +req.query.pagesize;
+  const currentPage = req.query.page;
+  const reservaQuery = Reserva.find();
+  let reservasAdq;
+  if(pageSize && currentPage){
+    reservaQuery
+      .skip(pageSize * (currentPage - 1))
+      .limit(pageSize);
+  }
+    reservaQuery
+    .then(documents => {
+      reservasAdq = documents;
+      return Reserva.count();
+    })
+    .then(count => {
+      res.status(200).json({
+        message: 'Reservas adquiridas com sucesso!',
+        reservas: reservasAdq,
+        maxReservas: count
     });
   });
 });

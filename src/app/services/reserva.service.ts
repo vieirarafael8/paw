@@ -13,33 +13,42 @@ import { Estado } from '../enums/estado';
 @Injectable({ providedIn: 'root' })
 export class ReservaService {
   private reservas: Reserva[] = [];
-  private reservasUpdated = new Subject<Reserva[]>();
+  private reservasUpdated = new Subject<{reservas: Reserva[], reservaCount: number}>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  getReservas() {
+  getReservas(reservaPerPage: number, currentPage: number) {
+    const queryParams = `?pagesize=${reservaPerPage}&page=${currentPage}`;
     this.http
-      .get<{ message: string; reservas: any }>(
-        'http://localhost:3000/api/reservas'
+      .get<{ message: string; reservas: any; maxReservas: number }>(
+        'http://localhost:3000/api/reservas' + queryParams
       )
-      .pipe(map((reservasData) => {
-        return reservasData.reservas.map(reserva => {
-          return {
-            id: reserva._id,
-            tipoEspaco: reserva.tipoEspaco,
-            numComp: reserva.numComp,
-            dataInicio: reserva.dataInicio,
-            dataFim: reserva.dataFim,
-            tele: reserva.tele,
-            correio: reserva.correio,
-            internet: reserva.internet,
-            estado: reserva.estado
-          };
-        });
-      }))
-      .subscribe(transformedReservas => {
-        this.reservas = transformedReservas;
-        this.reservasUpdated.next([...this.reservas]);
+      .pipe(
+        map((reservasData) => {
+        return {
+          reservas: reservasData.reservas.map(reserva => {
+            return {
+              id: reserva._id,
+              tipoEspaco: reserva.tipoEspaco,
+              numComp: reserva.numComp,
+              dataInicio: reserva.dataInicio,
+              dataFim: reserva.dataFim,
+              tele: reserva.tele,
+              correio: reserva.correio,
+              internet: reserva.internet,
+              estado: reserva.estado
+            };
+          }),
+          maxReservas
+        };
+      })
+    )
+      .subscribe(transformedReservasData => {
+        this.reservas = transformedReservaData.reservas;
+        this.reservasUpdated.next({
+          reservas: [...this.reservas],
+          reservaCount: transformedReservaData.maxReservas,
+          );
       });
   }
 

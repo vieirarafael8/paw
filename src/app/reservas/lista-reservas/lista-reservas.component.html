@@ -27,5 +27,6 @@
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
-<mat-paginator [length]="totalReservas" [pageSize]="reservasPorPagina" [pageSizeOptions]="[tamanhoPagina]" (page)="onChangedPage($event)"></mat-paginator>
-<h3 class="info-text mat-body-3" *ngIf="!(reservas.length > 0) && !isLoading"> Sem Reservas! </h3>
+<h2 class="info-text mat-body-3" *ngIf="!(reservas.length > 0) && !isLoading"> Sem Reservas! </h2>
+<mat-paginator [length]="reservas.length + 1" [pageSize]="reservaPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf="reservas.length > 0"></mat-paginator>
+

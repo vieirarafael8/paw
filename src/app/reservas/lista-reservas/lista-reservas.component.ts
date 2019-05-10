@@ -14,14 +14,15 @@ export class ListaReservasComponent implements OnInit, OnDestroy {
   private reservaSub: Subscription;
   isLoading = false;
   totalReservas = 10;
-  reservasPorPagina = 2;
-  tamanhoPagina = [1, 2, 5, 10];
+  reservaPerPage = 2;
+  currentPage = 1;
+  pageSizeOptions = [1, 2, 5, 10];
 
   constructor(public reservasService: ReservaService) {}
 
   ngOnInit() {
     this.isLoading = true;
-    this.reservasService.getReservas();
+    this.reservasService.getReservas(this.reservaPerPage, this.currentPage);
     this.reservaSub = this.reservasService.getPostUpdateListener()
       .subscribe((reservas: Reserva[]) => {
         this.isLoading = false;
@@ -30,10 +31,13 @@ export class ListaReservasComponent implements OnInit, OnDestroy {
   }
 
   onChangedPage(pageData: PageEvent) {
-
+    this.isLoading = true;
+    this.currentPage = pageData.pageIndex + 1;
+    this.reservaPerPage = pageData.pageSize;
+    this.reservasService.getReservas(this.reservaPerPage, this.currentPage);
   }
 
-  onDelete(reservaId: string){
+  onDelete(reservaId: string) {
     this.reservasService.deleteReserva(reservaId);
   }
 
