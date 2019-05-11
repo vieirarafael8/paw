@@ -9,16 +9,14 @@ a {
   color: white;
 }
 
+ul {
+  display: flex;
+}
+
 .spacer {
   flex: 1 1 auto;
 }
 
 .criar-item {
-  color: white;
+  color: rgb(0, 217, 255);
 }
-
-.minhas {
-  left: 50%;
-  margin-left: -3px;
-}
-

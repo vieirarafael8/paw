@@ -4,7 +4,11 @@ const Reserva = require('../models/reserva');
 
 const router = express.Router();
 
-router.post('', (req, res, next) =>{
+const checkAuth = require('../middleware/check-auth');
+
+router.post('',
+checkAuth,
+(req, res, next) =>{
   const reserva = new Reserva({
     tipoEspaco: req.body.tipoEspaco,
     numComp: req.body.numComp,
@@ -13,7 +17,8 @@ router.post('', (req, res, next) =>{
     tele: req.body.tele,
     correio: req.body.correio,
     internet: req.body.internet,
-    estado: req.body.estado
+    estado: req.body.estado,
+    creator: req.userData.userId
   });
   reserva.save().then(createdReserva => {
     res.status(201).json({
@@ -23,7 +28,8 @@ router.post('', (req, res, next) =>{
   });
 });
 
-router.get('', (req, res, next) => {
+router.get('',
+(req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = req.query.page;
   const reservaQuery = Reserva.find();
@@ -36,7 +42,7 @@ router.get('', (req, res, next) => {
     reservaQuery
     .then(documents => {
       reservasAdq = documents;
-      return Reserva.count();
+      return Reserva.countDocuments();
     })
     .then(count => {
       res.status(200).json({
@@ -47,7 +53,8 @@ router.get('', (req, res, next) => {
   });
 });
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id',
+(req, res, next) => {
     Reserva.findById(req.params.id).then(reserva => {
       if(reserva) {
         res.status(200).json(reserva);
@@ -57,12 +64,17 @@ router.get('/:id', (req, res, next) => {
     });
 });
 
-router.delete('/:id', (req, res, next) => {
-
-  Reserva.deleteOne({_id: req.params.id}).then(result => {
-    console.log(result);
-    res.status(200).json({
-      message: 'Reserva eliminada com sucesso!'});
+router.delete('/:id',
+checkAuth,
+(req, res, next) => {
+  Reserva.deleteOne({_id: req.params.id, creator: req.userData.userId}).then(result => {
+    if (result.n > 0) {
+      res.status(200).json({
+        message: 'Reserva eliminada com sucesso!'});
+    } else {
+      res.status(401).json({
+        message: 'Utilizador não autorizado a eliminar a reserva!'});
+    }
   });
 });
 

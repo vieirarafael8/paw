@@ -88,6 +88,7 @@ export class CriarReservaComponent implements OnInit {
             correio: reservasData.correio,
             internet: reservasData.internet,
             estado: reservasData.estado,
+            creator: reservasData.creator
             };
         });
 

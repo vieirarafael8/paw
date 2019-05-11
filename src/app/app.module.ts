@@ -26,7 +26,10 @@ import { AppComponent } from './app.component';
 import { CriarReservaComponent } from './reservas/criar-reserva/criar-reserva.component';
 import { HeaderComponent } from './header/header.component';
 import { ListaReservasComponent } from './reservas/lista-reservas/lista-reservas.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { AuthInterceptor } from './auth/auth-interceptor';
 
 
 @NgModule({
@@ -35,6 +38,8 @@ import { HttpClientModule } from '@angular/common/http';
     CriarReservaComponent,
     HeaderComponent,
     ListaReservasComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +65,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatProgressSpinnerModule,
     MatPaginatorModule
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

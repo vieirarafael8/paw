@@ -12,6 +12,7 @@ export class Reserva {
   correio: boolean;
   internet: boolean;
   estado: Estado;
+  creator: string;
 }
 
 

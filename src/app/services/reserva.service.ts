@@ -36,19 +36,20 @@ export class ReservaService {
               tele: reserva.tele,
               correio: reserva.correio,
               internet: reserva.internet,
-              estado: reserva.estado
+              estado: reserva.estado,
+              creator: reserva.creator
             };
           }),
-          maxReservas
+          maxReservas: reservasData.maxReservas
         };
       })
     )
       .subscribe(transformedReservasData => {
-        this.reservas = transformedReservaData.reservas;
+        this.reservas = transformedReservasData.reservas;
         this.reservasUpdated.next({
           reservas: [...this.reservas],
-          reservaCount: transformedReservaData.maxReservas,
-          );
+          reservaCount: transformedReservasData.maxReservas
+        });
       });
   }
 
@@ -57,14 +58,18 @@ export class ReservaService {
   }
 
   getReserva(id: string) {
-    return this.http.get<{_id: string,  tipoEspaco: TipoEspaco,
-      numComp: number,
-      dataInicio: Date,
-      dataFim: Date,
-      tele: boolean,
-      correio: boolean,
-      internet: boolean,
-      estado: Estado}>('http://localhost:3000/api/reservas/' + id);
+    return this.http.get<{
+      _id: string;
+      tipoEspaco: TipoEspaco;
+      numComp: number;
+      dataInicio: Date;
+      dataFim: Date;
+      tele: boolean;
+      correio: boolean;
+      internet: boolean;
+      estado: Estado;
+      creator: string;
+    }>('http://localhost:3000/api/reservas/' + id);
   }
 
 
@@ -80,31 +85,23 @@ export class ReservaService {
   ) {
     const reserva: Reserva = {
       id: null,
-      tipoEspaco: tipoEspaco,
-      numComp: numComp,
-      dataInicio: dataInicio,
-      dataFim: dataFim,
-      tele: tele,
-      correio: correio,
-      internet: internet,
-      estado: estado
+      tipoEspaco,
+      numComp,
+      dataInicio,
+      dataFim,
+      tele,
+      correio,
+      internet,
+      estado,
+      creator: null
     };
     this.http.post<{ message: string, reservaId: string }>('http://localhost:3000/api/reservas', reserva)
     .subscribe(responseData => {
-        const id = responseData.reservaId;
-        reserva.id = id;
-        this.reservas.push(reserva);
-        this.reservasUpdated.next([...this.reservas]);
         this.router.navigate(['/']);
     });
 
   }
   deleteReserva(reservaId: string) {
-    this.http.delete('http://localhost:3000/api/reservas/' + reservaId)
-    .subscribe(() => {
-      const updatedReservas = this.reservas.filter(reserva => reserva.id !== reservaId);
-      this.reservas = updatedReservas;
-      this.reservasUpdated.next([...this.reservas]);
-    });
+    return this.http.delete('http://localhost:3000/api/reservas/' + reservaId);
   }
 }

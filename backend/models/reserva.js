@@ -8,7 +8,8 @@ const reservaSchema = mongoose.Schema({
   tele: Boolean,
   correio: Boolean,
   internet: Boolean,
-  estado: {type: ['concluída', 'pendente'], default: 'pendente'}
+  estado: {type: ['concluída', 'pendente'], default: 'pendente'},
+  creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true}
 });
 
 module.exports = mongoose.model('Reserva', reservaSchema);

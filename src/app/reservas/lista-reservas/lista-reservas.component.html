@@ -22,11 +22,11 @@
     <h4 *ngIf="!(reserva.tele == true || reserva.correio == true || reserva.internet == true)">Sem Extras Reservados!</h4>
   </div>
   <p><b>Estado da reserva</b> -> {{ reserva.estado }}</p>
-    <mat-action-row>
+    <mat-action-row *ngIf="userIsAuthenticated && userId == reserva.creator">
       <button mat-button color="warn" (click)="onDelete(reserva.id)">DELETE</button>
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
-<h2 class="info-text mat-body-3" *ngIf="!(reservas.length > 0) && !isLoading"> Sem Reservas! </h2>
-<mat-paginator [length]="reservas.length + 1" [pageSize]="reservaPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf="reservas.length > 0"></mat-paginator>
+<h2 class="info-text mat-body-3" *ngIf="(!(reservas.length > 0) && (!isLoading))"> Sem Reservas! </h2>
+<mat-paginator [length]="totalReservas" [pageSize]="reservaPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" ></mat-paginator>
 
