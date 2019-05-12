@@ -41,7 +41,8 @@ export class ReservaService {
               correio: reserva.correio,
               internet: reserva.internet,
               estado: reserva.estado,
-              creator: reserva.creator
+              creator: reserva.creator,
+              custo: reserva.custo
             };
           }),
           maxReservas: reservasData.maxReservas
@@ -73,6 +74,7 @@ export class ReservaService {
       internet: boolean;
       estado: Estado;
       creator: string;
+      custo: number;
     }>(BACKEND_URL + id);
   }
 
@@ -85,7 +87,8 @@ export class ReservaService {
     tele: boolean,
     correio: boolean,
     internet: boolean,
-    estado: Estado
+    estado: Estado,
+    custo: number
   ) {
     const reserva: Reserva = {
       id: null,
@@ -97,7 +100,8 @@ export class ReservaService {
       correio,
       internet,
       estado,
-      creator: null
+      creator: null,
+      custo
     };
     this.http.post<{ message: string, reservaId: string }>(BACKEND_URL, reserva)
     .subscribe(responseData => {

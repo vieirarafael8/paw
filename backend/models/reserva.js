@@ -9,7 +9,8 @@ const reservaSchema = mongoose.Schema({
   correio: Boolean,
   internet: Boolean,
   estado: {type: ['concluída', 'pendente'], default: 'pendente'},
-  creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true}
+  creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
+  custo: Number
 });
 
 module.exports = mongoose.model('Reserva', reservaSchema);

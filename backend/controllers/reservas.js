@@ -10,7 +10,8 @@ exports.criarReserva = (req, res, next) =>{
     correio: req.body.correio,
     internet: req.body.internet,
     estado: req.body.estado,
-    creator: req.userData.userId
+    creator: req.userData.userId,
+    custo: req.body.custo
   });
   reserva.save().then(createdReserva => {
     res.status(201).json({

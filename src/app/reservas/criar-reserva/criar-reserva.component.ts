@@ -53,6 +53,13 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
   reserva: Reserva;
   isLoading = false;
   estado: Estado;
+  custo: number;
+  taxaSecretaria =  1;
+  taxaTele = 1;
+  taxaCorreio = 1;
+  taxaInternet = 1;
+  taxaReuniao = 1;
+  taxaFormacao = 1;
   private authStatusSub: Subscription;
 
 
@@ -68,9 +75,10 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
       tele: [false],
       correio: [false],
       internet: [false],
-      estado: ['']
+      estado: [''],
+      custo: ['']
     });
-
+    this.custo = 0;
     this.reservas = ['Openspace', 'Sala de Reunião', 'Sala de Formação'];
   }
 
@@ -95,7 +103,8 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
             correio: reservasData.correio,
             internet: reservasData.internet,
             estado: reservasData.estado,
-            creator: reservasData.creator
+            creator: reservasData.creator,
+            custo: reservasData.custo
             };
         });
 
@@ -130,8 +139,11 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
         this.criarReserva.value.tele,
         this.criarReserva.value.correio,
         this.criarReserva.value.internet,
-        this.estado = Estado.PENDENTE
+        this.estado = Estado.PENDENTE,
+        this.custo = this.calculoCustoPessoas(this.criarReserva.value.numComp) +
+        this.calculoCustoExtras(this.criarReserva.value.tele, this.criarReserva.value.correio, this.criarReserva.value.internet)
       );
+      console.log(this.custo);
       this.criarReserva.reset();
       } else if (this.criarReserva.value.tipoEspaco === 'Sala de Reunião') {
         this.isLoading = true;
@@ -143,8 +155,10 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
         this.criarReserva.value.tele,
         this.criarReserva.value.correio,
         this.criarReserva.value.internet,
-        this.estado = Estado.PENDENTE
+        this.estado = Estado.PENDENTE,
+        this.custo = this.calculoCustoPessoas(this.numCompReuniao)
       );
+        console.log(this.custo);
         this.criarReserva.reset();
       } else {
       this.isLoading = true;
@@ -156,11 +170,42 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
         this.criarReserva.value.tele,
         this.criarReserva.value.correio,
         this.criarReserva.value.internet,
-        this.estado = Estado.PENDENTE
+        this.estado = Estado.PENDENTE,
+        this.custo = this.calculoCustoPessoas(this.numCompFormacao)
       );
+      console.log(this.custo);
       this.criarReserva.reset();
       }
     }
+  }
+
+  calculoCustoPessoas(numComp: number) {
+    let custoTotalPessoas = 0;
+
+    if (this.criarReserva.value.tipoEspaco === 'Openspace') {
+      custoTotalPessoas =  numComp * this.taxaSecretaria;
+    } else if (this.criarReserva.value.tipoEspaco === 'Sala de Reunião') {
+      custoTotalPessoas = numComp * this.taxaReuniao;
+    } else if (this.criarReserva.value.tipoEspaco === 'Sala de Formação') {
+      custoTotalPessoas =  numComp * this.taxaFormacao;
+    }
+
+    return custoTotalPessoas;
+  }
+
+  calculoCustoExtras(tele: boolean, correio: boolean, internet: boolean) {
+    let custototalExtras = 0;
+
+    if (tele) {
+      custototalExtras = custototalExtras + this.taxaTele;
+    }
+    if (correio) {
+      custototalExtras = custototalExtras +  this.taxaCorreio;
+    }
+    if (internet) {
+      custototalExtras = custototalExtras + this.taxaInternet;
+    }
+    return custototalExtras;
   }
 
   ngOnDestroy() {

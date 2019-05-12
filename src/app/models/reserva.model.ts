@@ -13,6 +13,7 @@ export class Reserva {
   internet: boolean;
   estado: Estado;
   creator: string;
+  custo: number;
 }
 
 
