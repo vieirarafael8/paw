@@ -4,11 +4,6 @@ ul {
   margin: 0;
 }
 
-a {
-  text-decoration: none;
-  color: white;
-}
-
 ul {
   display: flex;
 }
@@ -18,5 +13,15 @@ ul {
 }
 
 .criar-item {
-  color: rgb(0, 217, 255);
+  color: white;
 }
+
+.titulo{
+  color:white;
+  text-decoration: none;
+}
+
+.list-itens {
+  text-align: center;
+}
+

@@ -2,7 +2,9 @@
 <mat-card>
   <mat-spinner *ngIf="isLoading"></mat-spinner>
   <form [formGroup]="criarReserva" (ngSubmit)="onAddReserva()" *ngIf="!isLoading">
-    <h4>Tipo Espaço</h4>
+    <h4><i class="material-icons">
+        meeting_room
+        </i> Tipo Espaço</h4>
     <mat-form-field>
       <mat-label>Tipo Espaço</mat-label>
       <mat-select formControlName="tipoEspaco">
@@ -12,14 +14,17 @@
       </mat-select>
       <mat-error *ngIf="criarReserva.get('tipoEspaco').invalid">Por favor escolha um tipo de Espaço!</mat-error>
     </mat-form-field>
-    <p *ngIf="criarReserva.value.tipoEspaco === 'Sala de Reunião'">
-        <small><ins>Este Espaço tem lotação máxima de 5 Pessoas!</ins></small>
-    </p>
-    <p *ngIf="criarReserva.value.tipoEspaco === 'Sala de Formação'">
-        <small><ins>Este Espaço tem lotação máxima de 20 Pessoas!</ins></small>
-    </p>
+    <span *ngIf="criarReserva.value.tipoEspaco === 'Sala de Reunião'">
+        <i class="material-icons">
+            warning</i><small><ins>Este Espaço tem lotação máxima de 5 Pessoas!</ins></small>
+        </span>
+  <span *ngIf="criarReserva.value.tipoEspaco === 'Sala de Formação'">
+    <i class="material-icons">warning</i><small><ins>Este Espaço tem lotação máxima de 20 Pessoas!</ins></small>
+  </span>
     <div *ngIf="criarReserva.value.tipoEspaco === 'Openspace'">
-      <h4>Número Secretárias</h4>
+      <h4><i class="material-icons">
+          dashboard
+          </i> Número Secretárias</h4>
       <mat-slider
         formControlName="numComp"
         thumbLabel
@@ -29,7 +34,9 @@
         min="1"
         max="10"
       ></mat-slider>
-      <h4>Extras</h4>
+      <h4><i class="material-icons">
+          grade
+          </i>Extras</h4>
       <section>
         <mat-checkbox id="tele" formControlName="tele" color="primary"
           >Telefone</mat-checkbox
@@ -43,7 +50,7 @@
       </section>
     </div>
     <div>
-      <h4>Data da reserva</h4>
+      <h4><i class="material-icons">date_range</i> Data da reserva</h4>
       <mat-form-field>
             <input matInput [matDatepicker]="dataI" formControlName="dataInicio" placeholder="Data de Início" />
             <mat-datepicker-toggle matSuffix [for]="dataI"></mat-datepicker-toggle>

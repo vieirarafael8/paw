@@ -19,3 +19,14 @@ mark{
 mat-spinner {
  margin: auto;
 }
+
+i {
+    display: inline-block;
+}
+section {
+  margin-left: 0.5%;
+}
+
+p{
+  text-align: justify;
+}

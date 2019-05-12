@@ -14,7 +14,8 @@ import {
   MatDatepickerModule,
   MatProgressSpinnerModule,
   MatPaginatorModule,
-  MatDialogModule
+  MatDialogModule,
+  MatMenuModule
 } from '@angular/material';
 
 @NgModule({
@@ -32,7 +33,8 @@ import {
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatDialogModule,
-    MatIconModule
+    MatIconModule,
+    MatMenuModule
   ]
 })
 

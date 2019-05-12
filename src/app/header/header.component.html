@@ -1,20 +1,23 @@
 <mat-toolbar color="primary">
+    <i class="material-icons" md-48>
+        home
+        </i>
   <span>
-    <a routerLink="/">ManageMySpace</a>
+    <a routerLinkActive="titulo" routerLink="/">  ManageMySpace</a>
   </span>
   <span class="spacer"></span>
   <ul>
     <li *ngIf="userIsAuthenticated">
-      <a mat-button routerLink="/criar" routerLinkActive="criar-item">Criar Reserva</a>
+      <a mat-button routerLink="/criar" routerLinkActive="criar-item"><i class="material-icons">event_available</i> Criar Reserva</a>
     </li>
-    <li *ngIf="!userIsAuthenticated">
-      <a mat-button routerLink="/auth/login" routerLinkActive="criar-item">Login</a>
-    </li>
-    <li *ngIf="!userIsAuthenticated">
-      <a mat-button routerLink="/auth/signup" routerLinkActive="criar-item">Registar</a>
-    </li>
-    <li *ngIf="userIsAuthenticated">
-      <button mat-button routerLink="/" (click)="onLogout()">Logout</button>
-    </li>
+    <button mat-button [matMenuTriggerFor]="menu">
+      <i class="material-icons">account_circle</i>
+      Login/Registo
+    </button>
+    <mat-menu #menu="matMenu" xPosition="after">
+      <button mat-menu-item *ngIf="!userIsAuthenticated" routerLink="/auth/login" >Login</button>
+      <button mat-menu-item *ngIf="!userIsAuthenticated" routerLink="/auth/signup" routerLinkActive="list-itens">Registar</button>
+      <button mat-menu-item *ngIf="userIsAuthenticated" routerLink="/" routerLinkActive="list-itens" (click)="onLogout()">Logout</button>
+    </mat-menu>
   </ul>
 </mat-toolbar>
