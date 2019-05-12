@@ -9,6 +9,10 @@ import { stringify } from '@angular/core/src/util';
 import { Router } from '@angular/router';
 import { Estado } from '../enums/estado';
 
+import {environment} from '../../environments/environment';
+
+const BACKEND_URL = environment.apiUrl + '/reservas/';
+
 
 @Injectable({ providedIn: 'root' })
 export class ReservaService {
@@ -21,7 +25,7 @@ export class ReservaService {
     const queryParams = `?pagesize=${reservaPerPage}&page=${currentPage}`;
     this.http
       .get<{ message: string; reservas: any; maxReservas: number }>(
-        'http://localhost:3000/api/reservas' + queryParams
+        BACKEND_URL + queryParams
       )
       .pipe(
         map((reservasData) => {
@@ -69,7 +73,7 @@ export class ReservaService {
       internet: boolean;
       estado: Estado;
       creator: string;
-    }>('http://localhost:3000/api/reservas/' + id);
+    }>(BACKEND_URL + id);
   }
 
 
@@ -95,13 +99,13 @@ export class ReservaService {
       estado,
       creator: null
     };
-    this.http.post<{ message: string, reservaId: string }>('http://localhost:3000/api/reservas', reserva)
+    this.http.post<{ message: string, reservaId: string }>(BACKEND_URL, reserva)
     .subscribe(responseData => {
         this.router.navigate(['/']);
     });
 
   }
   deleteReserva(reservaId: string) {
-    return this.http.delete('http://localhost:3000/api/reservas/' + reservaId);
+    return this.http.delete(BACKEND_URL + reservaId);
   }
 }
