@@ -60,6 +60,8 @@ export class ListaReservasComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.reservasService.deleteReserva(reservaId).subscribe(() => {
       this.reservasService.getReservas(this.reservaPerPage, this.currentPage);
+    }, () => {
+      this.isLoading = false;
     });
   }
 

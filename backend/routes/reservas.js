@@ -22,9 +22,14 @@ checkAuth,
   });
   reserva.save().then(createdReserva => {
     res.status(201).json({
-      message: 'Reserva adicionada com sucesso!',
+      message: 'Reserva Adicionada com Sucesso',
       reservaId: createdReserva._id
       });
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: 'Erro ao Criar Uma Reserva'
+    })
   });
 });
 
@@ -46,9 +51,14 @@ router.get('',
     })
     .then(count => {
       res.status(200).json({
-        message: 'Reservas adquiridas com sucesso!',
+        message: 'Reservas Obtidas com Sucesso',
         reservas: reservasAdq,
         maxReservas: count
+    });
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: 'Erro ao Tentar Obter Reservas'
     });
   });
 });
@@ -59,8 +69,12 @@ router.get('/:id',
       if(reserva) {
         res.status(200).json(reserva);
       } else {
-        res.status(404).json({message: 'Reserva não encontrada!'});
+        res.status(404).json({message: 'Reserva Não Existe'});
       }
+    }).catch(error => {
+      res.status(500).json({
+        message: 'Erro ao Tentar Obter Reserva'
+      });
     });
 });
 
@@ -70,11 +84,16 @@ checkAuth,
   Reserva.deleteOne({_id: req.params.id, creator: req.userData.userId}).then(result => {
     if (result.n > 0) {
       res.status(200).json({
-        message: 'Reserva eliminada com sucesso!'});
+        message: 'Reserva Eliminada com Sucesso'});
     } else {
       res.status(401).json({
-        message: 'Utilizador não autorizado a eliminar a reserva!'});
+        message: 'Utilizador Não Autorizado a Eliminar a Reserva'});
     }
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: 'Erro ao Tentar Eliminar Reserva'
+    });
   });
 });
 

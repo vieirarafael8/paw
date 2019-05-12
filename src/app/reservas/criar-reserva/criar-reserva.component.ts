@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ReservaService } from '../../services/reserva.service';
 import { Reserva } from 'src/app/models/reserva.model';
@@ -8,6 +8,8 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Estado } from 'src/app/enums/estado';
+import { Subscription } from 'rxjs';
+import {AuthService} from '../../auth/auth.service';
 
 // create our cost var with the information about the format that we want
 export const MY_FORMATS = {
@@ -38,7 +40,7 @@ export const MY_FORMATS = {
     {provide: MAT_DATE_FORMATS, useValue:  MY_FORMATS},
   ],
 })
-export class CriarReservaComponent implements OnInit {
+export class CriarReservaComponent implements OnInit, OnDestroy {
   public criarReserva: FormGroup;
 
   reservas: any[];
@@ -51,11 +53,12 @@ export class CriarReservaComponent implements OnInit {
   reserva: Reserva;
   isLoading = false;
   estado: Estado;
+  private authStatusSub: Subscription;
 
 
   constructor(
     private formBuilder: FormBuilder,
-    public reservaService: ReservaService, public route: ActivatedRoute
+    public reservaService: ReservaService, public route: ActivatedRoute, private authService: AuthService
   ) {
     this.criarReserva = this.formBuilder.group({
       tipoEspaco: ['', [Validators.required]],
@@ -72,6 +75,10 @@ export class CriarReservaComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.authStatusSub =  this.authService.getAuthStatusListener().subscribe(
+      authStatus => {
+        this.isLoading = false;
+      });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('reservaId')) {
         this.mode = 'edit';
@@ -154,5 +161,9 @@ export class CriarReservaComponent implements OnInit {
       this.criarReserva.reset();
       }
     }
+  }
+
+  ngOnDestroy() {
+    this.authStatusSub.unsubscribe();
   }
 }
