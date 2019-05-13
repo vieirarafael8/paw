@@ -8,7 +8,8 @@ module.exports = (req, res, next) => {
     next();
   } catch (error) {
     res.status(401).json({
-      message: 'Não se encontra autenticado'
+      message: 'Não se encontra autenticado',
     });
+
   }
 };

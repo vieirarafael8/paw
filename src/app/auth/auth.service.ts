@@ -22,6 +22,9 @@ export class AuthService {
   }
 
   getIsAuth() {
+    if (!this.isAuthenticated) {
+        this.router.navigate(['/auth/login']);
+    }
     return this.isAuthenticated;
   }
 
@@ -56,11 +59,10 @@ export class AuthService {
     this.http
       .post(BACKEND_URL + 'signup', authData)
       .subscribe(response => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/auth/login']);
       }, error => {
           error.error.message = 'O Email introduzido já se encontra registado!';
           this.authStatusListener.next(false);
-
       });
   }
 
@@ -87,15 +89,19 @@ export class AuthService {
           const expirationDate = new Date(now.getTime() + expiresDuration * 1000);
           this.saveAuthData(token, expirationDate, this.userId);
           this.router.navigate(['/']);
+        } else {
+          this.router.navigate(['/auth/login']);
         }
       }, error => {
         this.authStatusListener.next(false);
+        this.router.navigate(['/auth/login']);
       });
   }
 
   autoAuthUser() {
     const authInformation = this.getAuthData();
     if (!authInformation) {
+      this.router.navigate(['/auth/login']);
       return;
     }
     const now = new Date();
@@ -106,6 +112,8 @@ export class AuthService {
       this.userId = authInformation.userId;
       this.setAuthTimer(expiresIn / 1000);
       this.authStatusListener.next(true);
+    } else {
+      this.router.navigate(['/auth/login']);
     }
   }
 
@@ -116,7 +124,7 @@ export class AuthService {
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
     this.userId = null;
-    this.router.navigate(['/']);
+    this.router.navigate(['/auth/login']);
   }
 
   private setAuthTimer(duration: number) {
@@ -143,6 +151,7 @@ export class AuthService {
     const expirationDate = localStorage.getItem('expiration');
     const userId = localStorage.getItem('userId');
     if (!token && !expirationDate) {
+      this.router.navigate(['/auth/login']);
       return;
     }
     return {

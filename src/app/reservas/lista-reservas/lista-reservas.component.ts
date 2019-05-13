@@ -4,6 +4,7 @@ import { Reserva } from '../../models/reserva.model';
 import { ReservaService } from '../../services/reserva.service';
 import { PageEvent } from '@angular/material';
 import { AuthService } from 'src/app/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lista-reservas',
@@ -24,7 +25,8 @@ export class ListaReservasComponent implements OnInit, OnDestroy {
 
   constructor(
     public reservasService: ReservaService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit() {
