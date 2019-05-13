@@ -4,4 +4,7 @@ export interface AuthData {
   NIF: number;
   morada: string;
   password: string;
+  numCartao: number;
+  validade: Date;
+  ccv: number;
 }

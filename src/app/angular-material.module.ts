@@ -17,6 +17,7 @@ import {
   MatDialogModule,
   MatMenuModule
 } from '@angular/material';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   exports: [
@@ -34,7 +35,8 @@ import {
     MatPaginatorModule,
     MatDialogModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    ReactiveFormsModule
   ]
 })
 

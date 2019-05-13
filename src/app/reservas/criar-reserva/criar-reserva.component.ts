@@ -126,7 +126,7 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
 
     if (this.criarReserva.value.dataFim < this.criarReserva.value.dataInicio) {
       console.log('Data de Fim deve ser igual ou posterior à Data de Início!');
-      alert('Data de Fim deve ser igual ou posterior à Data de Início!');
+      // alert('Data de Fim deve ser igual ou posterior à Data de Início!');
       return;
     } else {
       if (this.criarReserva.value.tipoEspaco === 'Openspace') {
@@ -140,8 +140,9 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
         this.criarReserva.value.correio,
         this.criarReserva.value.internet,
         this.estado = Estado.PENDENTE,
-        this.custo = this.calculoCustoPessoas(this.criarReserva.value.numComp) +
-        this.calculoCustoExtras(this.criarReserva.value.tele, this.criarReserva.value.correio, this.criarReserva.value.internet)
+        this.custo = (this.calculoCustoPessoas(this.criarReserva.value.numComp) +
+        this.calculoCustoExtras(this.criarReserva.value.tele, this.criarReserva.value.correio, this.criarReserva.value.internet))
+        * this.calculoCustoDatas(this.criarReserva.value.dataInicio, this.criarReserva.value.dataFim)
       );
       console.log(this.custo);
       this.criarReserva.reset();
@@ -157,6 +158,7 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
         this.criarReserva.value.internet,
         this.estado = Estado.PENDENTE,
         this.custo = this.calculoCustoPessoas(this.numCompReuniao)
+        * this.calculoCustoDatas(this.criarReserva.value.dataInicio, this.criarReserva.value.dataFim)
       );
         console.log(this.custo);
         this.criarReserva.reset();
@@ -172,11 +174,22 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
         this.criarReserva.value.internet,
         this.estado = Estado.PENDENTE,
         this.custo = this.calculoCustoPessoas(this.numCompFormacao)
+        * this.calculoCustoDatas(this.criarReserva.value.dataInicio, this.criarReserva.value.dataFim)
       );
       console.log(this.custo);
       this.criarReserva.reset();
       }
     }
+  }
+
+  calculoCustoDatas(dataI: Date, dataF: Date) {
+
+    var diff = new Date(+dataF).valueOf() - new Date(+dataI).valueOf();
+    console.log(new Date(+dataF).valueOf());
+    console.log(new Date(+dataI).valueOf());
+
+
+    return diff;
   }
 
   calculoCustoPessoas(numComp: number) {

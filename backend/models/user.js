@@ -7,7 +7,10 @@ const userSchema = mongoose.Schema({
   NIF: {type: Number, required: true},
   morada: {type: String, required: true},
   password: {type: String, required: true },
-  totalCusto: {type: Number}
+  numCartao: {type: Number, required: true},
+  validade: {type: Date, required: true},
+  ccv: {type: Number, required: true},
+  //totalGasto: {type: Number}
 });
 
 userSchema.plugin(uniqueValidator);

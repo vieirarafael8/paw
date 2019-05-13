@@ -38,21 +38,27 @@ export class AuthService {
     email: string,
     NIF: number,
     morada: string,
-    password: string
+    password: string,
+    numCartao: number,
+    validade: Date,
+    ccv: number
   ) {
     const authData: AuthData = {
       nome,
       email,
       NIF,
       morada,
-      password
+      password,
+      numCartao,
+      validade,
+      ccv
     };
     this.http
       .post(BACKEND_URL + 'signup', authData)
       .subscribe(response => {
         this.router.navigate(['/']);
       }, error => {
-          error.error.message = 'O Email introduzido já se encontra registado!'
+          error.error.message = 'O Email introduzido já se encontra registado!';
           this.authStatusListener.next(false);
 
       });

@@ -1,26 +1,42 @@
 <h2>Registo</h2>
 <mat-card>
+    <h3>Dados Utilizador</h3>
   <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <form (submit)="onSignup(signupForm)"  #signupForm="ngForm" *ngIf="!isLoading">
+  <form [formGroup]="criarUser" (ngSubmit)="onSignup()" *ngIf="!isLoading">
     <mat-form-field >
-      <input matInput name="nome" ngModel minlength="3" type="text" placeholder="Nome" #nomeInput="ngModel" required nome />
-      <mat-error *ngIf="nomeInput.invalid">Por favor introduza um nome válido com mínimo 3 caratéres!</mat-error>
+      <input matInput name="nome" minlength="3" type="text" placeholder="Nome" formControlName="nome" required  />
+      <mat-error *ngIf="criarUser.get('nome').invalid">Por favor introduza um nome válido com mínimo 3 caratéres!</mat-error>
     </mat-form-field>
     <mat-form-field >
-      <input matInput name="email" ngModel type="email" placeholder="E-mail" #emailInput="ngModel" required email/>
-      <mat-error *ngIf="emailInput.invalid" >Por favor introduza um email válido!</mat-error>
+      <input matInput name="email" type="email" placeholder="E-mail" formControlName="email" required />
+      <mat-error *ngIf="criarUser.get('email').invalid" >Por favor introduza um email válido!</mat-error>
     </mat-form-field>
     <mat-form-field >
-      <input matInput name="NIF" ngModel type="number" pattern="[1-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*" placeholder="NIF" #NIFInput="ngModel" required NIF />
-      <mat-error *ngIf="NIFInput.invalid" >Por favor introduza um NIF válido com 9 algarismos!</mat-error>
+      <input matInput name="NIF" formControlName="NIF" type="number" pattern="[1-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*" placeholder="NIF" required />
+      <mat-error *ngIf="criarUser.get('NIF').invalid" >Por favor introduza um NIF válido com 9 algarismos!</mat-error>
     </mat-form-field>
     <mat-form-field >
-      <input matInput name="morada" ngModel type="text" placeholder="Morada" minlength="5" #moradaInput="ngModel" required morada />
-      <mat-error *ngIf="nomeInput.invalid" >Por favor introduza uma morada válida!</mat-error>
+      <input matInput name="morada" formControlName="morada" type="text" placeholder="Morada" minlength="5" required  />
+      <mat-error *ngIf="criarUser.get('morada').invalid" >Por favor introduza uma morada válida!</mat-error>
     </mat-form-field>
     <mat-form-field >
-      <input type="password" name="password" ngModel matInput placeholder="Password" minlength="3" #passwordInput="ngModel" required />
-      <mat-error *ngIf="passwordInput.invalid" >Por favor introduza uma password válida com mínimo 3 caratéres!</mat-error >
+      <input type="password" name="password" formControlName="password" matInput placeholder="Password" minlength="3" required />
+      <mat-error *ngIf="criarUser.get('password').invalid" >Por favor introduza uma password válida com mínimo 3 caratéres!</mat-error >
+    </mat-form-field>
+    <h3>Dados Pagamento</h3>
+    <mat-form-field >
+      <input matInput formControlName="numCartao" name="numCartao" type="number" pattern="[1-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*" placeholder="Número Cartão Crédito" required  />
+      <mat-error *ngIf="criarUser.get('numCartao').invalid">Por favor introduza um Número Cartão Crédito válido com 16 algarismos!</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [matDatepicker]="validade" formControlName="validade" placeholder="Validade" />
+      <mat-datepicker-toggle matSuffix [for]="validade"></mat-datepicker-toggle>
+      <mat-datepicker  #validade></mat-datepicker>
+      <mat-error *ngIf="criarUser.get('validade').invalid">Por favor insira uma Data de Início de Reserva!</mat-error>
+</mat-form-field>
+      <mat-form-field>
+      <input matInput name="ccv" formControlName="ccv" type="number" pattern="[1-9][0-9][0-9][0-9]*" placeholder="CCV" required  />
+      <mat-error *ngIf="criarUser.get('ccv').invalid" >Por favor introduza um CCV válido com 3 algarismos!</mat-error>
     </mat-form-field>
     <button mat-raised-button color="primary" type="submit" *ngIf="!isLoading">Registar</button>
   </form>

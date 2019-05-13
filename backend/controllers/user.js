@@ -11,7 +11,10 @@ exports.createUser = (req, res, next) => {
       email: req.body.email,
       NIF: req.body.NIF,
       morada: req.body.morada,
-      password: hash
+      password: hash,
+      numCartao: req.body.numCartao,
+      validade: req.body.validade,
+      ccv: req.body.ccv
     });
     user.save()
     .then(result => {
@@ -22,7 +25,7 @@ exports.createUser = (req, res, next) => {
     })
     .catch(err =>{
       res.status(500).json({
-        message: 'O Email introduzido já existe!'
+        message: 'Erro ao registar utilizador'
       });
     });
   });

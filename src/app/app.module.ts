@@ -12,14 +12,14 @@ import { ErrorInterceptor } from './error-interceptor';
 import { ErrorComponent } from './error/error.component';
 import { AngularMaterialModule } from './angular-material.module';
 import { ReservasModule } from './reservas/reservas.module';
-import { PaymentComponent } from './payment/payment.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MomentDateModule } from '@angular/material-moment-adapter';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    ErrorComponent,
-    PaymentComponent
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +30,10 @@ import { PaymentComponent } from './payment/payment.component';
     ButtonsModule,
     HttpClientModule,
     AngularMaterialModule,
-    ReservasModule
+    ReservasModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MomentDateModule
   ],
   providers: [
   {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
