@@ -184,12 +184,12 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
 
   calculoCustoDatas(dataI: Date, dataF: Date) {
 
-    var diff = new Date(+dataF).valueOf() - new Date(+dataI).valueOf();
-    console.log(new Date(+dataF).valueOf());
-    console.log(new Date(+dataI).valueOf());
+    const MS_PER_DAY: number = 1000 * 60 * 60 * 24;
+    const start: number = new Date(dataI).getTime();
+    const end: number = new Date(dataF).getTime();
+    const daysBetweenDates: number = Math.ceil((end - start) / MS_PER_DAY);
 
-
-    return diff;
+    return daysBetweenDates;
   }
 
   calculoCustoPessoas(numComp: number) {
