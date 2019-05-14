@@ -1,11 +1,25 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
+var dateFormat = require('dateformat');
+
 
 
 exports.createUser = (req, res, next) => {
+
+  var jsonDate = req.body.validade;
+  var then = new Date(jsonDate);
+
+  console.log('data ' + then);
+
+  d = dateFormat(then, "mm/yyyy");
+  console.log('data ' + d);
+
+
   bcrypt.hash(req.body.password, 10 )
+
   .then(hash => {
+
     const user = new User ({
       nome: req.body.nome,
       email: req.body.email,
@@ -13,9 +27,10 @@ exports.createUser = (req, res, next) => {
       morada: req.body.morada,
       password: hash,
       numCartao: req.body.numCartao,
-      validade: req.body.validade,
+      validade: d,
       ccv: req.body.ccv
     });
+    console.log(user);
     user.save()
     .then(result => {
       res.status(201).json({
@@ -24,6 +39,7 @@ exports.createUser = (req, res, next) => {
       });
     })
     .catch(err =>{
+      console.log(err);
       res.status(500).json({
         message: 'Erro ao registar utilizador'
       });

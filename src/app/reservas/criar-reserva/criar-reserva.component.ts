@@ -61,6 +61,9 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
   taxaReuniao = 1;
   taxaFormacao = 1;
   private authStatusSub: Subscription;
+  public today = new Date();
+  validaData = true;
+
 
 
   constructor(
@@ -116,17 +119,19 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
   }
 
   onAddReserva() {
-    console.log(this.criarReserva);
+
 
     if (this.criarReserva.invalid) {
       console.log('Formulário Inválido!');
       return;
     }
-    console.log(this.criarReserva.value.tipoEspaco);
 
     if (this.criarReserva.value.dataFim < this.criarReserva.value.dataInicio) {
-      console.log('Data de Fim deve ser igual ou posterior à Data de Início!');
-      // alert('Data de Fim deve ser igual ou posterior à Data de Início!');
+
+      console.log('A data de início deve ser anterior à data de fim da reserva');
+      return;
+    } else if ( this.today > this.criarReserva.value.dataInicio) {
+      console.log('As datas devem ser iguais ao superiores ao dia de hoje');
       return;
     } else {
       if (this.criarReserva.value.tipoEspaco === 'Openspace') {
@@ -144,7 +149,7 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
         this.calculoCustoExtras(this.criarReserva.value.tele, this.criarReserva.value.correio, this.criarReserva.value.internet))
         * this.calculoCustoDatas(this.criarReserva.value.dataInicio, this.criarReserva.value.dataFim)
       );
-      console.log(this.custo);
+
       this.criarReserva.reset();
       } else if (this.criarReserva.value.tipoEspaco === 'Sala de Reunião') {
         this.isLoading = true;
@@ -160,7 +165,7 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
         this.custo = this.calculoCustoPessoas(this.numCompReuniao)
         * this.calculoCustoDatas(this.criarReserva.value.dataInicio, this.criarReserva.value.dataFim)
       );
-        console.log(this.custo);
+
         this.criarReserva.reset();
       } else {
       this.isLoading = true;
@@ -176,7 +181,7 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
         this.custo = this.calculoCustoPessoas(this.numCompFormacao)
         * this.calculoCustoDatas(this.criarReserva.value.dataInicio, this.criarReserva.value.dataFim)
       );
-      console.log(this.custo);
+
       this.criarReserva.reset();
       }
     }

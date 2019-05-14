@@ -55,7 +55,7 @@
             <input matInput [matDatepicker]="dataI" formControlName="dataInicio" placeholder="Data de Início" />
             <mat-datepicker-toggle matSuffix [for]="dataI"></mat-datepicker-toggle>
             <mat-datepicker  #dataI></mat-datepicker>
-            <mat-error *ngIf="criarReserva.get('dataInicio').invalid">Por favor insira uma Data de Início de Reserva!</mat-error>
+            <mat-error *ngIf="criarReserva.get('dataInicio').invalid || !validaData">Por favor insira uma Data de Início de Reserva!</mat-error>
       </mat-form-field>
       <mat-form-field>
         <input matInput [matDatepicker]="dataF" formControlName="dataFim" placeholder="Data de Fim" />

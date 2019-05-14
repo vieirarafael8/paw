@@ -12,7 +12,7 @@
       <mat-error *ngIf="criarUser.get('email').invalid" >Por favor introduza um email válido!</mat-error>
     </mat-form-field>
     <mat-form-field >
-      <input matInput name="NIF" formControlName="NIF" type="number" pattern="[1-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*" placeholder="NIF" required />
+      <input matInput name="NIF" formControlName="NIF" type="number" pattern="[1-9]+[0-9]*\d{8}" maxlength="9" max="999999999"  placeholder="NIF" required />
       <mat-error *ngIf="criarUser.get('NIF').invalid" >Por favor introduza um NIF válido com 9 algarismos!</mat-error>
     </mat-form-field>
     <mat-form-field >
@@ -25,17 +25,19 @@
     </mat-form-field>
     <h3>Dados Pagamento</h3>
     <mat-form-field >
-      <input matInput formControlName="numCartao" name="numCartao" type="number" pattern="[1-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*" placeholder="Número Cartão Crédito" required  />
-      <mat-error *ngIf="criarUser.get('numCartao').invalid">Por favor introduza um Número Cartão Crédito válido com 16 algarismos!</mat-error>
+      <input matInput formControlName="numCartao" name="numCartao" type="number" pattern="[1-9]+[0-9]*\d{15}" placeholder="Número Cartão Crédito" maxlength="16" required  />
+      <mat-error *ngIf="criarUser.get('numCartao').invalid ">Por favor introduza um Número Cartão Crédito válido com 16 algarismos!</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput [matDatepicker]="validade" formControlName="validade" placeholder="Validade" />
-      <mat-datepicker-toggle matSuffix [for]="validade"></mat-datepicker-toggle>
-      <mat-datepicker  #validade></mat-datepicker>
-      <mat-error *ngIf="criarUser.get('validade').invalid">Por favor insira uma Data de Início de Reserva!</mat-error>
-</mat-form-field>
+      <input matInput [matDatepicker]="val" formControlName="validade" placeholder="Validade"/>
+      <mat-datepicker-toggle matSuffix [for]="val"></mat-datepicker-toggle>
+      <mat-datepicker  #val
+      startView="multi-year"
+                  panelClass="example-month-picker"></mat-datepicker>
+      <mat-error *ngIf="criarUser.get('validade').invalid ">Por favor insira a Validade do seu Cartão!</mat-error>
+    </mat-form-field>
       <mat-form-field>
-      <input matInput name="ccv" formControlName="ccv" type="number" pattern="[1-9][0-9][0-9][0-9]*" placeholder="CCV" required  />
+      <input matInput name="ccv" formControlName="ccv" type="number" pattern="[1-9]+[0-9]*\d{2}" maxlength="3" max="999"placeholder="CCV" required  />
       <mat-error *ngIf="criarUser.get('ccv').invalid" >Por favor introduza um CCV válido com 3 algarismos!</mat-error>
     </mat-form-field>
     <button mat-raised-button color="primary" type="submit" *ngIf="!isLoading">Registar</button>

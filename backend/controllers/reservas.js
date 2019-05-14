@@ -29,7 +29,7 @@ exports.criarReserva = (req, res, next) =>{
 exports.getReservas = (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = req.query.page;
-  const reservaQuery = Reserva.find();
+  const reservaQuery = Reserva.find({creator: req.userData.userId} );
   let reservasAdq;
   if(pageSize && currentPage){
     reservaQuery
