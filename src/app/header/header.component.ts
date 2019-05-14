@@ -11,27 +11,36 @@ import { Subscription } from 'rxjs';
 export class HeaderComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
-  admin = false;
+  private admin: boolean;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
+    this.admin = false;
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authListenerSubs = this.authService.getAuthStatusListener()
     .subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
+      if (this.authService.getIfAdmin()) {
+        this.admin = true;
+      }
     });
+  }
 
-    if (this.authService.getUserId() === '5cdad7e4fde4eb2dc0eb71ef') {
+  onLoginAdmin() {
+    if (this.authService.getIfAdmin()) {
       this.admin = true;
+      return this.admin;
     }
   }
 
   onLogout() {
     this.authService.logout();
+    this.admin = false;
   }
 
   ngOnDestroy() {
     this.authListenerSubs.unsubscribe();
+    this.admin = false;
   }
 }

@@ -5,9 +5,13 @@ import { CriarReservaComponent } from './reservas/criar-reserva/criar-reserva.co
 
 
 import { AuthGuard } from './auth/auth.guard';
+import { CriarEspacoComponent } from './espaco/criar-espaco/criar-espaco.component';
+import { ListagemReservasComponent } from './espaco/listagem-reservas/listagem-reservas.component';
 
 const routes: Routes = [
   {path: '', component: ListaReservasComponent},
+  {path: 'criar-espaco', component: CriarEspacoComponent},
+  {path: 'lista-reservas', component: ListagemReservasComponent},
   {path: 'criar', component: CriarReservaComponent, canActivate: [AuthGuard]},
   {path: 'auth', loadChildren: './auth/auth.module#AuthModule'}
 ];

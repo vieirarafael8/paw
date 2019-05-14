@@ -1,5 +1,6 @@
 const Reserva = require('../models/reserva');
 
+
 exports.criarReserva = (req, res, next) =>{
   const reserva = new Reserva({
     tipoEspaco: req.body.tipoEspaco,

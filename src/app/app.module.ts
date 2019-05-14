@@ -16,13 +16,15 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MomentDateModule } from '@angular/material-moment-adapter';
 import { MatSidenavModule, MatNavList, MatListModule } from '@angular/material';
 import { CriarEspacoComponent } from './espaco/criar-espaco/criar-espaco.component';
+import { ListagemReservasComponent } from './espaco/listagem-reservas/listagem-reservas.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     ErrorComponent,
-    CriarEspacoComponent
+    CriarEspacoComponent,
+    ListagemReservasComponent
   ],
   imports: [
     BrowserModule,

@@ -15,6 +15,7 @@ export class AuthService {
   private tokenTimer: any;
   private authStatusListener = new Subject<boolean>();
   private userId: string;
+  admin = false;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -67,6 +68,10 @@ export class AuthService {
       });
   }
 
+  getIfAdmin() {
+    return this.admin;
+  }
+
   login(email: string, password: string) {
     const loginData = {
       email,
@@ -90,6 +95,7 @@ export class AuthService {
           const expirationDate = new Date(now.getTime() + expiresDuration * 1000);
           this.saveAuthData(token, expirationDate, this.userId);
           if (this.userId === '5cdad7e4fde4eb2dc0eb71ef') {
+            this.admin = true;
             this.router.navigate(['/auth/admin']);
           } else {
             this.router.navigate(['/']);
@@ -116,6 +122,10 @@ export class AuthService {
       this.isAuthenticated = true;
       this.userId = authInformation.userId;
       this.setAuthTimer(expiresIn / 1000);
+      if (this.userId === '5cdad7e4fde4eb2dc0eb71ef') {
+        this.admin = true;
+        this.authStatusListener.next(true);
+      }
       this.authStatusListener.next(true);
     } else {
       this.router.navigate(['/auth/login']);
@@ -129,6 +139,7 @@ export class AuthService {
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
     this.userId = null;
+    this.admin = false;
     this.router.navigate(['/auth/login']);
   }
 
@@ -162,7 +173,7 @@ export class AuthService {
     return {
       token,
       expirationDate: new Date(expirationDate),
-      userId
+      userId,
     };
   }
 

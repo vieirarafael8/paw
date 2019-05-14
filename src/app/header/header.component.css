@@ -21,7 +21,18 @@ ul {
   text-decoration: none;
 }
 
+.titulo2{
+  color:white;
+  text-decoration: none;
+
+}
+
 .list-itens {
   text-align: center;
+}
+
+a{
+  text-decoration: none;
+  color:white;
 }
 

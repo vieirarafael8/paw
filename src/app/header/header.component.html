@@ -2,16 +2,24 @@
     <i class="material-icons" md-48>
         home
         </i>
-  <span>
+  <span *ngIf=" (!onLoginAdmin())">
     <a routerLinkActive="titulo" routerLink="/">  ManageMySpace</a>
+  </span>
+  <span *ngIf=" (onLoginAdmin())">
+    <a routerLinkActive="titulo2" routerLink="/auth/admin">  ManageMySpace</a>
   </span>
   <span class="spacer"></span>
   <ul>
-    <li *ngIf="userIsAuthenticated && !admin">
+    <li *ngIf="(userIsAuthenticated) && (!onLoginAdmin())">
       <a mat-button routerLink="/criar" routerLinkActive="criar-item"><i class="material-icons">event_available</i> Criar Reserva</a>
     </li>
-    <li *ngIf="userIsAuthenticated && admin">
-        <a mat-button routerLink="/criarEspaco" routerLinkActive="criar-item"><i class="material-icons">event_available</i> Criar Espaco</a>
+    <li *ngIf="(userIsAuthenticated) && (onLoginAdmin())">
+      <a mat-button routerLink="/lista-reservas" routerLinkActive="criar-item"><i class="material-icons">
+        dns
+        </i> Listagem Reservas</a>
+    </li>
+    <li *ngIf="(userIsAuthenticated) && (onLoginAdmin())">
+        <a mat-button routerLink="/criar-espaco" routerLinkActive="criar-item"><i class="material-icons">event_available</i> Criar Espaco</a>
       </li>
     <button mat-button [matMenuTriggerFor]="menu">
       <i class="material-icons">account_circle</i>

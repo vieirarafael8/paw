@@ -1,6 +1,28 @@
 const Espaco = require('../models/espaco');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+var dateFormat = require('dateformat');
 
-exports.criarEspaco = (req, res, next) =>{
+exports.espaco = (req, res, next) => {
+  const espaco = req.body;
+  console.log(espaco);
+};
+
+exports.getEspaco = (req,res,next) => {
+  res.sendFile(__dirname + 'C:\Users\vieir\OneDrive\Documentos\Trabalho PAW\paw\src\app\espaco\criar-espaco\criar-espaco.component.html');
+ };
+
+ exports.listaReservas = (req, res, next) => {
+  const espaco = req.body;
+  console.log(espaco);
+};
+
+exports.getListaReservas= (req,res,next) => {
+  res.sendFile(__dirname + 'C:\Users\vieir\OneDrive\Documentos\Trabalho PAW\paw\src\app\espaco\listagem-reservas\listagem-reservas.component.html');
+ };
+
+
+exports.criarEspaco = (req, res, next) => {
   const espaco = new Espaco({
     tipoEspaco: req.body.tipoEspaco,
     numComp: req.body.numComp,

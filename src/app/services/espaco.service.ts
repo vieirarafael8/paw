@@ -12,6 +12,7 @@ import { Estado } from '../enums/estado';
 import {environment} from '../../environments/environment';
 import { Espaco } from '../models/espaco.model';
 import { EstadoEspaco } from '../enums/estadoEspaco';
+
 const BACKEND_URL = environment.apiUrl + '/espacos/';
 
 @Injectable({ providedIn: 'root' })
@@ -86,7 +87,7 @@ export class ReservaService {
       numSalaReuniao,
       numSalaFormacao,
       estadoEspaco,
-      creator = null,
+      creator: null,
       taxaSecretaria,
       taxaTele,
       taxaCorreio,
@@ -94,13 +95,13 @@ export class ReservaService {
       taxaReuniao,
       taxaFormacao
     };
-    this.http.post<{ message: string, reservaId: string }>(BACKEND_URL, reserva)
+    this.http.post<{ message: string, espacoId: string }>(BACKEND_URL, espaco)
     .subscribe(responseData => {
         this.router.navigate(['/']);
     });
 
   }
-  deleteReserva(reservaId: string) {
-    return this.http.delete(BACKEND_URL + reservaId);
+  deleteEspaco(espacoId: string) {
+    return this.http.delete(BACKEND_URL + espacoId);
   }
 }
