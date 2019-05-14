@@ -7,9 +7,12 @@
   </span>
   <span class="spacer"></span>
   <ul>
-    <li *ngIf="userIsAuthenticated">
+    <li *ngIf="userIsAuthenticated && !admin">
       <a mat-button routerLink="/criar" routerLinkActive="criar-item"><i class="material-icons">event_available</i> Criar Reserva</a>
     </li>
+    <li *ngIf="userIsAuthenticated && admin">
+        <a mat-button routerLink="/criarEspaco" routerLinkActive="criar-item"><i class="material-icons">event_available</i> Criar Espaco</a>
+      </li>
     <button mat-button [matMenuTriggerFor]="menu">
       <i class="material-icons">account_circle</i>
       Login/Registo

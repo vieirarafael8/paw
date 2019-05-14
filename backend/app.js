@@ -35,6 +35,6 @@ app.use((req, res, next) => {
 
 app.use('/api/reservas', reservaRoutes);
 app.use('/api/user', userRoutes);
-app.use('/api/espaco', espacoRoutes);
+app.use('/api/espacos', espacoRoutes);
 
 module.exports = app;

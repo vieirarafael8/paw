@@ -3,6 +3,14 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 var dateFormat = require('dateformat');
 
+exports.admin = (req, res, next) => {
+  const admin = req.body;
+  console.log(admin);
+};
+
+exports.getAdmin = (req,res,next) => {
+  res.sendFile(__dirname + 'C:\Users\vieir\OneDrive\Documentos\Trabalho PAW\paw\src\app\admin\admin.component.html');
+ };
 
 
 exports.createUser = (req, res, next) => {

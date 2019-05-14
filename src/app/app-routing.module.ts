@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ListaReservasComponent } from './reservas/lista-reservas/lista-reservas.component';
 import { CriarReservaComponent } from './reservas/criar-reserva/criar-reserva.component';
 
+
 import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
