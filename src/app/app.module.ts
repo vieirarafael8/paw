@@ -14,12 +14,15 @@ import { AngularMaterialModule } from './angular-material.module';
 import { ReservasModule } from './reservas/reservas.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MomentDateModule } from '@angular/material-moment-adapter';
+import { MatSidenavModule, MatNavList, MatListModule } from '@angular/material';
+import { CriarEspacoComponent } from './espaco/criar-espaco/criar-espaco.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    ErrorComponent
+    ErrorComponent,
+    CriarEspacoComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,9 @@ import { MomentDateModule } from '@angular/material-moment-adapter';
     ReservasModule,
     ReactiveFormsModule,
     FormsModule,
-    MomentDateModule
+    MomentDateModule,
+    MatSidenavModule,
+    MatListModule
   ],
   providers: [
   {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

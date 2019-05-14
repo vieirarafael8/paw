@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 const reservaRoutes = require('./routes/reservas');
 const userRoutes = require('./routes/user');
+const espacoRoutes = require('./routes/espaco');
 
 const app = express();
 
@@ -23,7 +24,7 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Requested-With"
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -34,5 +35,6 @@ app.use((req, res, next) => {
 
 app.use('/api/reservas', reservaRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/espaco', espacoRoutes);
 
 module.exports = app;

@@ -5,7 +5,8 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import {environment} from '../../environments/environment';
 
-const BACKEND_URL = environment.apiUrl + '/user/';
+const BACKEND_URL_USER = environment.apiUrl + '/user/';
+
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -57,7 +58,7 @@ export class AuthService {
       ccv
     };
     this.http
-      .post(BACKEND_URL + 'signup', authData)
+      .post(BACKEND_URL_USER + 'signup', authData)
       .subscribe(response => {
         this.router.navigate(['/auth/login']);
       }, error => {
@@ -71,9 +72,36 @@ export class AuthService {
       email,
       password
     };
+    if (loginData.email === 'admin@gmail.com') {
+      this.http
+      .post<{ token: string, expiresIn: number, userId: string }>(
+        BACKEND_URL_USER + 'admin',
+        loginData
+      )
+      .subscribe(response => {
+        const token = response.token;
+        this.token = token;
+        if (token) {
+          const expiresDuration = response.expiresIn;
+          this.setAuthTimer(expiresDuration);
+          this.isAuthenticated = true;
+          this.userId = response.userId;
+          this.authStatusListener.next(true);
+          const now = new Date();
+          const expirationDate = new Date(now.getTime() + expiresDuration * 1000);
+          this.saveAuthData(token, expirationDate, this.userId);
+          this.router.navigate(['/auth/admin']);
+        } else {
+          this.router.navigate(['/auth/login']);
+        }
+      }, error => {
+        this.authStatusListener.next(false);
+        this.router.navigate(['/auth/login']);
+      });
+    } else {
     this.http
       .post<{ token: string, expiresIn: number, userId: string }>(
-        BACKEND_URL + 'login',
+        BACKEND_URL_USER + 'login',
         loginData
       )
       .subscribe(response => {
@@ -96,6 +124,7 @@ export class AuthService {
         this.authStatusListener.next(false);
         this.router.navigate(['/auth/login']);
       });
+    }
   }
 
   autoAuthUser() {
