@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import {environment} from '../../environments/environment';
+import { map } from 'rxjs/operators';
+import { User } from '../models/user.model';
 
 const BACKEND_URL_USER = environment.apiUrl + '/user/';
 
@@ -16,6 +18,9 @@ export class AuthService {
   private authStatusListener = new Subject<boolean>();
   private userId: string;
   admin = false;
+
+  private users: User[] = [];
+  private usersUpdated = new Subject<{users: User[], userCount: number}>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -36,6 +41,10 @@ export class AuthService {
 
   getAuthStatusListener() {
     return this.authStatusListener.asObservable();
+  }
+
+  getUsersUpdated() {
+    return this.usersUpdated.asObservable();
   }
 
   createUser(
@@ -68,6 +77,41 @@ export class AuthService {
       });
   }
 
+  getUsers(userPerPage: number, currentPage: number) {
+    const queryParams = `?pagesize=${userPerPage}&page=${currentPage}`;
+    this.http
+      .get<{ message: string; users: any; maxUsers: number }>(
+        BACKEND_URL_USER + 'listar/' + queryParams
+      )
+      .pipe(
+        map((usersData) => {
+        return {
+          users: usersData.users.map(user => {
+            return {
+              id: user.id,
+              nome: user.nome,
+              email: user.email,
+              NIF: user.NIF,
+              morada: user.morada,
+              password: user.password,
+              numCartao: user.numCartao,
+              validade: user.validade,
+              ccv: user.ccv,
+            };
+          }),
+          maxUsers: usersData.maxUsers
+        };
+      })
+    )
+      .subscribe(transformedUsersData => {
+        this.users = transformedUsersData.users;
+        this.usersUpdated.next({
+          users: [...this.users],
+          userCount: transformedUsersData.maxUsers
+        });
+      });
+  }
+
   getIfAdmin() {
     return this.admin;
   }
@@ -94,7 +138,7 @@ export class AuthService {
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresDuration * 1000);
           this.saveAuthData(token, expirationDate, this.userId);
-          if (this.userId === '5cdad7e4fde4eb2dc0eb71ef') {
+          if (this.userId === '5cddb3a670fffa33ec9bc45f') {
             this.admin = true;
             this.router.navigate(['/auth/admin']);
           } else {
@@ -122,7 +166,7 @@ export class AuthService {
       this.isAuthenticated = true;
       this.userId = authInformation.userId;
       this.setAuthTimer(expiresIn / 1000);
-      if (this.userId === '5cdad7e4fde4eb2dc0eb71ef') {
+      if (this.userId === '5cddb3a670fffa33ec9bc45f') {
         this.admin = true;
         this.authStatusListener.next(true);
       }
@@ -175,6 +219,9 @@ export class AuthService {
       expirationDate: new Date(expirationDate),
       userId,
     };
+  }
+  deleteU(userId: string) {
+    return this.http.delete(BACKEND_URL_USER + 'listar/' + userId);
   }
 
 }

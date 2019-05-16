@@ -10,6 +10,8 @@ import { HttpClient } from '@angular/common/http';
 import { Estado } from 'src/app/enums/estado';
 import { Subscription } from 'rxjs';
 import {AuthService} from '../../auth/auth.service';
+import { Espaco } from 'src/app/models/espaco.model';
+import { EspacoService } from 'src/app/services/espaco.service';
 
 // create our cost var with the information about the format that we want
 export const MY_FORMATS = {
@@ -44,12 +46,14 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
   public criarReserva: FormGroup;
 
   reservas: any[];
-
+  espacos: Espaco;
+  espacoService: EspacoService;
   submitted = false;
   numCompReuniao = 5;
   numCompFormacao = 20;
   private mode = 'create';
   private reservaId: string;
+  private espacoId: string;
   reserva: Reserva;
   isLoading = false;
   estado: Estado;
@@ -63,6 +67,9 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
   private authStatusSub: Subscription;
   public today = new Date();
   validaData = true;
+  espacosPerPage = 5;
+  currentPage = 1;
+  pageSizeOptions = [1, 2, 5, 10];
 
 
 
@@ -200,14 +207,17 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
   calculoCustoPessoas(numComp: number) {
     let custoTotalPessoas = 0;
 
-    if (this.criarReserva.value.tipoEspaco === 'Openspace') {
-      custoTotalPessoas =  numComp * this.taxaSecretaria;
-    } else if (this.criarReserva.value.tipoEspaco === 'Sala de Reunião') {
-      custoTotalPessoas = numComp * this.taxaReuniao;
-    } else if (this.criarReserva.value.tipoEspaco === 'Sala de Formação') {
-      custoTotalPessoas =  numComp * this.taxaFormacao;
-    }
 
+    if (this.criarReserva.value.tipoEspaco === 'Openspace') {
+          custoTotalPessoas =  numComp * this.taxaSecretaria;
+
+    } else if (this.criarReserva.value.tipoEspaco === 'Sala de Reunião') {
+          custoTotalPessoas = numComp * this.taxaReuniao;
+
+    } else if (this.criarReserva.value.tipoEspaco === 'Sala de Formação') {
+          custoTotalPessoas =  numComp * this.taxaFormacao;
+
+    }
     return custoTotalPessoas;
   }
 

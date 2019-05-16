@@ -8,9 +8,32 @@ exports.espaco = (req, res, next) => {
   console.log(espaco);
 };
 
-exports.getEspaco = (req,res,next) => {
+exports.criarEspaco = (req,res,next) => {
   res.sendFile(__dirname + 'C:\Users\vieir\OneDrive\Documentos\Trabalho PAW\paw\src\app\espaco\criar-espaco\criar-espaco.component.html');
  };
+
+ exports.getEspaco = (req, res, next) => {
+  const espacoQuery = Espaco.find();
+  let espacosAdq;
+    espacoQuery
+    .then(documents => {
+      espacosAdq = documents;
+      return espaco.countDocuments();
+    })
+    .then(count => {
+      res.status(200).json({
+        message: 'Espaços Obtidos com Sucesso',
+        espacos: espacosAdq,
+        maxespacos: count
+    });
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: 'Erro ao Tentar Obter Espaços'
+    });
+  });
+};
+
 
  exports.listaReservas = (req, res, next) => {
   const espaco = req.body;

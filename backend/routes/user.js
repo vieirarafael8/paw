@@ -10,13 +10,13 @@ router.post('/login', UserController.userLogin);
 
 router.post('/admin', UserController.admin);
 
+//router.post('/listar-users', UserController.users);
+
 router.get('/admin', UserController.getAdmin);
 
-router.get('/listagem-users', UserController.getUsers);
+router.get('/listar', UserController.getUsers);
 
-
-
-
+router.delete('/listar/:id', UserController.deleteUser);
 
 
 module.exports = router;

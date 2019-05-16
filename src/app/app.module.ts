@@ -17,7 +17,6 @@ import { MomentDateModule } from '@angular/material-moment-adapter';
 import { MatSidenavModule, MatNavList, MatListModule } from '@angular/material';
 import { CriarEspacoComponent } from './espaco/criar-espaco/criar-espaco.component';
 import { ListagemReservasComponent } from './espaco/listagem-reservas/listagem-reservas.component';
-import { ListagemUsersComponent } from './listagem-users/listagem-users.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +25,7 @@ import { ListagemUsersComponent } from './listagem-users/listagem-users.componen
     ErrorComponent,
     CriarEspacoComponent,
     ListagemReservasComponent,
-    ListagemUsersComponent
+
   ],
   imports: [
     BrowserModule,

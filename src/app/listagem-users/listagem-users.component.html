@@ -1,2 +1,28 @@
-<h2>Listagem Users</h2>
-<p>Listagem de clientes e faturação</p>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-accordion multi="true" *ngIf="users.length > 0 && !isLoading">
+    <h2>Listagem Users</h2>
+  <mat-expansion-panel *ngFor="let user of users">
+    <mat-expansion-panel-header>
+        {{ user.nome }}
+    </mat-expansion-panel-header>
+    <h3>Espaço Reservado:</h3>
+    <section>
+        <p> <b>Nome</b> -> {{ user.nome }} </p>
+        <p> <b>Email</b>  ->  {{ user.email }} </p>
+    </section>
+    <section>
+        <p> <b>NIF</b> -> {{ user.NIF }}</p>
+    </section>
+    <section>
+  <p><b>Número Cartão</b> -> {{ user.numCartao }}</p>
+  <p><b>Validade</b> -> {{ user.validade }}</p>
+  <p><b>CCV</b> -> {{ user.ccv }}</p>
+</section>
+  <mat-action-row *ngIf="userIsAuthenticated">
+      <button mat-button color="warn" (click)="onDelete(user.id)">DELETE</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<h2 class="info-text mat-body-3" *ngIf="(!(users.length > 0) && (!isLoading))"> Sem Utilizadores! </h2>
+<mat-paginator [length]="totalUsers" [pageSize]="usersPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" ></mat-paginator>
+
