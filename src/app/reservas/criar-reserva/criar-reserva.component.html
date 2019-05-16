@@ -25,15 +25,15 @@
       <h4><i class="material-icons">
           dashboard
           </i> Número Secretárias</h4>
-      <mat-slider
+      0 <mat-slider
         formControlName="numComp"
         thumbLabel
         color="primary"
         *ngIf="criarReserva.value.tipoEspaco === 'Openspace'"
         tickInterval="1"
-        min="1"
+        min="0"
         max="10"
-      ></mat-slider>
+      ></mat-slider> 10 <mat-error *ngIf="criarReserva.get('numComp').invalid">Por favor escolha o numero de secretárias!</mat-error>
       <h4><i class="material-icons">
           grade
           </i>Extras</h4>

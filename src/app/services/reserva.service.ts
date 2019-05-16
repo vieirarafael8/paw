@@ -105,7 +105,9 @@ export class ReservaService {
     };
     this.http.post<{ message: string, reservaId: string }>(BACKEND_URL, reserva)
     .subscribe(responseData => {
-        this.router.navigate(['/']);
+      console.log(reserva);
+
+      this.router.navigate(['/']);
     });
 
   }

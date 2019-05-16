@@ -18,7 +18,7 @@ const BACKEND_URL = environment.apiUrl + '/espacos/';
 @Injectable({ providedIn: 'root' })
 export class EspacoService {
   private espacos: Espaco[] = [];
-  private espacosUpdated = new Subject<{reservas: Espaco[], espacoCount: number}>();
+  private espacosUpdated = new Subject<{espacos: Espaco[], espacoCount: number}>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -40,7 +40,6 @@ export class EspacoService {
               numSalaReuniao: espaco.numSalaReuniao,
               numSalaFormacao: espaco.numSalaFormacao,
               estadoEspaco: espaco.estadoEspaco,
-              creator: espaco.creator,
               taxaSecretaria: espaco.taxaSecretaria,
               taxaTele: espaco.taxaTele,
               taxaCorreio: espaco.taxaCorreio,
@@ -56,7 +55,7 @@ export class EspacoService {
       .subscribe(transformedEspacosData => {
         this.espacos = transformedEspacosData.espacos;
         this.espacosUpdated.next({
-          reservas: [...this.espacos],
+          espacos: [...this.espacos],
           espacoCount: transformedEspacosData.maxEspacos
         });
       });
@@ -69,7 +68,6 @@ export class EspacoService {
       numSalaReuniao: number,
       numSalaFormacao: number,
       estadoEspaco: EstadoEspaco,
-      creator: string,
       taxaSecretaria: number,
       taxaTele: number,
       taxaCorreio: number,
@@ -98,7 +96,6 @@ export class EspacoService {
       numSalaReuniao,
       numSalaFormacao,
       estadoEspaco,
-      creator: null,
       taxaSecretaria,
       taxaTele,
       taxaCorreio,
@@ -108,7 +105,7 @@ export class EspacoService {
     };
     this.http.post<{ message: string, espacoId: string }>(BACKEND_URL, espaco)
     .subscribe(responseData => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/auth/admin']);
     });
 
   }

@@ -5,7 +5,6 @@ const espacoSchema = mongoose.Schema({
   numSalaReuniao: {type: Number, required: true},
   numSalaFormacao: {type: Number, required: true},
   estadoEspaco: {type: ['cheio', 'livre'], default: 'livre'},
-  creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
   taxaSecretaria: {type: Number, required: true},
   taxaTele: {type: Number, required: true},
   taxaCorreio: {type: Number, required: true},

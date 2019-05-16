@@ -29,3 +29,70 @@ section {
 p{
   text-align: justify;
 }
+
+#openSpace {
+  padding-bottom: 40px;
+}
+
+#numSecretOpenSpace {
+  display: inline-block;
+  width: 45%;
+  margin-right: 35px;
+
+}
+#taxaSecretaria {
+  display: inline-block;
+  width: 50%;
+}
+
+#salaReuniao {
+  padding-bottom: 40px;
+  }
+
+#numSalaReuniao {
+  display: inline-block;
+  width: 45%;
+  margin-right: 35px;
+}
+#taxaReuniao {
+  display: inline-block;
+  width: 50%;
+}
+
+#salaFormacao {
+  padding-bottom: 40px;
+}
+
+#numSalaFormacao {
+  display: inline-block;
+  width: 45%;
+  margin-right: 35px;
+}
+
+#taxaFormacao {
+  display: inline-block;
+  width: 50%;
+}
+
+#extras {
+  padding-bottom: 30px;
+}
+
+#taxaTele {
+  display: inline-block;
+  width: 30%;
+  margin-right: 30px;
+}
+#taxaCorreio {
+  display: inline-block;
+  width: 30%;
+  margin-right: 30px;
+}
+
+#taxaInternet {
+  display: inline-block;
+  width: 33%;
+}
+
+
+

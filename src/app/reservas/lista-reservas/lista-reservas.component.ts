@@ -16,7 +16,7 @@ export class ListaReservasComponent implements OnInit, OnDestroy {
   private reservaSub: Subscription;
   isLoading = false;
   totalReservas = 0;
-  reservaPerPage = 2;
+  reservaPerPage = 5;
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
   private authStatusSub: Subscription;

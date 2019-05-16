@@ -7,7 +7,6 @@ export class Espaco {
   numSalaReuniao: number;
   numSalaFormacao: number;
   estadoEspaco: EstadoEspaco;
-  creator: string;
   taxaSecretaria: number;
   taxaTele: number;
   taxaCorreio: number;

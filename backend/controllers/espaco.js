@@ -28,13 +28,12 @@ exports.criarEspaco = (req, res, next) => {
     numSalaReuniao: req.body.numSalaReuniao,
     numSalaFormacao: req.body.numSalaFormacao,
     estadoEspaco: req.body.estadoEspaco,
-    creator: req.userData.userId,
     taxaSecretaria: req.body.taxaSecretaria,
     taxaTele: req.body.taxaTele,
     taxaCorreio: req.body.taxaCorreio,
     taxaInternet: req.body.taxaInternet,
     taxaReuniao: req.body.taxaReuniao,
-    taxaFormacao: req.body.taxaFormacao,
+    taxaFormacao: req.body.taxaFormacao
   });
   espaco.save().then(createdEspaco => {
     res.status(201).json({
@@ -50,7 +49,7 @@ exports.criarEspaco = (req, res, next) => {
 };
 
 exports.deleteEspaco = (req, res, next) => {
-  Espaco.deleteOne({_id: req.params.id, creator: req.userData.userId}).then(result => {
+  Espaco.deleteOne({_id: req.params.id}).then(result => {
     if (result.n > 0) {
       res.status(200).json({
         message: 'Espaco Eliminado com Sucesso'});

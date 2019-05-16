@@ -58,7 +58,6 @@ export class CriarEspacoComponent implements OnInit, OnDestroy {
             numSalaReuniao: espacosData.numSalaReuniao,
             numSalaFormacao: espacosData.numSalaFormacao,
             estadoEspaco: espacosData.estadoEspaco,
-            creator: espacosData.creator,
             taxaSecretaria: espacosData.taxaSecretaria,
             taxaTele: espacosData.taxaTele,
             taxaCorreio: espacosData.taxaCorreio,
