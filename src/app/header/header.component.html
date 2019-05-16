@@ -14,6 +14,11 @@
       <a mat-button routerLink="/criar" routerLinkActive="criar-item"><i class="material-icons">event_available</i> Criar Reserva</a>
     </li>
     <li *ngIf="(userIsAuthenticated) && (onLoginAdmin())">
+      <a mat-button routerLink="/listagem-users" routerLinkActive="criar-item"><i class="material-icons">
+        assignment_ind
+        </i> Listagem Clientes</a>
+    </li>
+    <li *ngIf="(userIsAuthenticated) && (onLoginAdmin())">
       <a mat-button routerLink="/lista-reservas" routerLinkActive="criar-item"><i class="material-icons">
         dns
         </i> Listagem Reservas</a>

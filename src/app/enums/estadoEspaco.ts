@@ -1,4 +1,4 @@
-export enum EstadoEspaco{
-  CONCLUÍDA  = 'cheio',
-  PENDENTE = 'livre'
+export enum EstadoEspaco {
+  CHEIO  = 'cheio',
+  LIVRE = 'livre'
 }

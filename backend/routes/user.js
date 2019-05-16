@@ -12,6 +12,8 @@ router.post('/admin', UserController.admin);
 
 router.get('/admin', UserController.getAdmin);
 
+router.get('/listagem-users', UserController.getUsers);
+
 
 
 

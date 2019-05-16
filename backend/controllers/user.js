@@ -90,3 +90,32 @@ exports.userLogin = (req, res, next) => {
       });
     })
 };
+
+exports.getUsers = (req, res, next) => {
+  const pageSize = +req.query.pagesize;
+  const currentPage = req.query.page;
+  const espacoQuery = User.find();
+  let espacosAdq;
+  if(pageSize && currentPage){
+    espacoQuery
+      .skip(pageSize * (currentPage - 1))
+      .limit(pageSize);
+  }
+    espacoQuery
+    .then(documents => {
+      espacosAdq = documents;
+      return espaco.countDocuments();
+    })
+    .then(count => {
+      res.status(200).json({
+        message: 'Espaços Obtidos com Sucesso',
+        espacos: espacosAdq,
+        maxespacos: count
+    });
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: 'Erro ao Tentar Obter Espaços'
+    });
+  });
+};

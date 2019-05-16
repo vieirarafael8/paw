@@ -16,7 +16,7 @@ import { EstadoEspaco } from '../enums/estadoEspaco';
 const BACKEND_URL = environment.apiUrl + '/espacos/';
 
 @Injectable({ providedIn: 'root' })
-export class ReservaService {
+export class EspacoService {
   private espacos: Espaco[] = [];
   private espacosUpdated = new Subject<{reservas: Espaco[], espacoCount: number}>();
 
@@ -35,8 +35,7 @@ export class ReservaService {
           espacos: espacosData.espacos.map(espaco => {
             return {
               id: espaco._id,
-              tipoEspaco: espaco.tipoEspaco,
-              numComp: espaco.numComp,
+              numSecretOpenSpace: espaco.numSecretOpenSpace,
               numOpenspace: espaco.numOpenspace,
               numSalaReuniao: espaco.numSalaReuniao,
               numSalaFormacao: espaco.numSalaFormacao,
@@ -63,15 +62,29 @@ export class ReservaService {
       });
   }
 
+  getEspaco(id: string) {
+    return this.http.get<{
+      _id: string;
+      numSecretOpenSpace: number,
+      numSalaReuniao: number,
+      numSalaFormacao: number,
+      estadoEspaco: EstadoEspaco,
+      creator: string,
+      taxaSecretaria: number,
+      taxaTele: number,
+      taxaCorreio: number,
+      taxaInternet: number,
+      taxaReuniao: number,
+      taxaFormacao: number,
+    }>(BACKEND_URL + id);
+  }
+
 
   addEspaco(
-    tipoEspaco: TipoEspaco,
-    numComp: number,
-    numOpenspace: number,
+    numSecretOpenSpace: number,
     numSalaReuniao: number,
     numSalaFormacao: number,
     estadoEspaco: EstadoEspaco,
-    creator: string,
     taxaSecretaria: number,
     taxaTele: number,
     taxaCorreio: number,
@@ -81,9 +94,7 @@ export class ReservaService {
   ) {
     const espaco: Espaco = {
       id: null,
-      tipoEspaco,
-      numComp,
-      numOpenspace,
+      numSecretOpenSpace,
       numSalaReuniao,
       numSalaFormacao,
       estadoEspaco,

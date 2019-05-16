@@ -24,9 +24,7 @@ exports.getListaReservas= (req,res,next) => {
 
 exports.criarEspaco = (req, res, next) => {
   const espaco = new Espaco({
-    tipoEspaco: req.body.tipoEspaco,
-    numComp: req.body.numComp,
-    numOpenspace: req.body.numOpenspace,
+    numSecretOpenSpace: req.body.numSecretOpenSpace,
     numSalaReuniao: req.body.numSalaReuniao,
     numSalaFormacao: req.body.numSalaFormacao,
     estadoEspaco: req.body.estadoEspaco,

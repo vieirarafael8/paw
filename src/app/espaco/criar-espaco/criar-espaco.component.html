@@ -1,1 +1,72 @@
 <h2>Criar Espaço</h2>
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form [formGroup]="criarEspaco" (ngSubmit)="onAddEspaco()" *ngIf="!isLoading">
+      <h4><i class="material-icons">
+          dashboard
+          </i> Número Secretárias</h4>
+    <mat-form-field >
+      <input matInput name="numSecretOpenSpace" formControlName="numSecretOpenSpace" type="number" placeholder="Número Secretárias em OpenSpace" required />
+      <mat-error *ngIf="criarEspaco.get('numSecretOpenSpace').invalid" >Por favor introduza o Número Secretárias em OpenSpace!</mat-error>
+    </mat-form-field>
+    <h4><i class="material-icons">
+        announcement
+        </i> Número de Salas de Reunião</h4>
+    <mat-form-field >
+      <input matInput name="numSalaReuniao" formControlName="numSalaReuniao" type="number" placeholder="Número de Salas de Reunião" required />
+      <mat-error *ngIf="criarEspaco.get('numSalaReuniao').invalid" >Por favor introduza o Número de Salas de Reunião!</mat-error>
+    </mat-form-field>
+    <h4><i class="material-icons">
+        meeting_room
+        </i> Número de Salas de Formação</h4>
+    <mat-form-field >
+      <input matInput name="numSalaFormacao" formControlName="numSalaFormacao" type="number" placeholder="Número de Salas de Formação" required />
+      <mat-error *ngIf="criarEspaco.get('numSalaFormacao').invalid" >Por favor introduza o Número de Salas de Formação!</mat-error>
+    </mat-form-field>
+    <h4><i class="material-icons">
+        euro_symbol
+        </i> Taxa por Secretária em OpenSpace</h4>
+    <mat-form-field >
+      <input matInput name="taxaSecretaria" formControlName="taxaSecretaria" type="number" placeholder="Taxa por Secretária em OpenSpace" required />
+      <mat-error *ngIf="criarEspaco.get('taxaSecretaria').invalid" >Por favor introduza a Taxa por Secretária em OpenSpace!</mat-error>
+    </mat-form-field>
+    <h4><i class="material-icons">
+        euro_symbol
+        </i> Taxa por Sala de Reunião</h4>
+    <mat-form-field >
+      <input matInput name="taxaReuniao" formControlName="taxaReuniao" type="number" placeholder="Taxa por Sala de Reunião" required />
+      <mat-error *ngIf="criarEspaco.get('taxaReuniao').invalid" >Por favor introduza a Taxa por Sala de Reuniao!</mat-error>
+    </mat-form-field>
+    <h4><i class="material-icons">
+        euro_symbol
+        </i> Taxa por Sala de Formação</h4>
+    <mat-form-field >
+      <input matInput name="taxaFormacao" formControlName="taxaFormacao" type="number" placeholder="Taxa por Sala de Formação" required />
+      <mat-error *ngIf="criarEspaco.get('taxaFormacao').invalid" >Por favor introduza a Taxa por Sala de Formação!</mat-error>
+    </mat-form-field>
+    <h4><i class="material-icons">
+        perm_phone_msg
+        </i> Taxa do Telefone</h4>
+    <mat-form-field >
+      <input matInput name="taxaTele" formControlName="taxaTele" type="number" placeholder="Taxa do Telefone" required />
+      <mat-error *ngIf="criarEspaco.get('taxaTele').invalid" >Por favor introduza a Taxa do Telefone!</mat-error>
+    </mat-form-field>
+    <h4><i class="material-icons">
+        markunread_mailbox
+        </i> Taxa do Correio</h4>
+    <mat-form-field >
+      <input matInput name="taxaCorreio" formControlName="taxaCorreio" type="number" placeholder="Taxa do Correio" required />
+      <mat-error *ngIf="criarEspaco.get('taxaCorreio').invalid" >Por favor introduza a Taxa do Correio!</mat-error>
+    </mat-form-field>
+    <h4><i class="material-icons">
+        wifi
+        </i> Taxa da Internet</h4>
+    <mat-form-field >
+      <input matInput name="taxaInternet" formControlName="taxaInternet" type="number" placeholder="Taxa da Internet" required />
+      <mat-error *ngIf="criarEspaco.get('taxaInternet').invalid" >Por favor introduza a Taxa da Internet!</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">
+      Criar Espaco
+    </button>
+  </form>
+</mat-card>

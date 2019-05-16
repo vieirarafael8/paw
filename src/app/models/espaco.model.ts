@@ -3,9 +3,7 @@ import { EstadoEspaco } from '../enums/estadoEspaco';
 
 export class Espaco {
   id: string;
-  tipoEspaco: TipoEspaco;
-  numComp: number;
-  numOpenspace: number;
+  numSecretOpenSpace: number;
   numSalaReuniao: number;
   numSalaFormacao: number;
   estadoEspaco: EstadoEspaco;
