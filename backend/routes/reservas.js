@@ -10,9 +10,11 @@ router.post('', checkAuth, ReservaController.criarReserva);
 
 router.get('', checkAuth, ReservaController.getReservas);
 
-router.get('/:id', checkAuth, ReservaController.getReserva);
+router.get('/:id', ReservaController.getReserva);
 
 router.delete('/:id', checkAuth, ReservaController.deleteReserva);
+
+router.get('/allreservas', ReservaController.getAllReservas);
 
 
 module.exports = router;

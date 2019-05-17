@@ -26,7 +26,7 @@ export class EspacoService {
     const queryParams = `?pagesize=${reservaPerPage}&page=${currentPage}`;
     this.http
       .get<{ message: string; espacos: any; maxEspacos: number }>(
-        BACKEND_URL + 'info/' + queryParams
+        BACKEND_URL + 'info' + queryParams
       )
       .pipe(
         map((espacosData) => {
@@ -116,45 +116,4 @@ export class EspacoService {
     return this.http.delete(BACKEND_URL + espacoId);
   }
 
-  getReservas() {
-
-    this.http
-      .get<{ message: string; reservas: any; maxReservas: number }>(
-        BACKEND_URL + 'lista'
-      )
-      .pipe(
-        map((reservasData) => {
-        return {
-          reservas: reservasData.reservas.map(reserva => {
-            return {
-              id: reserva._id,
-              tipoEspaco: reserva.tipoEspaco,
-              numComp: reserva.numComp,
-              dataInicio: reserva.dataInicio,
-              dataFim: reserva.dataFim,
-              tele: reserva.tele,
-              correio: reserva.correio,
-              internet: reserva.internet,
-              estado: reserva.estado,
-              creator: reserva.creator,
-              custo: reserva.custo
-            };
-          }),
-          maxReservas: reservasData.maxReservas
-        };
-      })
-    )
-      .subscribe(transformedReservasData => {
-        this.reservas = transformedReservasData.reservas;
-        this.reservasUpdated.next({
-          reservas: [...this.reservas]
-        });
-      });
-  }
-
-  getReservaUpdateListener() {
-    console.log(this.reservasUpdated);
-
-    return this.reservasUpdated.asObservable();
-  }
 }

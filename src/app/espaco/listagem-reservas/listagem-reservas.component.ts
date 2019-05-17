@@ -27,48 +27,49 @@ export class ListagemReservasComponent implements OnInit, OnDestroy {
   userId: string;
 
   constructor(
-    public espacoService: EspacoService,
-    public reservaService: ReservaService,
+    public reservasService: ReservaService,
     private authService: AuthService,
     private router: Router
   ) {}
 
   ngOnInit() {
     this.isLoading = true;
-    this.espacoService.getReservas();
-    this.userId = this.authService.getUserId();
-    console.log('AQUI 1');
-
-    this.reservaSub = this.reservaService.getPostUpdateListener().subscribe(
-        (reservasData: { reservas: Reserva[]}) => {
-          console.log('AQUI 2');
-          this.isLoading = false;
-          this.reservas = reservasData.reservas;
-        }
-      );
-    console.log('AQUI 3');
+    this.reservasService.getAllReservas(this.reservaPerPage, this.currentPage);
+    this.reservaSub = this.reservasService
+      .getAdminUpdateListener()
+      .subscribe((reservasData: {reservas: Reserva[], reservaCount: number}) => {
+        this.isLoading = false;
+        this.totalReservas = reservasData.reservaCount;
+        this.reservas = reservasData.reservas;
+      });
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authStatusSub = this.authService
+          .getAuthStatusListener()
+          .subscribe(isAuthenticated => {
+            this.userIsAuthenticated = isAuthenticated;
+            this.userId = this.authService.getUserId();
+          });
   }
 
   onChangedPage(pageData: PageEvent) {
     this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;
     this.reservaPerPage = pageData.pageSize;
-    this.espacoService.getReservas();
+    this.reservasService.getAllReservas(this.reservaPerPage, this.currentPage);
   }
 
-  ngOnDestroy(): void {
-    this.reservaSub.unsubscribe();
-    this.authStatusSub.unsubscribe();
-  }
-
-  /*onDelete(reservaId: string) {
+  onDelete(reservaId: string) {
     this.isLoading = true;
     this.reservasService.deleteReserva(reservaId).subscribe(() => {
-      this.espacoService.getAdminReservas(this.reservaPerPage, this.currentPage);
+      this.reservasService.getAllReservas(this.reservaPerPage, this.currentPage);
     }, () => {
       this.isLoading = false;
     });
-  }*/
+  }
 
+  ngOnDestroy() {
+    this.reservaSub.unsubscribe();
+    this.authStatusSub.unsubscribe();
+  }
 
 }

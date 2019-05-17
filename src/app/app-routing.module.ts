@@ -12,7 +12,7 @@ const routes: Routes = [
   {path: '', component: ListaReservasComponent},
   {path: 'criar-espaco', component: CriarEspacoComponent},
   {path: 'info', component: CriarReservaComponent},
-  {path: 'lista', component: ListagemReservasComponent},
+  {path: 'allreservas', component: ListagemReservasComponent},
   {path: 'criar', component: CriarReservaComponent, canActivate: [AuthGuard]},
   {path: 'auth', loadChildren: './auth/auth.module#AuthModule'},
 

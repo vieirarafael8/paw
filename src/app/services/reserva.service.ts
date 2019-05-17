@@ -17,9 +17,9 @@ const BACKEND_URL = environment.apiUrl + '/reservas/';
 @Injectable({ providedIn: 'root' })
 export class ReservaService {
   private reservas: Reserva[] = [];
-
   private reservasUpdated = new Subject<{reservas: Reserva[], reservaCount: number}>();
-
+  private reservasAdmin: Reserva[] = [];
+  private reservasUpdatedAdmin = new Subject<{reservas: Reserva[], reservaCount: number}>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -60,10 +60,50 @@ export class ReservaService {
       });
   }
 
-  getPostUpdateListener() {
-    console.log(this.reservasUpdated);
+  getAllReservas(reservaPerPage: number, currentPage: number) {
+    const queryParams = `?pagesize=${reservaPerPage}&page=${currentPage}`;
+    this.http
+      .get<{ message: string; reservas: any; maxReservas: number }>(
+        BACKEND_URL + 'allreservas/' + queryParams
+      )
+      .pipe(
+        map((reservasData) => {
+        return {
+          reservas: reservasData.reservas.map(reserva => {
+            return {
+              id: reserva._id,
+              tipoEspaco: reserva.tipoEspaco,
+              numComp: reserva.numComp,
+              dataInicio: reserva.dataInicio,
+              dataFim: reserva.dataFim,
+              tele: reserva.tele,
+              correio: reserva.correio,
+              internet: reserva.internet,
+              estado: reserva.estado,
+              creator: reserva.creator,
+              custo: reserva.custo
+            };
+          }),
+          maxReservas: reservasData.maxReservas
+        };
+      })
+    )
+      .subscribe(transformedReservasData => {
+        this.reservasAdmin = transformedReservasData.reservas;
+        this.reservasUpdatedAdmin.next({
+          reservas: [...this.reservas],
+          reservaCount: transformedReservasData.maxReservas
+        });
+      });
+  }
 
+
+  getPostUpdateListener() {
     return this.reservasUpdated.asObservable();
+  }
+
+  getAdminUpdateListener() {
+    return this.reservasUpdatedAdmin.asObservable();
   }
 
   getReserva(id: string) {
@@ -109,8 +149,6 @@ export class ReservaService {
     };
     this.http.post<{ message: string, reservaId: string }>(BACKEND_URL, reserva)
     .subscribe(responseData => {
-      console.log(reserva);
-
       this.router.navigate(['/']);
     });
 
@@ -118,6 +156,5 @@ export class ReservaService {
   deleteReserva(reservaId: string) {
     return this.http.delete(BACKEND_URL + reservaId);
   }
-
 
 }

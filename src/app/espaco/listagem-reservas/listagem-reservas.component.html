@@ -23,9 +23,9 @@
   </div>
   <p><b>Estado da reserva</b> -> {{ reserva.estado }}</p>
   <p><b>Custo da reserva</b> -> {{ reserva.custo }}</p>
-    <!--<mat-action-row *ngIf="userIsAuthenticated && userId == reserva.creator">
+    <mat-action-row *ngIf="userIsAuthenticated && userId == reserva.creator">
       <button mat-button color="warn" (click)="onDelete(reserva.id)">DELETE</button>
-    </mat-action-row>-->
+    </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
 <h2 class="info-text mat-body-3" *ngIf="(!(reservas.length > 0) && (!isLoading))"> Sem Reservas! </h2>

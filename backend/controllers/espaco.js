@@ -78,31 +78,4 @@ exports.deleteEspaco = (req, res, next) => {
   });
 };
 
-exports.getAdminReservas = (req, res, next) => {
-  const pageSize = +req.query.pagesize;
-  const currentPage = req.query.page;
-  const reservaQuery = Reserva.find({id: req.body.id} );
-  let reservasAdq;
-  if(pageSize && currentPage){
-    reservaQuery
-      .skip(pageSize * (currentPage - 1))
-      .limit(pageSize);
-  }
-    reservaQuery
-    .then(documents => {
-      reservasAdq = documents;
-      return Reserva.countDocuments();
-    })
-    .then(count => {
-      res.status(200).json({
-        message: 'Reservas Obtidas com Sucesso',
-        reservas: reservasAdq,
-        maxReservas: count
-    });
-  })
-  .catch(error => {
-    res.status(500).json({
-      message: 'Erro ao Tentar Obter Reservas ADMIN'
-    });
-  });
-};
+
