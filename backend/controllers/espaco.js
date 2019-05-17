@@ -13,7 +13,7 @@ exports.criarEspaco = (req,res,next) => {
  };
 
  exports.getEspaco = (req, res, next) => {
-  const espacoQuery = Espaco.find();
+  const espacoQuery = Espaco.find({_id: req.params.id});
   let espacosAdq;
     espacoQuery
     .then(documents => {
@@ -33,16 +33,6 @@ exports.criarEspaco = (req,res,next) => {
     });
   });
 };
-
-
- exports.listaReservas = (req, res, next) => {
-  const espaco = req.body;
-  console.log(espaco);
-};
-
-exports.getListaReservas= (req,res,next) => {
-  res.sendFile(__dirname + 'C:\Users\vieir\OneDrive\Documentos\Trabalho PAW\paw\src\app\espaco\listagem-reservas\listagem-reservas.component.html');
- };
 
 
 exports.criarEspaco = (req, res, next) => {
@@ -84,6 +74,35 @@ exports.deleteEspaco = (req, res, next) => {
   .catch(error => {
     res.status(500).json({
       message: 'Erro ao Tentar Eliminar Espaco'
+    });
+  });
+};
+
+exports.getAdminReservas = (req, res, next) => {
+  const pageSize = +req.query.pagesize;
+  const currentPage = req.query.page;
+  const reservaQuery = Reserva.find({id: req.body.id} );
+  let reservasAdq;
+  if(pageSize && currentPage){
+    reservaQuery
+      .skip(pageSize * (currentPage - 1))
+      .limit(pageSize);
+  }
+    reservaQuery
+    .then(documents => {
+      reservasAdq = documents;
+      return Reserva.countDocuments();
+    })
+    .then(count => {
+      res.status(200).json({
+        message: 'Reservas Obtidas com Sucesso',
+        reservas: reservasAdq,
+        maxReservas: count
+    });
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: 'Erro ao Tentar Obter Reservas ADMIN'
     });
   });
 };

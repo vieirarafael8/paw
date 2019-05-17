@@ -17,7 +17,9 @@ const BACKEND_URL = environment.apiUrl + '/reservas/';
 @Injectable({ providedIn: 'root' })
 export class ReservaService {
   private reservas: Reserva[] = [];
+
   private reservasUpdated = new Subject<{reservas: Reserva[], reservaCount: number}>();
+
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -59,6 +61,8 @@ export class ReservaService {
   }
 
   getPostUpdateListener() {
+    console.log(this.reservasUpdated);
+
     return this.reservasUpdated.asObservable();
   }
 
@@ -114,4 +118,6 @@ export class ReservaService {
   deleteReserva(reservaId: string) {
     return this.http.delete(BACKEND_URL + reservaId);
   }
+
+
 }

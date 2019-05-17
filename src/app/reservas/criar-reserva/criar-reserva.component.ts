@@ -79,7 +79,7 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
   ) {
     this.criarReserva = this.formBuilder.group({
       tipoEspaco: ['', [Validators.required]],
-      numComp: ['', [Validators.required, Validators.min(1)]],
+      numComp: ['', [Validators.min(1)]],
       dataInicio: ['', [Validators.required]],
       dataFim: ['', [Validators.required]],
       tele: [false],
@@ -235,6 +235,8 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
     }
     return custototalExtras;
   }
+
+
 
   ngOnDestroy() {
     this.authStatusSub.unsubscribe();

@@ -10,12 +10,8 @@ router.post('', EspacoController.criarEspaco);
 
 router.get('', EspacoController.criarEspaco);
 
-//router.get('/info-espaco', EspacoController.getEspacos);
+router.get('/info', EspacoController.getEspaco);
 
-//router.post('/lista-reservas', EspacoController.listaReservas);
-
-router.get('/lista-reservas', EspacoController.getListaReservas);
-
-
+router.get('/lista', EspacoController.getAdminReservas);
 
 module.exports = router;

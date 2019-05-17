@@ -51,7 +51,7 @@ exports.getReservas = (req, res, next) => {
   })
   .catch(error => {
     res.status(500).json({
-      message: 'Erro ao Tentar Obter Reservas'
+      message: 'Erro ao Tentar Obter Reservas DO UTILIZADOR'
     });
   });
 };
@@ -65,7 +65,7 @@ exports.getReserva = (req, res, next) => {
     }
   }).catch(error => {
     res.status(500).json({
-      message: 'Erro ao Tentar Obter Reserva'
+      message: 'Erro ao Tentar Obter UMA Reserva'
     });
   });
 };
@@ -86,3 +86,5 @@ exports.deleteReserva = (req, res, next) => {
     });
   });
 };
+
+

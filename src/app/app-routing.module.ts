@@ -11,9 +11,11 @@ import { ListagemReservasComponent } from './espaco/listagem-reservas/listagem-r
 const routes: Routes = [
   {path: '', component: ListaReservasComponent},
   {path: 'criar-espaco', component: CriarEspacoComponent},
-  {path: 'lista-reservas', component: ListagemReservasComponent},
+  {path: 'info', component: CriarReservaComponent},
+  {path: 'lista', component: ListagemReservasComponent},
   {path: 'criar', component: CriarReservaComponent, canActivate: [AuthGuard]},
   {path: 'auth', loadChildren: './auth/auth.module#AuthModule'},
+
 ];
 
 @NgModule({

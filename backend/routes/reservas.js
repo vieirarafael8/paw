@@ -14,4 +14,5 @@ router.get('/:id', checkAuth, ReservaController.getReserva);
 
 router.delete('/:id', checkAuth, ReservaController.deleteReserva);
 
+
 module.exports = router;
