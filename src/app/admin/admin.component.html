@@ -1,19 +1,18 @@
 <div id="card">
-    <h2>Admin page/ Gestão OpenSpace / Dashboard</h2>
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <mat-accordion multi="true">
-    <mat-expansion-panel *ngFor="let espaco of espacos">
-        <mat-expansion-panel-header>
-          Estado do OpenSpace
-        </mat-expansion-panel-header>
-        <h3>Espaço Reservado:</h3>
-        <section>
-          <p><b>Lotação máxima</b> -> {{ espaco.numSecretOpenSpace }}</p>
-        </section>
-        <p><b>Numero de clientes</b> -> (numero de clientes)</p>
-        <p><b>Taxa de ocupação</b> -> (numero de secretarias ocupadas) / {{ espaco.numSecretOpenSpace }}</p>
-        <p><b>Espaços disponiveis</b> -> {{ espaco.numSecretOpenSpace }} - (numero de secretarias ocupadas)</p>
-    </mat-expansion-panel>
-  </mat-accordion>
+<h2>Admin page/ Gestão OpenSpace / Dashboard</h2>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-accordion multi="true" *ngIf="!isLoading">
+  <mat-expansion-panel *ngFor="let espaco of espacos">
+    <mat-expansion-panel-header>
+      Estado do OpenSpace
+    </mat-expansion-panel-header>
+    <section>
+      <p> <b>Lotação máxima</b> -> {{ espaco.numSecretOpenSpace }}</p>
+    </section>
+    <p> <b>Numero de clientes</b> -> {{  numeroClientes }}</p>
+    <p> <b>Taxa de ocupação</b> ->{{ (numTotalSecret/espaco.numSecretOpenSpace)*100 }}%</p>
+    <p> <b>Espaços disponiveis</b> -> {{ espaco.numSecretOpenSpace - numTotalSecret}} </p>
+  </mat-expansion-panel>
+</mat-accordion>
 </div>
 <mat-paginator [length]="totalEspacos" [pageSize]="espacoPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" ></mat-paginator>

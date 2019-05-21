@@ -1,8 +1,5 @@
 const Espaco = require('../models/espaco');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-
-const criarEspacoURL = require('C:\Users\vieir\OneDrive\Documentos\Trabalho PAW\paw\src\app\espaco\criar-espaco\criar-espaco.component.html');
+const Reserva = require('../models/reserva');
 
 exports.espaco = (req, res, next) => {
   const espaco = req.body;
@@ -10,31 +7,82 @@ exports.espaco = (req, res, next) => {
 };
 
 exports.criarEspaco = (req,res,next) => {
-  res.sendFile(__dirname + criarEspacoURL);
+  res.sendFile(__dirname + 'C:\Users\vieir\OneDrive\Documentos\Trabalho PAW\paw\src\app\espaco\criar-espaco\criar-espaco.component.html');
  };
 
  exports.getEspaco = (req, res, next) => {
+  const pageSize = +req.query.pagesize;
+  const currentPage = req.query.page;
   const espacoQuery = Espaco.find();
-  let espacosAdq;
+  let clientesAdq;
+  if(pageSize && currentPage){
+    espacoQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
+  }
     espacoQuery
     .then(documents => {
-      espacosAdq = documents;
-      return espaco.countDocuments();
+      clientesAdq = documents;
+      return Espaco.countDocuments();
     })
     .then(count => {
       res.status(200).json({
-        message: 'Espaços Obtidos com Sucesso',
-        espacos: espacosAdq,
-        maxespacos: count
+        message: 'Espaco Obtido com Sucesso',
+        clientes: clientesAdq,
+        maxEspacos: count
     });
-  })
-  .catch(error => {
+  }).catch(error => {
     res.status(500).json({
-      message: 'Erro ao Tentar Obter Espaços'
+      message: 'Erro ao Tentar Obter Espaco'
     });
   });
 };
 
+exports.getClientes= (req, res, next) => {
+  const clientesQuery = Reserva.distinct("creator", { tipoEspaco: "Openspace" });
+
+  console.log(clientesQuery);
+
+  clientesQuery
+  .then(documents => {
+    clientesAdq = documents;
+    return Espaco.countDocuments();
+  })
+  .then(count => {
+    res.status(200).json({
+      message: 'Espaco Obtido com Sucesso',
+      clientes: clientesAdq,
+      maxEspacos: count
+  });
+  }).catch(error => {
+    res.status(500).json({
+      message: 'Erro ao Tentar Obter Clientes'
+    });
+  });
+};
+
+
+exports.numSecretaria = (req, res) => {
+  const secretQuery = Reserva.find({ tipoEspaco: "Openspace" });
+
+  secretQuery
+  .then(documents => {
+    clientesAdq = documents;
+    return Reserva.countDocuments();
+  })
+  .then(count => {
+    res.status(200).json({
+      message: 'Reserva Obtido com Sucesso',
+      clientes: clientesAdq,
+      maxEspacos: count
+  });
+  }).catch(error => {
+    res.status(500).json({
+      message: 'Erro ao Tentar Obter Reservas'
+
+    });
+    console.log(error);
+
+  });
+}
 
 exports.criarEspaco = (req, res, next) => {
   const espaco = new Espaco({

@@ -1,38 +1,36 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { Reserva } from '../models/reserva.model';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, reduce } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import {environment} from '../../environments/environment';
 import { Espaco } from '../models/espaco.model';
 import { EstadoEspaco } from '../enums/estadoEspaco';
+import { Estado } from '../enums/estado';
 
-const BACKEND_URL = environment.apiUrl + '/espacos/';
+const BACKEND_URL_ESPACOS = environment.apiUrl + '/espacos/';
 
 @Injectable({ providedIn: 'root' })
 export class EspacoService {
   private espacos: Espaco[] = [];
   private espaco: Espaco;
   private espacosUpdated = new Subject<{espacos: Espaco[], espacoCount: number}>();
-  private reservas: Reserva[] = [];
-  private reservasUpdated = new Subject<{reservas: Reserva[]}>();
-
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  getEspacos(reservaPerPage: number, currentPage: number) {
-    const queryParams = `?pagesize=${reservaPerPage}&page=${currentPage}`;
-    this.http
+  getEspacos(espacoPerPage: number, currentPage: number) {
+    const queryParams = `?pagesize=${espacoPerPage}&page=${currentPage}`;
+    return this.http
       .get<{ message: string; espacos: any; maxEspacos: number }>(
-        BACKEND_URL + 'info' + queryParams
+        BACKEND_URL_ESPACOS + 'admin/' + queryParams
       )
       .pipe(
         map((espacosData) => {
         return {
-          espacos: espacosData.espacos.map(espaco => {
+          espacos: espacosData['clientes'].map(espaco => {
             return {
+              _id: espaco.id,
               numSecretOpenSpace: espaco.numSecretOpenSpace,
               numSalaReuniao: espaco.numSalaReuniao,
               numSalaFormacao: espaco.numSalaFormacao,
@@ -42,10 +40,10 @@ export class EspacoService {
               taxaCorreio: espaco.taxaCorreio,
               taxaInternet: espaco.taxaInternet,
               taxaReuniao: espaco.taxaReuniao,
-              taxaFormacao: espaco.taxaFormacao,
-              };
+              taxaFormacao: espaco.taxaFormacao
+            };
           }),
-          maxEspacos: espacosData.maxEspacos,
+          maxEspacos: espacosData.maxEspacos
         };
       })
     )
@@ -54,9 +52,19 @@ export class EspacoService {
         this.espacosUpdated.next({
           espacos: [...this.espacos],
           espacoCount: transformedEspacosData.maxEspacos
-
         });
       });
+
+  }
+
+  getSecretarias() {
+    return this.http
+      .get(BACKEND_URL_ESPACOS + 'secret');
+  }
+
+  getCountClientes() {
+    return this.http
+      .get(BACKEND_URL_ESPACOS + 'clientes');
   }
 
   getEspacoUpdateListener() {
@@ -77,7 +85,7 @@ export class EspacoService {
       taxaInternet: number,
       taxaReuniao: number,
       taxaFormacao: number,
-    }>(BACKEND_URL + id);
+    }>(BACKEND_URL_ESPACOS + id);
   }
 
 
@@ -106,14 +114,14 @@ export class EspacoService {
       taxaReuniao,
       taxaFormacao
     };
-    this.http.post<{ message: string, espacoId: string }>(BACKEND_URL, espaco)
+    this.http.post<{ message: string, espacoId: string }>(BACKEND_URL_ESPACOS, espaco)
     .subscribe(responseData => {
         this.router.navigate(['/auth/admin']);
     });
 
   }
   deleteEspaco(espacoId: string) {
-    return this.http.delete(BACKEND_URL + espacoId);
+    return this.http.delete(BACKEND_URL_ESPACOS + espacoId);
   }
 
 }

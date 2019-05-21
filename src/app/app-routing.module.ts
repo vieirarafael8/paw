@@ -7,6 +7,7 @@ import { CriarReservaComponent } from './reservas/criar-reserva/criar-reserva.co
 import { AuthGuard } from './auth/auth.guard';
 import { CriarEspacoComponent } from './espaco/criar-espaco/criar-espaco.component';
 import { ListagemReservasComponent } from './espaco/listagem-reservas/listagem-reservas.component';
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [
   {path: '', component: ListaReservasComponent},

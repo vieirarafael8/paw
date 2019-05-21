@@ -1,17 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-
 import { Reserva } from '../models/reserva.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TipoEspaco } from '../enums/tipoEspaco';
 import { map } from 'rxjs/operators';
-import { stringify } from '@angular/core/src/util';
 import { Router } from '@angular/router';
 import { Estado } from '../enums/estado';
-
 import {environment} from '../../environments/environment';
 import { AuthService } from '../auth/auth.service';
-import { User } from '../models/user.model';
 
 const BACKEND_URL = environment.apiUrl + '/reservas/';
 
@@ -20,9 +16,7 @@ const BACKEND_URL = environment.apiUrl + '/reservas/';
 export class ReservaService {
   private reservas: Reserva[] = [];
   private reservasUpdated = new Subject<{reservas: Reserva[], reservaCount: number}>();
-  private reservasAdmin: Reserva[] = [];
   private reservasUpdatedAdmin = new Subject<{reservas: Reserva[], reservaCount: number}>();
-  user = User;
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
 
@@ -159,13 +153,11 @@ export class ReservaService {
   }
 
   updateEstado(id: string, estado: Estado) {
-    console.log(estado);
     const reservaData = {
       estado: estado,
       };
     return this.http
       .put(BACKEND_URL + id, reservaData);
-
   }
 
   deleteReserva(reservaId: string) {

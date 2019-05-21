@@ -5,6 +5,9 @@ import { AuthService } from '../auth/auth.service';
 import { PageEvent } from '@angular/material';
 import { EspacoService } from '../services/espaco.service';
 import { Espaco } from '../models/espaco.model';
+import { User } from '../models/user.model';
+import { ReservaService } from '../services/reserva.service';
+import { Reserva } from '../models/reserva.model';
 
 
 @Component({
@@ -25,14 +28,24 @@ export class AdminComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   userId: string;
   totalGasto: number;
+  numeroClientes = 0;
+  private userSub: Subscription;
+  usersPerPage = 5;
+  users: User[] = [];
+  reservas: Reserva;
+  private reservaSub: Subscription;
+  numTotalSecret = 0;
 
   constructor(
     public espacosService: EspacoService,
+    public reservasService: ReservaService,
     private authService: AuthService,
     private router: Router
   ) {}
 
   ngOnInit() {
+    this.calculosAuxiliares();
+    this.calculosAuxiliares2();
     this.isLoading = true;
     this.espacosService.getEspacos(this.espacoPerPage, this.currentPage);
     this.espacoSub = this.espacosService
@@ -58,6 +71,32 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.currentPage = pageData.pageIndex + 1;
     this.espacoPerPage = pageData.pageSize;
     this.espacosService.getEspacos(this.espacoPerPage, this.currentPage);
+    this.authService.getUsers(this.espacoPerPage, this.currentPage);
+
+  }
+
+  calculosAuxiliares() {
+
+    this.isLoading = true;
+    this.espacosService.getCountClientes().subscribe(
+      (data) => {
+        this.numeroClientes =  data['clientes'].length;
+        this.isLoading = false;
+      },
+    );
+    return this.numeroClientes;
+  }
+
+  calculosAuxiliares2() {
+
+    this.isLoading = true;
+    this.espacosService.getSecretarias().subscribe(data=>{
+
+      this.numTotalSecret = data['clientes'].map((x)=>  x.numComp).reduce((x, y)=> x + y);
+      this.isLoading = false;
+
+    });
+    return this.numTotalSecret;
   }
 
   ngOnDestroy() {

@@ -9,6 +9,7 @@ const espacoRoutes = require('./routes/espaco');
 
 const app = express();
 
+mongoose.set('useCreateIndex', true);
 mongoose.connect('mongodb+srv://admin:'+ process.env.MONGO_ATLAS_PW + '@cluster0-8ok3m.mongodb.net/managemyspace', { useNewUrlParser: true })
 .then(() => {
   console.log('Connected to database!');
