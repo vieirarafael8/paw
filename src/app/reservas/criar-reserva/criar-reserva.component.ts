@@ -70,7 +70,7 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
   espacosPerPage = 5;
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
-
+  totalGasto = 0;
 
 
   constructor(
@@ -191,6 +191,7 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
 
       this.criarReserva.reset();
       }
+
     }
   }
 

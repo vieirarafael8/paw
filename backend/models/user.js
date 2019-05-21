@@ -9,7 +9,8 @@ const userSchema = mongoose.Schema({
   password: {type: String, required: true },
   numCartao: {type: Number, required: true},
   validade: {type: String, required: true},
-  ccv: {type: Number, required: true}
+  ccv: {type: Number, required: true},
+  totalGasto: {type: Number, required: true}
 });
 
 userSchema.plugin(uniqueValidator);

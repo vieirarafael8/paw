@@ -3,16 +3,6 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 var dateFormat = require('dateformat');
 
-exports.admin = (req, res, next) => {
-  const admin = req.body;
-  console.log(admin);
-};
-
-exports.getAdmin = (req,res,next) => {
-  res.sendFile(__dirname + 'C:\Users\vieir\OneDrive\Documentos\Trabalho PAW\paw\src\app\admin\admin.component.html');
- };
-
-
 exports.createUser = (req, res, next) => {
 
   var jsonDate = req.body.validade;
@@ -36,7 +26,8 @@ exports.createUser = (req, res, next) => {
       password: hash,
       numCartao: req.body.numCartao,
       validade: d,
-      ccv: req.body.ccv
+      ccv: req.body.ccv,
+      totalGasto: req.body.totalGasto
     });
     console.log(user);
     user.save()

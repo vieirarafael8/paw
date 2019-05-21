@@ -8,4 +8,5 @@ export class User {
   numCartao: number;
   validade: string;
   ccv: number;
+  totalGasto: number;
 }

@@ -1,4 +1,4 @@
-export enum Estado{
-  CONCLUÍDA  = 'concluída',
+export enum Estado {
+  CONCLUIDA  = 'concluida',
   PENDENTE = 'pendente'
 }

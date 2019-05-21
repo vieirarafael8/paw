@@ -7,4 +7,5 @@ export interface AuthData {
   numCartao: number;
   validade: Date;
   ccv: number;
+  totalGasto: number;
 }

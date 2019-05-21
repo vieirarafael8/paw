@@ -1,7 +1,8 @@
 const Espaco = require('../models/espaco');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-var dateFormat = require('dateformat');
+
+const criarEspacoURL = require('C:\Users\vieir\OneDrive\Documentos\Trabalho PAW\paw\src\app\espaco\criar-espaco\criar-espaco.component.html');
 
 exports.espaco = (req, res, next) => {
   const espaco = req.body;
@@ -9,11 +10,11 @@ exports.espaco = (req, res, next) => {
 };
 
 exports.criarEspaco = (req,res,next) => {
-  res.sendFile(__dirname + 'C:\Users\vieir\OneDrive\Documentos\Trabalho PAW\paw\src\app\espaco\criar-espaco\criar-espaco.component.html');
+  res.sendFile(__dirname + criarEspacoURL);
  };
 
  exports.getEspaco = (req, res, next) => {
-  const espacoQuery = Espaco.find({_id: req.params.id});
+  const espacoQuery = Espaco.find();
   let espacosAdq;
     espacoQuery
     .then(documents => {

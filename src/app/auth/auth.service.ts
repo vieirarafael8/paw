@@ -18,6 +18,7 @@ export class AuthService {
   private authStatusListener = new Subject<boolean>();
   private userId: string;
   admin = false;
+  totalGasto = 0;
 
   private users: User[] = [];
   private usersUpdated = new Subject<{users: User[], userCount: number}>();
@@ -55,7 +56,8 @@ export class AuthService {
     password: string,
     numCartao: number,
     validade: Date,
-    ccv: number
+    ccv: number,
+    totalGasto: number
   ) {
     const authData: AuthData = {
       nome,
@@ -65,7 +67,8 @@ export class AuthService {
       password,
       numCartao,
       validade,
-      ccv
+      ccv,
+      totalGasto
     };
     this.http
       .post(BACKEND_URL_USER + 'signup', authData)
@@ -97,6 +100,7 @@ export class AuthService {
               numCartao: user.numCartao,
               validade: user.validade,
               ccv: user.ccv,
+              totalGasto: user.totalGasto
             };
           }),
           maxUsers: usersData.maxUsers
@@ -110,6 +114,20 @@ export class AuthService {
           userCount: transformedUsersData.maxUsers
         });
       });
+  }
+
+  getUser(id: string) {
+    return this.http.get<{
+      nome: string,
+      email: string,
+      NIF: number,
+      morada: string,
+      password: string,
+      numCartao: number,
+      validade: Date,
+      ccv: number,
+      totalGasto: number
+    }>(BACKEND_URL_USER + id);
   }
 
   getIfAdmin() {

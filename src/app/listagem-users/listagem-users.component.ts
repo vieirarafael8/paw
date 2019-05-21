@@ -4,6 +4,7 @@ import { User } from '../models/user.model';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { PageEvent } from '@angular/material';
+import { ReservaService } from '../services/reserva.service';
 
 @Component({
   selector: 'app-listagem-users',
@@ -21,8 +22,10 @@ export class ListagemUsersComponent implements OnInit, OnDestroy {
   private authStatusSub: Subscription;
   userIsAuthenticated = false;
   userId: string;
+
   constructor(
   private authService: AuthService,
+  private reservaService: ReservaService,
   private router: Router) { }
 
   ngOnInit() {
@@ -51,6 +54,7 @@ export class ListagemUsersComponent implements OnInit, OnDestroy {
     this.currentPage = pageData.pageIndex + 1;
     this.usersPerPage = pageData.pageSize;
     this.authService.getUsers(this.usersPerPage, this.currentPage);
+
   }
 
   onDelete(userId: string) {

@@ -31,6 +31,7 @@ export const MY_FORMATS = {
 export class SignupComponent implements OnInit, OnDestroy {
 
   public today = new Date();
+  totalGasto: number;
   valida = true;
 
   constructor(public authService: AuthService, private formBuilder: FormBuilder) {
@@ -43,7 +44,9 @@ export class SignupComponent implements OnInit, OnDestroy {
       numCartao: ['', [Validators.required, Validators.max(9999999999999999)]],
       validade: ['', [Validators.required]],
       ccv: ['', [Validators.required, Validators.max(999)]],
+      totalGasto: ['']
     });
+    this.totalGasto = 0;
   }
   public criarUser: FormGroup;
   isLoading = false;
@@ -79,7 +82,8 @@ export class SignupComponent implements OnInit, OnDestroy {
       this.criarUser.value.password,
       this.criarUser.value.numCartao,
       this.criarUser.value.validade,
-      this.criarUser.value.ccv
+      this.criarUser.value.ccv,
+      this.totalGasto
       );
     }
   }

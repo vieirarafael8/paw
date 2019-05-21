@@ -10,6 +10,6 @@ router.post('', EspacoController.criarEspaco);
 
 router.get('', EspacoController.criarEspaco);
 
-router.get('/info', EspacoController.getEspaco);
+router.get('/admin', EspacoController.getEspaco);
 
 module.exports = router;

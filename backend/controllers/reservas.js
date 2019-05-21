@@ -27,6 +27,26 @@ exports.criarReserva = (req, res, next) =>{
   });
 };
 
+exports.updateEstado = (req, res, next) => {
+  const newEstado = {
+    estado: req.body.estado,
+  };
+
+  Reserva.updateOne({ _id: req.params.id}, newEstado)
+    .then(result => {
+      if (result.n > 0) {
+        res.status(200).json({ message: "Update successful!" });
+      } else {
+        res.status(401).json({ message: "Not authorized!" });
+      }
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: "Couldn't udpate post!"
+      });
+    });
+};
+
 exports.getReservas = (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = req.query.page;
@@ -59,7 +79,7 @@ exports.getReservas = (req, res, next) => {
 exports.getAllReservas = (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = req.query.page;
-  const reservaQuery = Reserva.find(req.params.id);
+  const reservaQuery = Reserva.find();
   let reservasAdq;
   if(pageSize && currentPage){
     reservaQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
