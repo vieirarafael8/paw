@@ -17,7 +17,7 @@
   <p><b>Número Cartão</b> -> {{ user.numCartao }}</p>
   <p><b>Validade</b> -> {{ user.validade }}</p>
   <p><b>CCV</b> -> {{ user.ccv }}</p>
-  <p><b>Total gasto</b> -> {{ user.totalGasto }}</p>
+  <p><b>Total gasto</b> -> {{ user.totalGasto }} €</p>
 </section>
   <mat-action-row *ngIf="userIsAuthenticated">
       <button mat-button color="warn" (click)="onDelete(user.id)">DELETE</button>

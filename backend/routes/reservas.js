@@ -8,6 +8,8 @@ const ReservaController = require('../controllers/reservas');
 
 router.get('/allreservas', ReservaController.getAllReservas);
 
+router.get('/totalgasto', ReservaController.getReservasTotalGasto);
+
 router.post('', checkAuth, ReservaController.criarReserva);
 
 router.get('', checkAuth, ReservaController.getReservas);

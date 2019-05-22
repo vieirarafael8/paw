@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema({
   numCartao: {type: Number, required: true},
   validade: {type: String, required: true},
   ccv: {type: Number, required: true},
-  totalGasto: {type: Number, required: true}
+  totalGasto: {type: Number, required: true, default: 0}
 });
 
 userSchema.plugin(uniqueValidator);

@@ -91,7 +91,7 @@ export class AuthService {
         return {
           users: usersData.users.map(user => {
             return {
-              id: user.id,
+              id: user._id,
               nome: user.nome,
               email: user.email,
               NIF: user.NIF,

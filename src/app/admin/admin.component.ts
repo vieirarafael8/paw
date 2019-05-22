@@ -90,9 +90,9 @@ export class AdminComponent implements OnInit, OnDestroy {
   calculosAuxiliares2() {
 
     this.isLoading = true;
-    this.espacosService.getSecretarias().subscribe(data=>{
+    this.espacosService.getSecretarias().subscribe(data => {
 
-      this.numTotalSecret = data['clientes'].map((x)=>  x.numComp).reduce((x, y)=> x + y);
+      this.numTotalSecret = data['clientes'].map((x) =>  x.numComp).reduce((x, y) => x + y);
       this.isLoading = false;
 
     });

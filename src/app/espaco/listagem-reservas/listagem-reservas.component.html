@@ -23,7 +23,7 @@
     <h4 *ngIf="!(reserva.tele == true || reserva.correio == true || reserva.internet == true)">Sem Extras Reservados!</h4>
   </div>
   <p><b>Estado da reserva</b> -> {{ reserva.estado }}</p>
-  <p><b>Custo da reserva</b> -> {{ reserva.custo }}</p>
+  <p><b>Custo da reserva</b> -> {{ reserva.custo }} €</p>
     <mat-action-row *ngIf="reserva.estado == 'pendente'">
       <button mat-button color="warn" (click)="onAprove(reserva.id)">Aprovar</button>
     </mat-action-row>

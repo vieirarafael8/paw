@@ -47,7 +47,7 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
 
   reservas: any[];
   espacos: Espaco;
-  espacoService: EspacoService;
+
   submitted = false;
   numCompReuniao = 5;
   numCompFormacao = 20;
@@ -58,12 +58,12 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
   isLoading = false;
   estado: Estado;
   custo: number;
-  taxaSecretaria =  1;
-  taxaTele = 1;
-  taxaCorreio = 1;
-  taxaInternet = 1;
-  taxaReuniao = 1;
-  taxaFormacao = 1;
+  taxaSecretaria =  0;
+  taxaTele = 0;
+  taxaCorreio = 0;
+  taxaInternet = 0;
+  taxaReuniao = 0;
+  taxaFormacao = 0;
   private authStatusSub: Subscription;
   public today = new Date();
   validaData = true;
@@ -71,11 +71,14 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
   totalGasto = 0;
+  numSalasReuniao = 0;
+  numSalasFormacao = 0;
 
 
   constructor(
     private formBuilder: FormBuilder,
-    public reservaService: ReservaService, public route: ActivatedRoute, private authService: AuthService
+    public reservaService: ReservaService, public route: ActivatedRoute,
+    private authService: AuthService, private espacoService: EspacoService
   ) {
     this.criarReserva = this.formBuilder.group({
       tipoEspaco: ['', [Validators.required]],
@@ -93,6 +96,7 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.taxasELimitesEspaco();
     this.authStatusSub =  this.authService.getAuthStatusListener().subscribe(
       authStatus => {
         this.isLoading = false;
@@ -134,11 +138,12 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
     }
 
     if (this.criarReserva.value.dataFim < this.criarReserva.value.dataInicio) {
-
+      alert('A data de início deve ser anterior à data de fim da reserva');
       console.log('A data de início deve ser anterior à data de fim da reserva');
       return;
     } else if ( this.today > this.criarReserva.value.dataInicio) {
       console.log('As datas devem ser iguais ao superiores ao dia de hoje');
+      alert('As datas devem ser iguais ao superiores ao dia de hoje');
       return;
     } else {
       if (this.criarReserva.value.tipoEspaco === 'Openspace') {
@@ -205,7 +210,22 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
     return daysBetweenDates;
   }
 
+  taxasELimitesEspaco() {
+    this.espacoService.getEspacoLimit().subscribe((data) =>{
+      this.taxaSecretaria = data['clientes'].map((x) =>  x.taxaSecretaria).reduce((x, y) => x + y);
+      this.taxaReuniao = data['clientes'].map((x) =>  x.taxaReuniao).reduce((x, y) => x + y);
+      this.taxaFormacao = data['clientes'].map((x) =>  x.taxaFormacao).reduce((x, y) => x + y);
+      this.taxaTele = data['clientes'].map((x) =>  x.taxaTele).reduce((x, y) => x + y);
+      this.taxaCorreio = data['clientes'].map((x) =>  x.taxaCorreio).reduce((x, y) => x + y);
+      this.taxaInternet = data['clientes'].map((x) =>  x.taxaInternet).reduce((x, y) => x + y);
+      this.numSalasReuniao = data['clientes'].map((x) =>  x.numSalasReuniao).reduce((x, y) => x + y);
+      this.numSalasFormacao = data['clientes'].map((x) =>  x.numSalasFormacao).reduce((x, y) => x + y);
+    });
+
+  }
+
   calculoCustoPessoas(numComp: number) {
+
     let custoTotalPessoas = 0;
 
 

@@ -120,6 +120,10 @@ export class ReservaService {
     }>(BACKEND_URL + id);
   }
 
+  getReservasTotalGasto() {
+    return this.http.get(BACKEND_URL + 'totalGasto');
+  }
+
 
   addReserva(
     tipoEspaco: TipoEspaco,

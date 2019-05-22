@@ -76,6 +76,30 @@ exports.getReservas = (req, res, next) => {
   });
 };
 
+exports.getReservasTotalGasto = (req, res, next) => {
+
+  const reservaQuery = Reserva.find();
+
+  let reservasAdq;
+    reservaQuery
+    .then(documents => {
+      reservasAdq = documents;
+      return Reserva.countDocuments();
+    })
+    .then(count => {
+      res.status(200).json({
+        message: 'Reservas para Total Gasto Obtidas com Sucesso',
+        reservas: reservasAdq,
+        maxReservas: count
+    });
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: 'Erro ao Tentar Obter Reservas para Total Gasto'
+    });
+  });
+};
+
 exports.getAllReservas = (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = req.query.page;

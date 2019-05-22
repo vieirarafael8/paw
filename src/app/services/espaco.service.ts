@@ -88,6 +88,10 @@ export class EspacoService {
     }>(BACKEND_URL_ESPACOS + id);
   }
 
+  getEspacoLimit() {
+    return this.http.get(BACKEND_URL_ESPACOS + 'admin');
+  }
+
 
   addEspaco(
     numSecretOpenSpace: number,

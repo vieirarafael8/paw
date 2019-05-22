@@ -11,13 +11,8 @@ exports.criarEspaco = (req,res,next) => {
  };
 
  exports.getEspaco = (req, res, next) => {
-  const pageSize = +req.query.pagesize;
-  const currentPage = req.query.page;
   const espacoQuery = Espaco.find();
   let clientesAdq;
-  if(pageSize && currentPage){
-    espacoQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
-  }
     espacoQuery
     .then(documents => {
       clientesAdq = documents;
@@ -39,8 +34,6 @@ exports.criarEspaco = (req,res,next) => {
 exports.getClientes= (req, res, next) => {
   const clientesQuery = Reserva.distinct("creator", { tipoEspaco: "Openspace" });
 
-  console.log(clientesQuery);
-
   clientesQuery
   .then(documents => {
     clientesAdq = documents;
@@ -48,13 +41,13 @@ exports.getClientes= (req, res, next) => {
   })
   .then(count => {
     res.status(200).json({
-      message: 'Espaco Obtido com Sucesso',
+      message: 'Utilizadores que reservaram secretarias Openspace Obtido com Sucesso',
       clientes: clientesAdq,
       maxEspacos: count
   });
   }).catch(error => {
     res.status(500).json({
-      message: 'Erro ao Tentar Obter Clientes'
+      message: 'Erro ao Tentar Obter Utilizadores que reservaram secretarias Openspace'
     });
   });
 };
@@ -70,17 +63,14 @@ exports.numSecretaria = (req, res) => {
   })
   .then(count => {
     res.status(200).json({
-      message: 'Reserva Obtido com Sucesso',
+      message: 'Reserva Tipo Espaço OpenSpace Obtido com Sucesso',
       clientes: clientesAdq,
       maxEspacos: count
   });
   }).catch(error => {
     res.status(500).json({
-      message: 'Erro ao Tentar Obter Reservas'
-
+      message: 'Erro ao Tentar Obter Reserva Tipo Espaço OpenSpace'
     });
-    console.log(error);
-
   });
 }
 

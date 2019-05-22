@@ -22,6 +22,7 @@ export class ListagemUsersComponent implements OnInit, OnDestroy {
   private authStatusSub: Subscription;
   userIsAuthenticated = false;
   userId: string;
+  totalGasto = 0;
 
   constructor(
   private authService: AuthService,
@@ -29,6 +30,7 @@ export class ListagemUsersComponent implements OnInit, OnDestroy {
   private router: Router) { }
 
   ngOnInit() {
+
     this.isLoading = true;
     this.authService.getUsers(this.usersPerPage, this.currentPage);
     this.userId = this.authService.getUserId();
@@ -47,6 +49,7 @@ export class ListagemUsersComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
         this.userId = this.authService.getUserId();
       });
+      this.onTotalGasto();
   }
 
   onChangedPage(pageData: PageEvent) {
@@ -66,9 +69,20 @@ export class ListagemUsersComponent implements OnInit, OnDestroy {
     });
   }
 
-  onConfirmarReserva() {
-
+  onTotalGasto() {
+    this.isLoading = true;
+    this.reservaService.getReservasTotalGasto().subscribe(data => {
+      for (let i = 0; i < data['reservas'].map((x) => x.creator).length;  i++) {
+        for(let j = 0; j < this.users.length; j++){
+          if (data['reservas'].map((x) => x.creator)[i] === this.users[j].id) {
+           this.users[j].totalGasto += this.totalGasto = data['reservas'].map((x) => x.custo)[i];
+          }
+      }
+    }
+    });
+    return this.totalGasto;
   }
+
 
   ngOnDestroy() {
     this.userSub.unsubscribe();
