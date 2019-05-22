@@ -62,16 +62,6 @@ export class EspacoService {
       .get(BACKEND_URL_ESPACOS + 'secret');
   }
 
-  getSalaReuniao() {
-    return this.http
-      .get(BACKEND_URL_ESPACOS + 'reuniao');
-  }
-
-  getSalaFormacao() {
-    return this.http
-      .get(BACKEND_URL_ESPACOS + 'formacao');
-  }
-
   getCountClientes() {
     return this.http
       .get(BACKEND_URL_ESPACOS + 'clientes');

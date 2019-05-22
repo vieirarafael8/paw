@@ -8,10 +8,6 @@ const EspacoController = require('../controllers/espaco');
 
 router.get('/secret', EspacoController.numSecretaria);
 
-router.get('/reuniao', EspacoController.numSalaReuniao);
-
-router.get('/formacao', EspacoController.numSalaFormacao);
-
 router.get('/clientes', EspacoController.getClientes);
 
 router.post('', EspacoController.criarEspaco);

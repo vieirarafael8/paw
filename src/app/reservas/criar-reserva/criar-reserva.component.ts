@@ -49,8 +49,8 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
   espacos: Espaco;
 
   submitted = false;
-  numCompReuniao = 1;
-  numCompFormacao = 1;
+  numCompReuniao = 5;
+  numCompFormacao = 20;
   private mode = 'create';
   private reservaId: string;
   private espacoId: string;
@@ -73,10 +73,6 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
   totalGasto = 0;
   numSalasReuniao = 0;
   numSalasFormacao = 0;
-  numSecretOpenSpace = 0;
-  numTotalSecret = 0;
-  numTotalReuniao = 0;
-  numTotalFormacao = 0;
 
 
   constructor(
@@ -101,9 +97,6 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.taxasELimitesEspaco();
-    this.secretariasUsadas();
-    this.salaReuniao();
-    this.salaFormacao();
     this.authStatusSub =  this.authService.getAuthStatusListener().subscribe(
       authStatus => {
         this.isLoading = false;
@@ -155,7 +148,6 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
     } else {
       if (this.criarReserva.value.tipoEspaco === 'Openspace') {
       this.isLoading = true;
-      if((this.numSecretOpenSpace - this.numTotalSecret) > 0) {
       this.reservaService.addReserva(
         this.criarReserva.value.tipoEspaco,
         this.criarReserva.value.numComp,
@@ -170,20 +162,9 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
         * this.calculoCustoDatas(this.criarReserva.value.dataInicio, this.criarReserva.value.dataFim)
       );
 
-      console.log(this.numTotalSecret);
-      console.log(this.numSecretOpenSpace);
-      } else {
-        console.log(this.numTotalSecret);
-        console.log(this.numSecretOpenSpace);
-        console.log('Limite de secretárias disponiveis atingido');
-        alert('Limite de secretárias disponiveis atingido');
-        this.criarReserva.reset();
-      }
-
       this.criarReserva.reset();
       } else if (this.criarReserva.value.tipoEspaco === 'Sala de Reunião') {
         this.isLoading = true;
-        if ((this.numSalasReuniao - this.numTotalReuniao) > 0) {
         this.reservaService.addReserva(
         this.criarReserva.value.tipoEspaco,
         this.numCompReuniao,
@@ -196,16 +177,10 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
         this.custo = this.calculoCustoPessoas(this.numCompReuniao)
         * this.calculoCustoDatas(this.criarReserva.value.dataInicio, this.criarReserva.value.dataFim)
       );
-        } else {
-          console.log('Limite de salas de reunião disponiveis atingido');
-          alert('Limite de salas de reunião disponiveis atingido');
-          this.criarReserva.reset();
-        }
 
         this.criarReserva.reset();
       } else {
       this.isLoading = true;
-      if((this.numSalasFormacao - this.numTotalFormacao) > 0) {
       this.reservaService.addReserva(
         this.criarReserva.value.tipoEspaco,
         this.numCompFormacao,
@@ -218,14 +193,6 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
         this.custo = this.calculoCustoPessoas(this.numCompFormacao)
         * this.calculoCustoDatas(this.criarReserva.value.dataInicio, this.criarReserva.value.dataFim)
       );
-      } else {
-        console.log(this.numTotalFormacao);
-        console.log(this.numSalasFormacao);
-
-        console.log('Limite de salas de formação disponiveis atingido');
-        alert('Limite de salas de formação disponiveis atingido');
-        this.criarReserva.reset();
-      }
 
       this.criarReserva.reset();
       }
@@ -253,7 +220,6 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
       this.taxaInternet = data['clientes'].map((x) =>  x.taxaInternet).reduce((x, y) => x + y);
       this.numSalasReuniao = data['clientes'].map((x) =>  x.numSalasReuniao).reduce((x, y) => x + y);
       this.numSalasFormacao = data['clientes'].map((x) =>  x.numSalasFormacao).reduce((x, y) => x + y);
-      this.numSecretOpenSpace = data['clientes'].map((x) =>  x.numSecretOpenSpace).reduce((x, y) => x + y);
     });
 
   }
@@ -291,35 +257,7 @@ export class CriarReservaComponent implements OnInit, OnDestroy {
     return custototalExtras;
   }
 
-  secretariasUsadas() {
 
-    this.espacoService.getSecretarias().subscribe(data => {
-
-      this.numTotalSecret = data['clientes'].map((x) =>  x.numComp).reduce((x, y) => x + y);
-
-    });
-    return this.numTotalSecret;
-  }
-
-  salaReuniao() {
-
-    this.espacoService.getSalaReuniao().subscribe(data => {
-
-      this.numTotalReuniao = data['clientes'].map((x) =>  x.numComp).reduce((x, y) => x + y);
-
-    });
-    return this.numTotalReuniao;
-  }
-
-  salaFormacao() {
-
-    this.espacoService.getSalaFormacao().subscribe(data => {
-
-      this.numTotalFormacao = data['clientes'].map((x) =>  x.numComp).reduce((x, y) => x + y);
-
-    });
-    return this.numTotalFormacao;
-  }
 
   ngOnDestroy() {
     this.authStatusSub.unsubscribe();
