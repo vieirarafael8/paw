@@ -74,6 +74,48 @@ exports.numSecretaria = (req, res) => {
   });
 }
 
+exports.numSalaReuniao = (req, res) => {
+  const secretQuery = Reserva.find({ tipoEspaco: "Sala de Reunião" });
+
+  secretQuery
+  .then(documents => {
+    clientesAdq = documents;
+    return Reserva.countDocuments();
+  })
+  .then(count => {
+    res.status(200).json({
+      message: 'Reserva Tipo Sala de Reunião Obtido com Sucesso',
+      clientes: clientesAdq,
+      maxEspacos: count
+  });
+  }).catch(error => {
+    res.status(500).json({
+      message: 'Erro ao Tentar Obter Reserva Tipo Sala de Reunião'
+    });
+  });
+}
+
+exports.numSalaFormacao = (req, res) => {
+  const secretQuery = Reserva.find({ tipoEspaco: "Sala de Formação" });
+
+  secretQuery
+  .then(documents => {
+    clientesAdq = documents;
+    return Reserva.countDocuments();
+  })
+  .then(count => {
+    res.status(200).json({
+      message: 'Reserva Tipo Sala de Formação Obtido com Sucesso',
+      clientes: clientesAdq,
+      maxEspacos: count
+  });
+  }).catch(error => {
+    res.status(500).json({
+      message: 'Erro ao Tentar Obter Reserva Tipo Sala de Formação'
+    });
+  });
+}
+
 exports.criarEspaco = (req, res, next) => {
   const espaco = new Espaco({
     numSecretOpenSpace: req.body.numSecretOpenSpace,
