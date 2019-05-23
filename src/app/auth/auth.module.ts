@@ -7,6 +7,7 @@ import { SignupComponent } from './signup/signup.component';
 import { AngularMaterialModule } from '../angular-material.module';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AdminComponent } from '../admin/admin.component';
+import { ListagemReservasComponent } from '../espaco/listagem-reservas/listagem-reservas.component';
 import { ListagemUsersComponent } from '../listagem-users/listagem-users.component';
 
 @NgModule({
@@ -22,6 +23,18 @@ import { ListagemUsersComponent } from '../listagem-users/listagem-users.compone
     FormsModule,
     AuthRoutingModule,
     ReactiveFormsModule
+  ],
+  exports: [
+    LoginComponent,
+    SignupComponent,
+    AdminComponent,
+    ListagemUsersComponent,
+    CommonModule,
+    AngularMaterialModule,
+    FormsModule,
+    AuthRoutingModule,
+    ReactiveFormsModule
   ]
 })
+
 export class AuthModule {}

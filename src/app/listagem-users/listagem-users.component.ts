@@ -49,7 +49,7 @@ export class ListagemUsersComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
         this.userId = this.authService.getUserId();
       });
-      this.onTotalGasto();
+    this.onTotalGasto();
   }
 
   onChangedPage(pageData: PageEvent) {
@@ -73,9 +73,9 @@ export class ListagemUsersComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.reservaService.getReservasTotalGasto().subscribe(data => {
       for (let i = 0; i < data['reservas'].map((x) => x.creator).length;  i++) {
-        for(let j = 0; j < this.users.length; j++){
+        for (let j = 0; j < this.users.length; j++) {
           if (data['reservas'].map((x) => x.creator)[i] === this.users[j].id) {
-           this.users[j].totalGasto += this.totalGasto = data['reservas'].map((x) => x.custo)[i];
+           this.users[j].totalGasto += data['reservas'].map((x) => x.custo)[i];
           }
       }
     }

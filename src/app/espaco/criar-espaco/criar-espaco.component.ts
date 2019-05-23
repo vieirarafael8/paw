@@ -23,6 +23,7 @@ export class CriarEspacoComponent implements OnInit, OnDestroy {
   private espacoId: string;
   espaco: Espaco;
   estadoEspaco: EstadoEspaco;
+  espacoExist = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -42,6 +43,7 @@ export class CriarEspacoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
     this.authStatusSub =  this.authService.getAuthStatusListener().subscribe(
       authStatus => {
         this.isLoading = false;

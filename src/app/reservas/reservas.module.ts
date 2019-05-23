@@ -6,11 +6,19 @@ import { RouterModule } from '@angular/router';
 import { CriarReservaComponent } from './criar-reserva/criar-reserva.component';
 import { ListaReservasComponent } from './lista-reservas/lista-reservas.component';
 import { AngularMaterialModule } from '../angular-material.module';
-import { ListagemReservasComponent } from '../espaco/listagem-reservas/listagem-reservas.component';
+import { ListagemUsersComponent } from '../listagem-users/listagem-users.component';
+
 
 @NgModule({
-  declarations: [CriarReservaComponent, ListaReservasComponent, ListagemReservasComponent],
+  declarations: [CriarReservaComponent, ListaReservasComponent],
   imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    AngularMaterialModule,
+    RouterModule
+  ],
+  exports: [
+    CriarReservaComponent, ListaReservasComponent,
     CommonModule,
     ReactiveFormsModule,
     AngularMaterialModule,

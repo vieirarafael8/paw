@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { Subscription } from 'rxjs';
+import { EspacoService } from '../services/espaco.service';
 
 @Component({
   selector: 'app-header',
@@ -12,8 +13,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
   private admin: boolean;
+  espacoExist = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private espacoService: EspacoService) {}
 
   ngOnInit() {
     this.admin = false;
@@ -31,6 +33,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.authService.getIfAdmin()) {
       this.admin = true;
       return this.admin;
+    }
+    if (this.espacoService.getEspacos(1, 1)) {
+      this.espacoExist = true;
     }
   }
 
