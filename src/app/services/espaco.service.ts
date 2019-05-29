@@ -16,19 +16,19 @@ export class EspacoService {
   private espacos: Espaco[] = [];
   private espaco: Espaco;
   private espacosUpdated = new Subject<{espacos: Espaco[], espacoCount: number}>();
+  espacoExist = false;
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  getEspacos(espacoPerPage: number, currentPage: number) {
-    const queryParams = `?pagesize=${espacoPerPage}&page=${currentPage}`;
+  getEspacos() {
     return this.http
       .get<{ message: string; espacos: any; maxEspacos: number }>(
-        BACKEND_URL_ESPACOS + 'admin/' + queryParams
+        BACKEND_URL_ESPACOS + 'admin'
       )
       .pipe(
         map((espacosData) => {
         return {
-          espacos: espacosData['clientes'].map(espaco => {
+          espacos: espacosData.espacos.map(espaco => {
             return {
               _id: espaco.id,
               numSecretOpenSpace: espaco.numSecretOpenSpace,
@@ -54,7 +54,6 @@ export class EspacoService {
           espacoCount: transformedEspacosData.maxEspacos
         });
       });
-
   }
 
   getSecretarias() {
@@ -76,6 +75,15 @@ export class EspacoService {
     return this.http
       .get(BACKEND_URL_ESPACOS + 'clientes');
   }
+  getCountClientesR() {
+    return this.http
+      .get(BACKEND_URL_ESPACOS + 'clientesR');
+  }
+  getCountClientesF() {
+    return this.http
+      .get(BACKEND_URL_ESPACOS + 'clientesF');
+  }
+
 
   getEspacoUpdateListener() {
     return this.espacosUpdated.asObservable();
@@ -100,6 +108,16 @@ export class EspacoService {
 
   getEspacoLimit() {
     return this.http.get(BACKEND_URL_ESPACOS + 'admin');
+  }
+
+  getSecretLimit() {
+    return this.http.get(BACKEND_URL_ESPACOS + 'secret');
+  }
+  getReuniaoLimit() {
+    return this.http.get(BACKEND_URL_ESPACOS + 'reuniao');
+  }
+  getFormacaoLimit() {
+    return this.http.get(BACKEND_URL_ESPACOS + 'formacao');
   }
 
 
@@ -132,7 +150,7 @@ export class EspacoService {
     .subscribe(responseData => {
         this.router.navigate(['/auth/admin']);
     });
-
+    this.espacoExist = true;
   }
   deleteEspaco(espacoId: string) {
     return this.http.delete(BACKEND_URL_ESPACOS + espacoId);

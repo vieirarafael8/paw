@@ -15,8 +15,7 @@ const routes: Routes = [
   {path: 'allreservas', component: ListagemReservasComponent},
   {path: 'criar', component: CriarReservaComponent, canActivate: [AuthGuard]},
   {path: 'auth', loadChildren: './auth/auth.module#AuthModule'},
-  {path: 'reservas', loadChildren: './reserva/reserva.module#ReservaModule'},
-
+  {path: 'reservas', loadChildren: './reservas/reservas.module#ReservaModule'}
 ];
 
 @NgModule({

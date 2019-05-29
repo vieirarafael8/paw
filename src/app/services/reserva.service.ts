@@ -9,7 +9,7 @@ import { Estado } from '../enums/estado';
 import {environment} from '../../environments/environment';
 import { AuthService } from '../auth/auth.service';
 
-const BACKEND_URL = environment.apiUrl + '/reservas/';
+const BACKEND_URL_RESERVAS = environment.apiUrl + '/reservas/';
 
 
 @Injectable({ providedIn: 'root' })
@@ -24,7 +24,7 @@ export class ReservaService {
     const queryParams = `?pagesize=${reservaPerPage}&page=${currentPage}`;
     this.http
       .get<{ message: string; reservas: any; maxReservas: number }>(
-        BACKEND_URL + queryParams
+        BACKEND_URL_RESERVAS + queryParams
       )
       .pipe(
         map((reservasData) => {
@@ -62,7 +62,7 @@ export class ReservaService {
     const queryParams = `?pagesize=${reservaPerPage}&page=${currentPage}`;
     this.http
       .get<{ message: string; reservas: any; maxReservas: number }>(
-        BACKEND_URL + 'allreservas/' + queryParams
+        BACKEND_URL_RESERVAS + 'allreservas/' + queryParams
       )
       .pipe(
         map((reservasData) => {
@@ -117,11 +117,11 @@ export class ReservaService {
       estado: Estado;
       creator: string;
       custo: number;
-    }>(BACKEND_URL + id);
+    }>(BACKEND_URL_RESERVAS + id);
   }
 
   getReservasTotalGasto() {
-    return this.http.get(BACKEND_URL + 'totalGasto');
+    return this.http.get(BACKEND_URL_RESERVAS + 'totalGasto');
   }
 
 
@@ -149,7 +149,7 @@ export class ReservaService {
       creator: null,
       custo
     };
-    this.http.post<{ message: string, reservaId: string }>(BACKEND_URL, reserva)
+    this.http.post<{ message: string, reservaId: string }>(BACKEND_URL_RESERVAS, reserva)
     .subscribe(responseData => {
       this.router.navigate(['/']);
     });
@@ -161,11 +161,15 @@ export class ReservaService {
       estado: estado,
       };
     return this.http
-      .put(BACKEND_URL + id, reservaData);
+      .put(BACKEND_URL_RESERVAS + id, reservaData);
   }
 
   deleteReserva(reservaId: string) {
-    return this.http.delete(BACKEND_URL + reservaId);
+    return this.http.delete(BACKEND_URL_RESERVAS + reservaId);
+  }
+
+  deleteAllReservas(userId: string) {
+    return this.http.delete( BACKEND_URL_RESERVAS + 'deleteAllReservas/' + userId);
   }
 
 }

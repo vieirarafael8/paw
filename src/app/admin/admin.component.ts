@@ -29,12 +29,16 @@ export class AdminComponent implements OnInit, OnDestroy {
   userId: string;
   totalGasto: number;
   numeroClientes = 0;
+  numeroClientesR = 0;
   private userSub: Subscription;
   usersPerPage = 5;
   users: User[] = [];
   reservas: Reserva;
   private reservaSub: Subscription;
   numTotalSecret = 0;
+  numTotalReuniao = 0;
+  numeroClientesF = 0;
+  numTotalFormacao = 0;
 
   constructor(
     public espacosService: EspacoService,
@@ -45,9 +49,13 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.calculosAuxiliares();
+    this.calculosAuxiliaresR();
+    this.calculosAuxiliaresF();
     this.calculosAuxiliares2();
+    this.calculosAuxiliares2R();
+    this.calculosAuxiliares2F();
     this.isLoading = true;
-    this.espacosService.getEspacos(this.espacoPerPage, this.currentPage);
+    this.espacosService.getEspacos();
     this.espacoSub = this.espacosService
       .getEspacoUpdateListener()
       .subscribe(
@@ -64,13 +72,14 @@ export class AdminComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
         this.userId = this.authService.getUserId();
       });
+
   }
 
   onChangedPage(pageData: PageEvent) {
     this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;
     this.espacoPerPage = pageData.pageSize;
-    this.espacosService.getEspacos(this.espacoPerPage, this.currentPage);
+    this.espacosService.getEspacos();
     this.authService.getUsers(this.espacoPerPage, this.currentPage);
 
   }
@@ -87,16 +96,64 @@ export class AdminComponent implements OnInit, OnDestroy {
     return this.numeroClientes;
   }
 
+  calculosAuxiliaresR() {
+
+    this.isLoading = true;
+    this.espacosService.getCountClientesR().subscribe(
+      (data) => {
+        this.numeroClientesR =  data['clientesR'].length;
+        this.isLoading = false;
+      },
+    );
+    return this.numeroClientesR;
+  }
+
+  calculosAuxiliaresF() {
+
+    this.isLoading = true;
+    this.espacosService.getCountClientesF().subscribe(
+      (data) => {
+        this.numeroClientesF =  data['clientesF'].length;
+        this.isLoading = false;
+      },
+    );
+    return this.numeroClientesF;
+  }
   calculosAuxiliares2() {
 
     this.isLoading = true;
     this.espacosService.getSecretarias().subscribe(data => {
 
-      this.numTotalSecret = data['clientes'].map((x) =>  x.numComp).reduce((x, y) => x + y);
+      this.numTotalSecret = data['secrets'].map((x) =>  x.numComp).reduce((x, y) => x + y);
       this.isLoading = false;
 
     });
     return this.numTotalSecret;
+  }
+
+  calculosAuxiliares2R() {
+
+    this.isLoading = true;
+    this.espacosService.getSalaReuniao().subscribe(data => {
+
+      this.numTotalReuniao = data['salasR'].map((x) =>  x.numComp).reduce((x, y) => x + y);
+      this.isLoading = false;
+
+    });
+    return this.numTotalReuniao;
+  }
+
+
+  calculosAuxiliares2F() {
+
+    this.isLoading = true;
+    this.espacosService.getSalaFormacao().subscribe(data => {
+
+      this.numTotalFormacao = data['salasF'].map((x) =>  x.numComp).reduce((x, y) => x + y);
+      this.isLoading = false;
+
+    });
+    return this.numTotalFormacao;
   }
 
   ngOnDestroy() {

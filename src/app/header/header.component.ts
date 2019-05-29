@@ -18,6 +18,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService, private espacoService: EspacoService) {}
 
   ngOnInit() {
+    if (this.espacoService.getEspacos()) {
+      this.espacoExist = true;
+    }
     this.admin = false;
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authListenerSubs = this.authService.getAuthStatusListener()
@@ -33,9 +36,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.authService.getIfAdmin()) {
       this.admin = true;
       return this.admin;
-    }
-    if (this.espacoService.getEspacos(1, 1)) {
-      this.espacoExist = true;
     }
   }
 

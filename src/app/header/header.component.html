@@ -23,8 +23,8 @@
         dns
         </i> Listagem Reservas</a>
     </li>
-    <li *ngIf="(userIsAuthenticated) && (onLoginAdmin())">
-        <a mat-button routerLink="/criar-espaco" *ngIf="espacoExist" routerLinkActive="criar-item"><i class="material-icons">event_available</i> Criar Espaco</a>
+    <li *ngIf="(userIsAuthenticated) && (onLoginAdmin()) && !espacoExist">
+        <a mat-button routerLink="/criar-espaco" routerLinkActive="criar-item"><i class="material-icons">event_available</i> Criar Espaco</a>
       </li>
     <button mat-button [matMenuTriggerFor]="menu">
       <i class="material-icons">account_circle</i>

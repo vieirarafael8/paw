@@ -22,7 +22,6 @@ export class ListagemUsersComponent implements OnInit, OnDestroy {
   private authStatusSub: Subscription;
   userIsAuthenticated = false;
   userId: string;
-  totalGasto = 0;
 
   constructor(
   private authService: AuthService,
@@ -62,25 +61,27 @@ export class ListagemUsersComponent implements OnInit, OnDestroy {
 
   onDelete(userId: string) {
     this.isLoading = true;
+    this.reservaService.deleteAllReservas(userId).subscribe(() => {
+      this.reservaService.getAllReservas(this.usersPerPage, this.currentPage);
+    }, () => {
+      this.isLoading = false;
+    });
     this.authService.deleteU(userId).subscribe(() => {
       this.authService.getUsers(this.usersPerPage, this.currentPage);
     }, () => {
       this.isLoading = false;
     });
+
   }
 
   onTotalGasto() {
     this.isLoading = true;
     this.reservaService.getReservasTotalGasto().subscribe(data => {
       for (let i = 0; i < data['reservas'].map((x) => x.creator).length;  i++) {
-        for (let j = 0; j < this.users.length; j++) {
-          if (data['reservas'].map((x) => x.creator)[i] === this.users[j].id) {
-           this.users[j].totalGasto += data['reservas'].map((x) => x.custo)[i];
-          }
+           this.users.find(data['reservas'].map((x) => x.creator)[i]).totalGasto =
+           this.users.find(data['reservas'].map((x) => x.creator)[i]).totalGasto + data['reservas'].map((x) => x.custo)[i];
       }
-    }
     });
-    return this.totalGasto;
   }
 
 

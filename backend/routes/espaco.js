@@ -12,6 +12,10 @@ router.get('/reuniao', EspacoController.numSalaReuniao);
 
 router.get('/formacao', EspacoController.numSalaFormacao);
 
+router.get('/clientesR', EspacoController.getClientesReuniao);
+
+router.get('/clientesF', EspacoController.getClientesFormacao);
+
 router.get('/clientes', EspacoController.getClientes);
 
 router.post('', EspacoController.criarEspaco);

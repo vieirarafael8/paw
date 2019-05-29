@@ -27,6 +27,9 @@
     <mat-action-row *ngIf="reserva.estado == 'pendente'">
       <button mat-button color="warn" (click)="onAprove(reserva.id)">Aprovar</button>
     </mat-action-row>
+    <mat-action-row>
+      <button mat-button color="warn" (click)="onDelete(reserva.id)">DELETE</button>
+    </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
 <h2 class="info-text mat-body-3" *ngIf="(!(reservas.length > 0) && (!isLoading))"> Sem Reservas! </h2>

@@ -7,6 +7,8 @@ import {environment} from '../../environments/environment';
 import { map } from 'rxjs/operators';
 import { User } from '../models/user.model';
 
+const BACKEND_URL_RESERVAS = environment.apiUrl + '/reservas/';
+
 const BACKEND_URL_USER = environment.apiUrl + '/user/';
 
 
@@ -156,7 +158,7 @@ export class AuthService {
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresDuration * 1000);
           this.saveAuthData(token, expirationDate, this.userId);
-          if (this.userId === '5cddb3a670fffa33ec9bc45f') {
+          if (this.userId === '5ced6ae161856c3ad42549e1') {
             this.admin = true;
             this.router.navigate(['/auth/admin']);
           } else {
@@ -184,7 +186,7 @@ export class AuthService {
       this.isAuthenticated = true;
       this.userId = authInformation.userId;
       this.setAuthTimer(expiresIn / 1000);
-      if (this.userId === '5cddb3a670fffa33ec9bc45f') {
+      if (this.userId === '5ced6ae161856c3ad42549e1') {
         this.admin = true;
         this.authStatusListener.next(true);
       }
@@ -238,6 +240,7 @@ export class AuthService {
       userId,
     };
   }
+
   deleteU(userId: string) {
     return this.http.delete(BACKEND_URL_USER + 'listar/' + userId);
   }

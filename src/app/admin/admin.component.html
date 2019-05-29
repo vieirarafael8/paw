@@ -1,5 +1,5 @@
 <div id="card">
-<h2>Admin page/ Gestão OpenSpace / Dashboard</h2>
+<h2>Gestão OpenSpace</h2>
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 <mat-accordion multi="true" *ngIf="!isLoading">
   <mat-expansion-panel *ngFor="let espaco of espacos">
@@ -10,9 +10,43 @@
       <p> <b>Lotação máxima</b> -> {{ espaco.numSecretOpenSpace }}</p>
     </section>
     <p> <b>Numero de clientes</b> -> {{  numeroClientes }}</p>
-    <p> <b>Taxa de ocupação</b> ->{{ (numTotalSecret/espaco.numSecretOpenSpace)*100 }}%</p>
+    <p> <b>Taxa de ocupação</b> -> {{ (numTotalSecret/espaco.numSecretOpenSpace)*100 }}%</p>
     <p> <b>Espaços disponiveis</b> -> {{ espaco.numSecretOpenSpace - numTotalSecret}} </p>
   </mat-expansion-panel>
 </mat-accordion>
 </div>
+<div id="card">
+  <h2>Gestão Salas Reunião</h2>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <mat-accordion multi="true" *ngIf="!isLoading">
+    <mat-expansion-panel *ngFor="let espaco of espacos">
+      <mat-expansion-panel-header>
+        Estado das Salas de Reunião
+      </mat-expansion-panel-header>
+      <section>
+        <p> <b>Lotação máxima</b> -> {{ espaco.numSalaReuniao }}</p>
+      </section>
+      <p> <b>Numero de clientes</b> -> {{  numeroClientesR }}</p>
+      <p> <b>Taxa de ocupação</b> -> {{ (numTotalReuniao/espaco.numSalaReuniao)*100 }}%</p>
+      <p> <b>Espaços disponiveis</b> -> {{ espaco.numSalaReuniao - numTotalReuniao}} </p>
+    </mat-expansion-panel>
+  </mat-accordion>
+  </div>
+  <div id="card">
+  <h2>Gestão Salas Formação</h2>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <mat-accordion multi="true" *ngIf="!isLoading">
+    <mat-expansion-panel *ngFor="let espaco of espacos">
+      <mat-expansion-panel-header>
+        Estado das Salas de Formação
+      </mat-expansion-panel-header>
+      <section>
+        <p> <b>Lotação máxima</b> -> {{ espaco.numSalaFormacao }}</p>
+      </section>
+      <p> <b>Numero de clientes</b> -> {{  numeroClientesF }}</p>
+      <p> <b>Taxa de ocupação</b> -> {{ (numTotalFormacao/espaco.numSalaFormacao)*100 }}%</p>
+      <p> <b>Espaços disponiveis</b> -> {{ espaco.numSalaFormacao - numTotalFormacao}} </p>
+    </mat-expansion-panel>
+  </mat-accordion>
+  </div>
 <mat-paginator [length]="totalEspacos" [pageSize]="espacoPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" ></mat-paginator>

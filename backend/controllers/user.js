@@ -117,15 +117,13 @@ exports.getUsers = (req, res, next) => {
 };
 
 exports.deleteUser = (req, res, next) => {
-  console.log(req.body.id);
-
   User.deleteOne({id: req.body.id}).then(result => {
     if (result.n > 0) {
       res.status(200).json({
-        message: 'Utilizador Eliminada com Sucesso'});
+        message: 'Utilizador Eliminado com Sucesso'});
     } else {
       res.status(401).json({
-        message: 'Utilizador Não Autorizado a Eliminar a User'});
+        message: 'Não Autorizado a Eliminar a User'});
     }
   })
   .catch(error => {

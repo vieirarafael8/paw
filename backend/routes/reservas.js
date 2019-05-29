@@ -10,6 +10,8 @@ router.get('/allreservas', ReservaController.getAllReservas);
 
 router.get('/totalgasto', ReservaController.getReservasTotalGasto);
 
+router.delete('/deleteAllReservas/:id', ReservaController.deleteAllReservas);
+
 router.post('', checkAuth, ReservaController.criarReserva);
 
 router.get('', checkAuth, ReservaController.getReservas);

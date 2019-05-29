@@ -45,8 +45,10 @@ export class ListagemReservasComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           this.totalReservas = reservasData.reservaCount;
           this.reservas = reservasData.reservas;
+
         }
       );
+
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSub = this.authService
       .getAuthStatusListener()
@@ -54,6 +56,7 @@ export class ListagemReservasComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
         this.userId = this.authService.getUserId();
       });
+
   }
 
   onChangedPage(pageData: PageEvent) {

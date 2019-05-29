@@ -158,4 +158,21 @@ exports.deleteReserva = (req, res, next) => {
   });
 };
 
+exports.deleteAllReservas = (req, res, next) => {
+  Reserva.deleteMany({creator: req.userData.userId}).then(result => {
+    if (result.n > 0) {
+      res.status(200).json({
+        message: 'Reserva Eliminada com Sucesso'});
+    } else {
+      res.status(401).json({
+        message: 'Utilizador Não Autorizado a Eliminar a Reserva'});
+    }
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: 'Erro ao Tentar Eliminar Reserva'
+    });
+  });
+};
+
 

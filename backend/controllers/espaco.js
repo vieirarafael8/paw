@@ -12,16 +12,16 @@ exports.criarEspaco = (req,res,next) => {
 
  exports.getEspaco = (req, res, next) => {
   const espacoQuery = Espaco.find();
-  let clientesAdq;
+  let espacosAdq;
     espacoQuery
     .then(documents => {
-      clientesAdq = documents;
+      espacosAdq = documents;
       return Espaco.countDocuments();
     })
     .then(count => {
       res.status(200).json({
         message: 'Espaco Obtido com Sucesso',
-        clientes: clientesAdq,
+        espacos: espacosAdq,
         maxEspacos: count
     });
   }).catch(error => {
@@ -37,17 +37,59 @@ exports.getClientes= (req, res, next) => {
   clientesQuery
   .then(documents => {
     clientesAdq = documents;
-    return Espaco.countDocuments();
+    return Reserva.countDocuments();
   })
   .then(count => {
     res.status(200).json({
       message: 'Utilizadores que reservaram secretarias Openspace Obtido com Sucesso',
       clientes: clientesAdq,
-      maxEspacos: count
+      maxClientes: count
   });
   }).catch(error => {
     res.status(500).json({
       message: 'Erro ao Tentar Obter Utilizadores que reservaram secretarias Openspace'
+    });
+  });
+};
+
+exports.getClientesReuniao= (req, res, next) => {
+  const clientesRQuery = Reserva.distinct("creator", { tipoEspaco: "Sala de Reunião" });
+
+  clientesRQuery
+  .then(documents => {
+    clientesRAdq = documents;
+    return Reserva.countDocuments();
+  })
+  .then(count => {
+    res.status(200).json({
+      message: 'Utilizadores que reservaram Salas de Reunião Obtido com Sucesso',
+      clientesR: clientesRAdq,
+      maxClientesR: count
+  });
+  }).catch(error => {
+    res.status(500).json({
+      message: 'Erro ao Tentar Obter Utilizadores que reservaram Salas de Reunião'
+    });
+  });
+};
+
+exports.getClientesFormacao= (req, res, next) => {
+  const clientesFQuery = Reserva.distinct("creator", { tipoEspaco: "Sala de Formação" });
+
+  clientesFQuery
+  .then(documents => {
+    clientesFAdq = documents;
+    return Reserva.countDocuments();
+  })
+  .then(count => {
+    res.status(200).json({
+      message: 'Utilizadores que reservaram Salas de Formação Obtido com Sucesso',
+      clientesF: clientesFAdq,
+      maxClientesF: count
+  });
+  }).catch(error => {
+    res.status(500).json({
+      message: 'Erro ao Tentar Obter Utilizadores que reservaram Salas de Formação'
     });
   });
 };
@@ -58,14 +100,14 @@ exports.numSecretaria = (req, res) => {
 
   secretQuery
   .then(documents => {
-    clientesAdq = documents;
+    secretAdq = documents;
     return Reserva.countDocuments();
   })
   .then(count => {
     res.status(200).json({
       message: 'Reserva Tipo Espaço OpenSpace Obtido com Sucesso',
-      clientes: clientesAdq,
-      maxEspacos: count
+      secrets: secretAdq,
+      maxSecret: count
   });
   }).catch(error => {
     res.status(500).json({
@@ -75,18 +117,18 @@ exports.numSecretaria = (req, res) => {
 }
 
 exports.numSalaReuniao = (req, res) => {
-  const secretQuery = Reserva.find({ tipoEspaco: "Sala de Reunião" });
+  const salaRQuery = Reserva.find({ tipoEspaco: "Sala de Reunião" });
 
-  secretQuery
+  salaRQuery
   .then(documents => {
-    clientesAdq = documents;
+    salaRAdq = documents;
     return Reserva.countDocuments();
   })
   .then(count => {
     res.status(200).json({
       message: 'Reserva Tipo Sala de Reunião Obtido com Sucesso',
-      clientes: clientesAdq,
-      maxEspacos: count
+      salasR: salaRAdq,
+      maxSalasR: count
   });
   }).catch(error => {
     res.status(500).json({
@@ -96,18 +138,18 @@ exports.numSalaReuniao = (req, res) => {
 }
 
 exports.numSalaFormacao = (req, res) => {
-  const secretQuery = Reserva.find({ tipoEspaco: "Sala de Formação" });
+  const salasFQuery = Reserva.find({ tipoEspaco: "Sala de Formação" });
 
-  secretQuery
+  salasFQuery
   .then(documents => {
-    clientesAdq = documents;
+    salasFAdq = documents;
     return Reserva.countDocuments();
   })
   .then(count => {
     res.status(200).json({
       message: 'Reserva Tipo Sala de Formação Obtido com Sucesso',
-      clientes: clientesAdq,
-      maxEspacos: count
+      salasF: salasFAdq,
+      maxSalasF: count
   });
   }).catch(error => {
     res.status(500).json({
